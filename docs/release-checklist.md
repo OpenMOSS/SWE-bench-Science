@@ -13,7 +13,7 @@
 
 ## B. 单题 002 canary
 
-- [ ] environment image 可在 `linux/amd64` 拉取
+- [x] environment image 可在 `linux/amd64` 拉取
 - [x] environment image 无 harness、私测和答案材料（本地 canary）
 - [ ] Pier 可按版本安装 Codex/Claude/mini-swe-agent 中至少一种
 - [x] 网关 base URL、wire protocol 和 key 只由 env/job config 提供
@@ -48,7 +48,7 @@
 
 - [ ] 从空目录下载 HF snapshot，不依赖旧 authoring GitHub
 - [ ] 复制用户 `.env` 到本地 credentials 位置，不提交
-- [ ] 拉取 002 environment/verifier images
+- [x] 拉取 002 environment/verifier images
 - [ ] Pier 完成 120 秒短测
 - [ ] 固定 selection 支持单题、任意列表、默认 107 和 opt-in 119
 - [ ] 失败可按 task/trial 精确重试，不重新抽样

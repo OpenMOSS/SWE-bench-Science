@@ -49,14 +49,17 @@ Pier 的 Docker backend 可能在评测机上临时派生
 - `scripts/materialize.py`：按明确题号清单展开本地 Pier task
 - `scripts/run_batch.py`：按固定清单预拉取镜像并调用 Pier 批量评测
 - `profiles/codex.env.example`：Codex 模型、网关、wire protocol 和版本示例
-- `scripts/build_canary.py`：构建并检查一题 environment/verifier amd64 镜像
+- `scripts/build_canary.py`：构建并检查一题本地 environment/verifier amd64 镜像
+- `scripts/build_publish_batch.py`：按题号批量构建、推送 Docker Hub、记录 digest 并
+  在每批完成后删除本批本地镜像和 build cache
 - `scripts/validate_release.py`：编号、GPL、路径泄漏和镜像字段校验
 
 ## 当前阶段
 
-当前阶段是 `canary`：发布架构已冻结，119 个公开 task bundle 已导入，002 的
-环境/私测隔离和 Pier 端到端 no-op 评测已通过。正式发布仍需完成许可证复核、
-119 对 Docker Hub digest、HF private dataset 上传和干净用户验收。
+当前阶段是 `batch-publish`：发布架构已冻结，119 个公开 task bundle 已导入，002
+的 environment/verifier 已推送到 Docker Hub 并按 digest 运行过 no-op verifier。
+正式发布仍需完成许可证复核、其余 Docker Hub digest、HF private dataset 上传和
+干净用户验收。
 
 ## 开箱使用
 
@@ -93,6 +96,21 @@ python3 scripts/validate_release.py
 
 # 构建一题 linux/amd64 environment + verifier canary
 python3 scripts/build_canary.py --task-id 002 --platform linux/amd64
+
+# 发布默认 107 道非 GPL 题；每批 10 道，推送完成后清理本批本地镜像
+HTTP_PROXY=http://host.docker.internal:7897 \
+HTTPS_PROXY=http://host.docker.internal:7897 \
+ALL_PROXY=http://host.docker.internal:7897 \
+NO_PROXY=localhost,127.0.0.1,host.docker.internal \
+python3 scripts/build_publish_batch.py --batch-size 10
+
+# 从断点继续；已记录两个 Docker Hub digest 的题目会跳过
+python3 scripts/build_publish_batch.py --batch-size 10 --resume
+
+# 包含 12 道 GPL-family 题目时必须显式选择全量清单并打开开关
+python3 scripts/build_publish_batch.py \
+  --selection huggingface/selections/all-119.json \
+  --allow-GPL --batch-size 10 --resume
 ```
 
 使用 Python 3.11+ 的 Pier（DeepSWE 固定的 Harbor-compatible runner）运行已构建
