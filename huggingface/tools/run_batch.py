@@ -196,7 +196,11 @@ def main() -> int:
     print(json.dumps(metadata, indent=2, sort_keys=True))
     if args.dry_run:
         return 0
-    return subprocess.run(command, check=False).returncode
+    pier_environment = os.environ.copy()
+    # Pier may build an ephemeral environment+agent image. Keep that derived
+    # build on the same architecture as the prebuilt task images.
+    pier_environment["DOCKER_DEFAULT_PLATFORM"] = args.platform
+    return subprocess.run(command, check=False, env=pier_environment).returncode
 
 
 if __name__ == "__main__":

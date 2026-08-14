@@ -88,7 +88,9 @@ python3 tools/materialize.py --allow-GPL --output tasks-selected-all
 The materializer writes the exact task ids to `selection.json`. The batch runner
 hashes that list, pulls the environment and verifier images, writes a redacted
 `batch-run.json`, and invokes Pier with `--no-force-build --no-delete`. It never
-uses runner-side random sampling.
+uses runner-side random sampling. The selected `--platform` is also exported as
+`DOCKER_DEFAULT_PLATFORM` so Pier's ephemeral environment+agent image stays
+compatible with the prebuilt image architecture on an arm64 host.
 
 ## Codex Gateway Profile
 

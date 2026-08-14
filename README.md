@@ -77,7 +77,7 @@ python3 scripts/materialize.py --output /tmp/science-tasks --force
 python3 scripts/materialize.py --allow-GPL --output /tmp/science-tasks-all --force
 
 # 使用已发布的 Docker Hub digest；脚本会按 linux/amd64 预拉取两类镜像，
-# 写入 batch-run.json 后调用 Pier。默认 --no-delete，避免 Pier 删除预构建镜像。
+# 并把同一平台传给 Pier 派生的 agent image。默认 --no-delete，避免 Pier 删除预构建镜像。
 python3 scripts/run_batch.py --path /tmp/science-tasks \
   --agent nop --n-concurrent 4 --n-attempts 1 \
   --env-file /path/to/openai.env
