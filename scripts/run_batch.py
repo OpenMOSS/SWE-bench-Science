@@ -110,6 +110,8 @@ def main() -> int:
     parser.add_argument("--n-concurrent", type=int, default=1)
     parser.add_argument("--n-attempts", type=int, default=1)
     parser.add_argument("--max-retries", type=int, default=0)
+    parser.add_argument("--agent-timeout-multiplier", type=float)
+    parser.add_argument("--verifier-timeout-multiplier", type=float)
     parser.add_argument("--jobs-dir", type=Path, default=Path("jobs"))
     parser.add_argument("--job-name")
     parser.add_argument("--platform", default="linux/amd64")
@@ -163,6 +165,10 @@ def main() -> int:
         "--n-concurrent", str(args.n_concurrent), "--n-attempts", str(args.n_attempts),
         "--max-retries", str(args.max_retries), "--no-force-build", "--no-delete", "--yes",
     ]
+    if args.agent_timeout_multiplier is not None:
+        command.extend(["--agent-timeout-multiplier", str(args.agent_timeout_multiplier)])
+    if args.verifier_timeout_multiplier is not None:
+        command.extend(["--verifier-timeout-multiplier", str(args.verifier_timeout_multiplier)])
     if args.env_file:
         command.extend(["--env-file", str(args.env_file)])
     for model in models:

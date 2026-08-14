@@ -114,6 +114,8 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 .venv/bin/pier run \
 `CODEX_REASONING_EFFORT`，生成 Pier 原生 `config_toml`。`OPENAI_API_KEY` 只由 Pier
 加载到 agent 进程；切换中转站就是改用另一个 `--env-file`。其他 agent 仍可用重复
 的 `--model`、`--agent-env` 和 `--agent-kwarg` 原样传给 Pier。
+短测可以用 `--agent-timeout-multiplier 0.0223` 将本任务默认约 5400 秒 agent
+上限压到约 120 秒；这只限制 agent 阶段，verifier 仍按自己的 timeout 运行。
 
 ## 明确禁止
 

@@ -117,6 +117,8 @@ derives the network allowlist from the endpoint. Switching relay, protocol, or
 credential means selecting another env file; task files and images do not
 change. Advanced users can disable this translation with `--no-auto-provider`
 and pass repeated `--agent-kwarg` / `--agent-env` values directly to Pier.
+For a short smoke, add `--agent-timeout-multiplier 0.0223` (approximately 120
+seconds against the default task timeout); verifier timeout remains separate.
 
 ## Agent Harnesses
 
