@@ -1,0 +1,12 @@
+{
+  "task_id": "092",
+  "title": "Repair inconsistent Chemprop reaction observations",
+  "domain": "ai-chemistry-reaction-property-learning",
+  "language": "python",
+  "source_repository": "https://github.com/chemprop/chemprop",
+  "source_commit": "1f367d55d1bac14dd6b9e0cd5746574fcfab9a59",
+  "source_license": "MIT",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "873bfddc79c4be961e1b653f28bf7718df73b74df7a12102e96a97ac64f51f07"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "051",
+  "title": "Repair an inconsistent planetary gradient-tensor calculation",
+  "domain": "planetary-geodesy-and-geomagnetism",
+  "language": "fortran",
+  "source_repository": "https://github.com/SHTOOLS/SHTOOLS",
+  "source_commit": "7f7d91474509acb597071eb789661b1f0cc304ca",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "623104b002867b3f7a57e24a85ce03cc84c897607d507cfafe5d93a423415325"
+}

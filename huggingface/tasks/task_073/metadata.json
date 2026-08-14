@@ -1,0 +1,12 @@
+{
+  "task_id": "073",
+  "title": "Repair inconsistent alternate-conformer structure connectivity",
+  "domain": "structural-biology-pdbx-macromolecular-connectivity",
+  "language": "python",
+  "source_repository": "https://github.com/biotite-dev/biotite",
+  "source_commit": "f8c3b8aa5473e078f91c86dcee7340eb9ed3eb97",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "4750773214e103b4927e1cfa74f838b86bd0b9fcf3e9f49a25844b17e06b6e24"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "112",
+  "title": "Repair an inconsistent hybrid-section plastic capacity workflow",
+  "domain": "high-performance-fibers-and-composites",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "bb313b40e78959c6b6aa7c2e1d88bc13135cabb91be96ead6c7b02b595e09c91"
+}

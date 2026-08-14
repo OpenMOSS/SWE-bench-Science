@@ -1,0 +1,12 @@
+{
+  "task_id": "091",
+  "title": "Repair a workflow regression",
+  "domain": "materials-science-volumetric-data-semantics",
+  "language": "python",
+  "source_repository": "https://github.com/materialsproject/pymatgen-core",
+  "source_commit": "c8cfee71f3ce5d92c5b5f6ca3d363f8f3a9f4495",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "ee6d2a8fa5af6c99aded10bacf8ffa2910bcb148ed68fb80707b9cebe7eb0437"
+}

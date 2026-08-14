@@ -1,0 +1,12 @@
+{
+  "task_id": "088",
+  "title": "Repair a boundary aggregation failure",
+  "domain": "boundary-aggregation",
+  "language": "python",
+  "source_repository": "https://github.com/pydata/xarray",
+  "source_commit": "0b071e369a88f6672accc2a99c40d3b4b334f2f9",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "5e7474f8aa8269a9d76e03f048cce31b30e91fadfa8bb5e3401d63b59c63ddbf"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "021",
+  "title": "Complete a missing atomic-liquid thermodynamic-integration capability",
+  "domain": "atomistic thermodynamic integration and free-energy calculation",
+  "language": "python",
+  "source_repository": "https://github.com/deepmodeling/dpti",
+  "source_commit": "9d90fd83c1eec85b7e204bb87f281df0b592623a",
+  "source_license": "LGPL-3.0-family",
+  "license_source": "LICENSE",
+  "gpl_family": true,
+  "public_payload_sha256": "dd6fb60643f7b22fd56015f0d3b55317f55d72fbd7593b4bbffddfebefd29774"
+}

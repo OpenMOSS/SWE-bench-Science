@@ -1,0 +1,12 @@
+{
+  "task_id": "018",
+  "title": "Restore blacklist semantics in an HMMRATAC chromatin-accessibility workflow",
+  "domain": "epigenomics-atac-seq-hmm",
+  "language": "python-cython",
+  "source_repository": "https://github.com/macs3-project/MACS",
+  "source_commit": "f01cb680e239192484ab672b9e34531b1403eb3d",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "ad3688322c62612c1fec8dc19b8a57624ede929b541d54972e719d4f1f253ab8"
+}

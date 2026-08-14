@@ -1,0 +1,12 @@
+{
+  "task_id": "115",
+  "title": "Restore physically meaningful structural stability checks",
+  "domain": "structural-engineering-and-disaster-resilience",
+  "language": "python",
+  "source_repository": "https://github.com/JWock82/Pynite",
+  "source_commit": "147c7aa24ec30b1c6a4d4820446915380752877b",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "9fd0984b691e2f02e10254a1bd81bce154c5487a07bdd0b418feb9a291468abc"
+}

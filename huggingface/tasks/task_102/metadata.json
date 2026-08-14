@@ -1,0 +1,12 @@
+{
+  "task_id": "102",
+  "title": "Repair an inconsistent polymer coordinate workflow",
+  "domain": "polymer-coordinate-generation",
+  "language": "python",
+  "source_repository": "https://github.com/marrink-lab/polyply_1.0",
+  "source_commit": "160e9707d844ad1b108e1d8184152050d16088a0",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "2152837000fbb33fc8d41e69096794de10a4c9bfe7e3ca4f6237362e5d33a560"
+}

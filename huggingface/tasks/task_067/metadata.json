@@ -1,0 +1,12 @@
+{
+  "task_id": "067",
+  "title": "Repair a seasonal fire-weather state transition",
+  "domain": "climate-fire-weather",
+  "language": "python",
+  "source_repository": "https://github.com/Ouranosinc/xclim",
+  "source_commit": "d1e654cf59a5d5761f5586bca1102a1590ae6e32",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "c92bab50be2064b2be6a92409c8b291f4c4187ddbe02bde1c154b45dc361c15d"
+}

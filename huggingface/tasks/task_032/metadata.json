@@ -1,0 +1,12 @@
+{
+  "task_id": "032",
+  "title": "Repair an inconsistent peptide energy after topology import",
+  "domain": "molecular-simulation",
+  "language": "python",
+  "source_repository": "https://github.com/openmm/openmm",
+  "source_commit": "d2f76949b3ccac1139f0a0a0d1459aa47e2f0a98",
+  "source_license": "LGPL-family",
+  "license_source": "license.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "c180d4dc2be2dfbf776c6ea49cf291b717bb320516711ed8c8e4ab15dd0c0947"
+}

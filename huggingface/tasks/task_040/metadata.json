@@ -1,0 +1,12 @@
+{
+  "task_id": "040",
+  "title": "Restore consistent magnetic-dipole electromagnetic predictions",
+  "domain": "computational-electromagnetics-and-geophysical-forward-modeling",
+  "language": "python",
+  "source_repository": "https://github.com/simpeg/simpeg",
+  "source_commit": "3cc6605c54b0f6062c1a139ece2ecf69cddc829",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "26565f5e7771aa455a68dbcf6a23d0746fd3842931499db02f8bfb93a0dc074c"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "036",
+  "title": "Repair inconsistent sampling on a spherical curvilinear ocean grid",
+  "domain": "computational-oceanography-and-spherical-geometry",
+  "language": "python",
+  "source_repository": "https://github.com/Parcels-code/Parcels",
+  "source_commit": "439ea290f9a75c3cbd66d79333fed475f92aeb00",
+  "source_license": "MIT",
+  "license_source": "LICENSE.md",
+  "gpl_family": false,
+  "public_payload_sha256": "29dadb61548cf625beadcef5620a0e20a03d97d48b09ac7ad259548e4e2aaf1f"
+}

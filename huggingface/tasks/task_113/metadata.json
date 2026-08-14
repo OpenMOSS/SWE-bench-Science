@@ -1,0 +1,12 @@
+{
+  "task_id": "113",
+  "title": "Repair an inconsistent solar-resource workflow",
+  "domain": "renewable-energy-modelling",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "abff131018164171256d840b24b28f75874d438199c298730bb9e67a418069d1"
+}

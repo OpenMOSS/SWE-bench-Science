@@ -1,0 +1,12 @@
+{
+  "task_id": "028",
+  "title": "Repair control-referenced relative responses in a single-cell perturbation workflow",
+  "domain": "single-cell-perturbation-response-modeling",
+  "language": "python",
+  "source_repository": "https://github.com/JialongJiang/DSPIN",
+  "source_commit": "cbedc58e2127d912895defa95c65a623fa2f67d6",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "5f00f99c550a360506e23c8b91f7e29ba400088a732e3a061ece166440d04ef4"
+}

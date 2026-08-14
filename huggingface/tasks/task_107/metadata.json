@@ -1,0 +1,12 @@
+{
+  "task_id": "107",
+  "title": "Repair a public symbolic workflow",
+  "domain": "computer-algebra",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "9938aee4065bf2710315908c516fc18766d810d19943994ca58551f7b178794a"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "062",
+  "title": "Repair an inconsistent archived elasticity workflow",
+  "domain": "computational-materials-science",
+  "language": "python",
+  "source_repository": "https://github.com/materialsproject/atomate2",
+  "source_commit": "95b15d576f47923e1f200c0894915a8f46675291",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "a848f093dd0e16bc9b440ab1cda38b126cdc559d1261b5acc095292febc7eaac"
+}

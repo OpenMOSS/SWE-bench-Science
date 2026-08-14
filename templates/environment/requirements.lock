@@ -1,0 +1,3 @@
+# The importer writes a task-specific lock file here.
+# This template intentionally has no scientific package defaults.
+pytest==8.3.5

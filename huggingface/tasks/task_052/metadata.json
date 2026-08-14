@@ -1,0 +1,12 @@
+{
+  "task_id": "052",
+  "title": "Restore a nonuniform finite-volume phase-field workflow",
+  "domain": "computational-materials-finite-volume-pde",
+  "language": "python",
+  "source_repository": "https://github.com/usnistgov/fipy",
+  "source_commit": "11e5c6ae26207a60e223d46473ac364b352ac982",
+  "source_license": "UNKNOWN",
+  "license_source": "LICENSE.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "3ee5dcafe311d965bdf99f2208a383202baec7279b4668f0486fa9efabaf78fe"
+}

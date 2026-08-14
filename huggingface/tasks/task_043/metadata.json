@@ -1,0 +1,12 @@
+{
+  "task_id": "043",
+  "title": "Repair an inconsistent porous-volume characterization",
+  "domain": "porous-media-image-analysis",
+  "language": "python",
+  "source_repository": "https://github.com/PMEAL/porespy",
+  "source_commit": "f2360a52bc77ec917aa07ce0cf6128dc7687ea64",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "dc0ef803237a7f1beab83b5eeaa8fe68fb3c39a553bb28ce9acde348e912b0be"
+}

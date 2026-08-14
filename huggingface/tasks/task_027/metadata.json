@@ -1,0 +1,12 @@
+{
+  "task_id": "027",
+  "title": "Restore consistent NMR peak-set encoding under batch padding",
+  "domain": "ai4science-nmr-structure-elucidation",
+  "language": "python",
+  "source_repository": "https://github.com/little1d/NMRTrans",
+  "source_commit": "9e59a111d201c1c3aee6db079fe1ea2c6a2d8ba8",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "79aadb8a7614f24d2868a1e8d9bf303ea506294b937f5a76ae98a02cbe4eeb68"
+}

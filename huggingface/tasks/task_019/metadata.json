@@ -1,0 +1,12 @@
+{
+  "task_id": "019",
+  "title": "Complete robust topic-to-cistrome binarization for independent probability matrices",
+  "domain": "single-cell-chromatin-accessibility",
+  "language": "python",
+  "source_repository": "https://github.com/aertslab/pycisTopic",
+  "source_commit": "cb5f54111d2affd89ad732c20c14dab6138026f0",
+  "source_license": "UNKNOWN",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "c4b61cbc1c1a90b7f7263eb3c0536a2595d0d3c66d7ee9b83633b576ad02123b"
+}

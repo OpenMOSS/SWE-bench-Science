@@ -1,0 +1,12 @@
+{
+  "task_id": "118",
+  "title": "Repair inconsistent periodic molecular energy representations",
+  "domain": "computational-high-energy-molecular-chemistry-periodic-models",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "AGPL-family",
+  "license_source": "COPYING",
+  "gpl_family": true,
+  "public_payload_sha256": "1d2f2929496088cc56e5ace00807c26de51b2ca99b758ced06ebe7b6f8a057e1"
+}

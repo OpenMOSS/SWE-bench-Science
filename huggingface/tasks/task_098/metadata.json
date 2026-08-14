@@ -1,0 +1,12 @@
+{
+  "task_id": "098",
+  "title": "Repair inconsistent satellite parallax geolocation",
+  "domain": "remote-sensing-and-geostationary-geolocation",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "UNKNOWN",
+  "license_source": "not-detected",
+  "gpl_family": false,
+  "public_payload_sha256": "551331a7c8d9ec732af39574c53fd2f2139520ba8eb5a322aed7d412101fe61d"
+}

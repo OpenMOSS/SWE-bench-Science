@@ -1,0 +1,12 @@
+{
+  "task_id": "085",
+  "title": "Inconsistent archived observables",
+  "domain": "computational-chemistry-and-solvation",
+  "language": "fortran",
+  "source_repository": "https://github.com/dftbplus/dftbplus",
+  "source_commit": "d4da8c5027b643291f3a6295efd4340ce79d6a36",
+  "source_license": "AGPL-family",
+  "license_source": "COPYING",
+  "gpl_family": true,
+  "public_payload_sha256": "2db37177603a05c62b276b94c738f8592f40853359df72a3f25205c1d5bb5748"
+}

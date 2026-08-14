@@ -1,0 +1,12 @@
+{
+  "task_id": "030",
+  "title": "Repair format-conformant SHELX/AIRSS .res export in a crystallographic IO workflow",
+  "domain": "crystallography-file-format-semantics",
+  "language": "python",
+  "source_repository": "https://github.com/materialsproject/pymatgen",
+  "source_commit": "585bb673c4aa222669c4b0d72ffeec3dbf092630",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "fe8a693f065061ef2c9dbeb378deabfb408a0b54cad15bb727f0dbfc6d7e05da"
+}

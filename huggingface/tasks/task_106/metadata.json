@@ -1,0 +1,12 @@
+{
+  "task_id": "106",
+  "title": "Reproduce and extend a version-pinned MAP4/MAPC retrieval protocol",
+  "domain": "chemoinformatics-molecular-fingerprints",
+  "language": "python",
+  "source_repository": "https://github.com/MLCIL/scikit-fingerprints",
+  "source_commit": "839001468ba8f8da64ba9d54b33fa33c795ed3c5",
+  "source_license": "MIT",
+  "license_source": "LICENSE.md",
+  "gpl_family": false,
+  "public_payload_sha256": "e94e60a0ebbd19494438edfdc820c664f7f9d4a72a7a4e9f4a5158e65019d996"
+}

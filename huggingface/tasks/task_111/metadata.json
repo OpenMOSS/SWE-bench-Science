@@ -1,0 +1,12 @@
+{
+  "task_id": "111",
+  "title": "Restore consistent tapered-filament free response",
+  "domain": "computational-mechanics-and-soft-filament-dynamics",
+  "language": "python",
+  "source_repository": "https://github.com/GazzolaLab/PyElastica",
+  "source_commit": "46ad665fb84bda0c2d9b3392b6f2ef2388af1358",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "bc051a4f26a75f73535918cd1a8bc8754a4b1da712860acdff481ba9ff0efe8a"
+}

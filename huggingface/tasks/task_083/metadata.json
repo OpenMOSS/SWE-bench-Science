@@ -1,0 +1,12 @@
+{
+  "task_id": "083",
+  "title": "Repair bond-order species reporting",
+  "domain": "computational-chemistry",
+  "language": "python",
+  "source_repository": "https://github.com/deepmodeling/reacnetgenerator",
+  "source_commit": "37b0bef6fd9d5945f1b752ac82d4f8564728cd8b",
+  "source_license": "LGPL-3.0-family",
+  "license_source": "LICENSE",
+  "gpl_family": true,
+  "public_payload_sha256": "48f2557e6046a003e567fb8b9055d9a6f9a93401f664313f9c04cedadd30780c"
+}

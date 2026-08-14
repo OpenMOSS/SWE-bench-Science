@@ -1,0 +1,12 @@
+{
+  "task_id": "074",
+  "title": "Repair an ill-conditioned overlap band-postprocessing workflow",
+  "domain": "electronic-structure-nonorthogonal-eigenproblems",
+  "language": "python",
+  "source_repository": "https://github.com/deepmodeling/DeePTB",
+  "source_commit": "e365079ea71190aaa0dc96d22253d3888c47abf9",
+  "source_license": "LGPL-3.0-family",
+  "license_source": "LICENSE",
+  "gpl_family": true,
+  "public_payload_sha256": "ad672fdf766b9ec695c2a3fc0ef10ff87623c0c0ca31d0dcef02fcc67b8bb9ae"
+}

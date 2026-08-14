@@ -1,0 +1,12 @@
+{
+  "task_id": "001",
+  "title": "Repair omega-dependent range-separated PBE workflow in a real PySCF STRSF repository",
+  "domain": "density-functional-theory",
+  "language": "python",
+  "source_repository": "https://github.com/aditisingh4812/simplified_tuned_range_separated",
+  "source_commit": "f794ca5265d38906782506f1ac4e197b4e273fc4",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "9ed895761e11ebcd5d3d383429d1b50b2039969eab6be3369298f32077d581dd"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "049",
+  "title": "Restore consistent stochastic-field behavior on nonuniform grids",
+  "domain": "finite-difference-stochastic-partial-differential-equations",
+  "language": "python",
+  "source_repository": "https://github.com/zwicker-group/py-pde",
+  "source_commit": "a9f8256c1b4b48ac73f3df35b3e570993501b333",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "2102d49be26585ee8217bb375347adb25a008f36d62c783554d2a4e930489433"
+}

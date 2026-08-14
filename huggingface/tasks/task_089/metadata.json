@@ -1,0 +1,12 @@
+{
+  "task_id": "089",
+  "title": "Repair inconsistent ORCA excited-state oscillator strengths",
+  "domain": "computational-chemistry-spectroscopy",
+  "language": "python",
+  "source_repository": "https://github.com/cclib/cclib",
+  "source_commit": "6ba33bdd48bf336a81400147d2870323b241e457",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "fe78fd81c8f3bde1750d471aec4416de4b93ff45a1490008fe50e529855c6782"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "078",
+  "title": "Repair an inconsistent astronomical aperture workflow",
+  "domain": "astronomical-image-analysis-and-wcs-aperture-photometry",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "842e8b9cc90cfc2fa565d985ad1d43d880025e8237e60838f0d164d37f50f906"
+}

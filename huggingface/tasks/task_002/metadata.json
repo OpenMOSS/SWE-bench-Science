@@ -1,0 +1,12 @@
+{
+  "task_id": "002",
+  "title": "Repair an inconsistent reduced validation workflow",
+  "domain": "density-functional-theory",
+  "language": "python",
+  "source_repository": "https://github.com/aditisingh4812/simplified_tuned_range_separated",
+  "source_commit": "f794ca5265d38906782506f1ac4e197b4e273fc4",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "413aae9a4fa7428016b80984ed9c66d8b5e9e3af97d9588571f64fcac7a1dc46"
+}

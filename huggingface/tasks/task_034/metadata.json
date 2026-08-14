@@ -1,0 +1,12 @@
+{
+  "task_id": "034",
+  "title": "Repair an inconsistent stochastic trajectory calculation",
+  "domain": "stochastic-numerical-analysis",
+  "language": "python",
+  "source_repository": "https://github.com/patrick-kidger/diffrax",
+  "source_commit": "56d78e1acbdc9c1493caef17a34777931430f3bf",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "889b0227a9c51d2b5bc30a32e135fcd05155e4d6cf5be68637bd012d34e8a7b5"
+}

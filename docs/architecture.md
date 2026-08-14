@@ -1,9 +1,9 @@
 # SWE-bench Science 架构与发布契约
 
-状态：`design-review`
+状态：`canary`
 
-本文档先确定职责、发布边界和验收条件。它不是已完成实现的说明，也不代表当前
-已有镜像已经满足这些要求。
+本文档冻结职责、发布边界和验收条件。当前 119 个 task bundle 已导入，task 002
+的 environment/verifier amd64 canary 已完成隔离和 Pier 端到端验收。
 
 ## 1. 目标
 
@@ -101,7 +101,7 @@ Hugging Face task row / local task.toml
                    v
         +---------------------+
         | ephemeral E_i + A_j |
-        | agent works in /app |
+        | agent works in /app/task_NNN |
         +----------+----------+
                    |
           collect model.patch
@@ -130,7 +130,7 @@ Hugging Face task row / local task.toml
 - 题目运行需要的公开 fixture 和公开 reproduction；
 - 完成题目所需语言运行时、编译器、系统库和离线依赖；
 - Git、shell 和 Pier installed agent 所需的基础工具；
-- 工作目录 `/app`，且 baseline 位于可提交的正常分支；
+- 工作目录 `/app/task_NNN`，且 baseline 位于可提交的正常分支；
 - 无 future branch/tag/reflog 可泄露参考修复。
 
 它不得包含：
@@ -225,9 +225,10 @@ tasks/task_001/
 └── instruction.md
 ```
 
-当 verifier 已预构建且入口点在 verifier image 中时，HF bundle 不必携带
-`tests/`。私有 authoring 输入可以额外拥有 `environment/Dockerfile` 和
-`tests/Dockerfile`，发布前按策略选择是否导出。标准答案目录永不导出。
+当 verifier 已预构建且入口点在 verifier image 中时，HF bundle 只携带
+`task.toml`、`instruction.md` 和供 Pier 校验格式的薄 `environment/Dockerfile` /
+`tests/Dockerfile` 入口。完整 source/build context 只保留在本地 release 工作区，
+通过 `--include-build-context` 显式展开；标准答案目录永不导出。
 
 建议的 `task.toml` 结构：
 
@@ -250,6 +251,7 @@ timeout_sec = 5400.0
 [environment]
 docker_image = "<dockerhub-environment-image>@sha256:<digest>"
 os = "linux"
+allow_internet = false
 cpus = 2
 memory_mb = 8192
 storage_mb = 20480
@@ -262,6 +264,7 @@ timeout_sec = 1800.0
 [verifier.environment]
 docker_image = "<dockerhub-verifier-image>@sha256:<digest>"
 os = "linux"
+allow_internet = false
 cpus = 2
 memory_mb = 8192
 storage_mb = 20480
@@ -387,18 +390,17 @@ replicate id 和结果路径。失败重试只重跑明确 task/trial，不重�
 swe-bench-science-release/
 ├── docs/                         # 架构、字段、审阅记录
 ├── manifests/
-│   ├── tasks.jsonl               # 119 题 canonical release manifest
-│   └── selections/               # default-107 / all-119 / 固定抽样
+│   └── tasks.jsonl               # 119 题 canonical release manifest
 ├── profiles/
-│   └── agents/                   # Pier agent/provider 模板，不含密钥
+│   └── codex.env.example         # Pier provider 模板，不含真实密钥
 ├── templates/
-│   ├── task/                     # task.toml 模板
 │   ├── environment/              # environment Dockerfile 模板
+│   ├── task-tests/               # 预构建 verifier 的薄入口
 │   └── verifier/                 # verifier Dockerfile/entrypoint 模板
-├── schemas/                      # manifest 和结果 JSON schema
-├── huggingface/                  # HF card 与生成后的 data/task bundle
-│   └── tools/                    # 可随 HF 下载的最小 materializer
-├── src/                          # 审批后才加入的导入/校验/构建工具
+├── huggingface/                  # HF card、data、selection、薄 task bundle
+│   ├── tools/                    # 随 HF 下载的 materializer/batch runner
+│   └── profiles/                 # 不含密钥的 provider 示例
+├── scripts/                      # 导入、生成、校验、构建和 Pier 批量入口
 └── tests/                        # release tooling tests
 ```
 
@@ -412,6 +414,7 @@ staging/       尚未通过扫描的中间产物
 dist/          待上传的 HF snapshot/release bundle
 secrets/       Docker Hub/HF/provider credentials
 jobs,trials/   Pier 运行结果
+tasks/         逐题完整源码/build context；由 importer 本地生成，不进入 Git
 ```
 
 数据流只能是 `imports/private -> validate -> staging -> dist`。不能从 `dist` 反向

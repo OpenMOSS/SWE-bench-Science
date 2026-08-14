@@ -1,0 +1,12 @@
+{
+  "task_id": "101",
+  "title": "Repair an inconsistent battery-model reproduction",
+  "domain": "lithium-ion-battery-modeling",
+  "language": "python",
+  "source_repository": "https://github.com/pybamm-team/PyBaMM",
+  "source_commit": "1e9fbcea25b78a0a633face62b077dae1f92bf62",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "7ca613711ba2cbfcb078328bc5fe977dda892c408974f1d7140f7f1d7d0228b3"
+}

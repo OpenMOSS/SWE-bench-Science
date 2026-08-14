@@ -1,0 +1,12 @@
+{
+  "task_id": "082",
+  "title": "Repair a workflow consistency bug",
+  "domain": "atomistic-machine-learning-and-molecular-simulation",
+  "language": "python",
+  "source_repository": "https://github.com/deepmodeling/dpgen",
+  "source_commit": "02a442c6bd7da9b5b2c9f958d3a103f5d6cd2a27",
+  "source_license": "UNKNOWN",
+  "license_source": "not-detected",
+  "gpl_family": false,
+  "public_payload_sha256": "2385deedff3d0a8ef16754877f091f473675d1dabfd7a965bd63a5d15ad6e987"
+}

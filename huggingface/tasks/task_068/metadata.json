@@ -1,0 +1,12 @@
+{
+  "task_id": "068",
+  "title": "Restore biologically consistent retrieval from a VCF archive",
+  "domain": "genomic-variant-data-semantics",
+  "language": "c",
+  "source_repository": "https://github.com/samtools/htslib",
+  "source_commit": "a4dde3f93c75dff09e9a1ddaf0db2e54c91ac5e3",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "200dced78b8f36c974b68150c631e9247accbaf38a5b7ccea50c46cee503252a"
+}

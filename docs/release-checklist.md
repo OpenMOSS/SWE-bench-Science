@@ -4,8 +4,8 @@
 
 - [ ] 老师确认 HF repo id 和 private visibility
 - [ ] 老师确认 Docker Hub namespace 与 verifier visibility
-- [ ] 确认 119 个 release id，`001` 只含最终 payload 且无 legacy alias/history
-- [ ] 确认 12 个 GPL-family task id
+- [x] 确认 119 个 release id，`001` 只含最终 payload 且无 legacy alias/history
+- [x] 确认 12 个 GPL-family task id
 - [ ] 确认 HF 最小表格列和论文统计维度
 - [ ] 确认 verifier tests 的披露策略
 - [ ] 确认 Pier 最低版本和 task schema version
@@ -14,13 +14,13 @@
 ## B. 单题 002 canary
 
 - [ ] environment image 可在 `linux/amd64` 拉取
-- [ ] environment image 无 harness、私测和答案材料
+- [x] environment image 无 harness、私测和答案材料（本地 canary）
 - [ ] Pier 可按版本安装 Codex/Claude/mini-swe-agent 中至少一种
-- [ ] 网关 base URL、wire protocol 和 key 只由 env/job config 提供
-- [ ] collect hook 导出 binary-safe `model.patch`
-- [ ] verifier image 为 separate environment，无网络
-- [ ] verifier 在干净 baseline 应用 patch 并重新构建
-- [ ] no-op 能失败，known-good 能通过
+- [x] 网关 base URL、wire protocol 和 key 只由 env/job config 提供
+- [x] collect hook 导出 binary-safe `model.patch`
+- [x] verifier image 为 separate environment，无网络（本地 canary）
+- [x] verifier 在干净 baseline 应用 patch 并重新构建
+- [x] no-op 能失败，known-good 能通过
 - [ ] 60/120 秒短测能产出 trajectory、artifact 和 reward
 
 ## C. 全量镜像

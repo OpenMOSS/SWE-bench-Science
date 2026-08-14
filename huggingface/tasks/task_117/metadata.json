@@ -1,0 +1,12 @@
+{
+  "task_id": "117",
+  "title": "Repair inconsistent lateral-frame member observations",
+  "domain": "structural-engineering-disaster-resilience",
+  "language": "python",
+  "source_repository": "https://github.com/JWock82/Pynite",
+  "source_commit": "573e51689fe5fe54f279a7a875e431a35355fe73",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "576548fdac2012b5964ab55f374077468fdce4afddd9599cfbf6301b1f3ea490"
+}

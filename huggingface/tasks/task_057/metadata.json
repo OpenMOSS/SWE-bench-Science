@@ -1,0 +1,12 @@
+{
+  "task_id": "057",
+  "title": "Investigate a periodic trajectory-processing anomaly",
+  "domain": "molecular-dynamics-trajectory-analysis",
+  "language": "python",
+  "source_repository": "https://github.com/mdtraj/mdtraj",
+  "source_commit": "b963d4f01290fef66cca714e4a53f4891096b69a",
+  "source_license": "LGPL-2.1-family",
+  "license_source": "LICENSE",
+  "gpl_family": true,
+  "public_payload_sha256": "0274c5f903a8b34858e57c8d192eb528d3610c6be05065ef78c5ebbd27498b83"
+}

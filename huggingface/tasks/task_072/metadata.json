@@ -1,0 +1,12 @@
+{
+  "task_id": "072",
+  "title": "Repair an incomplete DICOM color image presentation workflow",
+  "domain": "medical-imaging-color-pixel-semantics",
+  "language": "python",
+  "source_repository": "https://github.com/pydicom/pydicom",
+  "source_commit": "b69de21c8610853493bc81d3eac79644554e4bda",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "c918fcb63e5730461495bdda55df23582e82cb3a33361cc7a15f54e2a039d9b0"
+}

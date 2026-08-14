@@ -1,0 +1,12 @@
+{
+  "task_id": "060",
+  "title": "Restore a complete cross-band drift-correction recording",
+  "domain": "high-density-extracellular-electrophysiology",
+  "language": "python",
+  "source_repository": "https://github.com/SpikeInterface/spikeinterface",
+  "source_commit": "3fd3d97164c6e85c2897ce8b13ba6aace81c2811",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "d172cc3adb3c04d7f5cdcac22ceae69e26c0d3d3b429fd08a70725fbf50781c2"
+}

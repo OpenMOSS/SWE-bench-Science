@@ -1,0 +1,12 @@
+{
+  "task_id": "070",
+  "title": "Restore chemically consistent proteoform ion annotations",
+  "domain": "proteomics",
+  "language": "python",
+  "source_repository": "https://github.com/levitsky/pyteomics",
+  "source_commit": "f509b761a5231e9f108780c88c2b3781266e7b90",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "3245e11806859843e00f907068319bf7bda844f2ef96396de5f571f8062aa7db"
+}

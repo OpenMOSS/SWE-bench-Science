@@ -1,0 +1,12 @@
+{
+  "task_id": "029",
+  "title": "Restore annotation equivalence after circular-record orientation normalization",
+  "domain": "genomics-sequence-annotation",
+  "language": "python",
+  "source_repository": "https://github.com/biopython/biopython",
+  "source_commit": "fb0e7f522d714d76eec42f5fd428eb7942a11dde",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "c77a56a3a0f491a8d8323bc49a7f61646abddac45c3db18dc37baa8d3722dc95"
+}

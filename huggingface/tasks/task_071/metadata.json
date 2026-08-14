@@ -1,0 +1,12 @@
+{
+  "task_id": "071",
+  "title": "Repair an orientation-sensitive fiber-scattering reduction",
+  "domain": "grazing-incidence-and-fiber-x-ray-scattering",
+  "language": "python",
+  "source_repository": "https://github.com/silx-kit/pyFAI",
+  "source_commit": "3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
+  "source_license": "UNKNOWN",
+  "license_source": "not-detected",
+  "gpl_family": false,
+  "public_payload_sha256": "a594aff3f42be0d163e6fc22059215b3192da8418a22bb76724ae9799f7f36b0"
+}

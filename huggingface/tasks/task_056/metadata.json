@@ -1,0 +1,12 @@
+{
+  "task_id": "056",
+  "title": "Repair a physically inconsistent orbital history export",
+  "domain": "astrodynamics-and-orbital-mechanics",
+  "language": "python",
+  "source_repository": "https://github.com/poliastro/poliastro",
+  "source_commit": "0583b33091b07229abe2027bccdc596ba3c5033b0",
+  "source_license": "MIT",
+  "license_source": "COPYING",
+  "gpl_family": false,
+  "public_payload_sha256": "0c40a39f1a705c60ae6088941ee2549c10a86b5886dbe1b9b6689b0557d68830"
+}

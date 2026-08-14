@@ -1,0 +1,12 @@
+{
+  "task_id": "033",
+  "title": "Repair inconsistent energies across equivalent periodic representations",
+  "domain": "periodic-electronic-structure",
+  "language": "python",
+  "source_repository": "https://github.com/pyscf/pyscf",
+  "source_commit": "802cd37e9dc6abb52f30d84bb422b6ee15493fc9",
+  "source_license": "UNKNOWN",
+  "license_source": "not-detected",
+  "gpl_family": false,
+  "public_payload_sha256": "59642aa8102cab97c1cedeac4a85d537656eab0ffeeb1250b30f97cf87faeb01"
+}

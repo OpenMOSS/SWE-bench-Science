@@ -1,0 +1,12 @@
+{
+  "task_id": "004",
+  "title": "Repair split-read exon-overlap filtering",
+  "domain": "rna-seq-genomic-interval-semantics",
+  "language": "c++",
+  "source_repository": "https://github.com/arq5x/bedtools2",
+  "source_commit": "0f45761e8ef6ffc093f649b0145788577a62ed33",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "8cc8d65610e3d79b5906805b086ce8163a7f03a586bfcbc62badbe9c62d8c555"
+}

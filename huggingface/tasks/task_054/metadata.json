@@ -1,0 +1,12 @@
+{
+  "task_id": "054",
+  "title": "Repair an inconsistent tandem-mass spectral similarity workflow",
+  "domain": "mass-spectrometry-spectral-similarity",
+  "language": "python",
+  "source_repository": "https://github.com/matchms/matchms",
+  "source_commit": "9f27ba89d8c485e6a2fa2db4756e3fe3aec05151",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "c1a33e4bda2aaf121eb0df8edbfb0c902ceaf32766cdc4a96ff9ef2aba6390a1"
+}

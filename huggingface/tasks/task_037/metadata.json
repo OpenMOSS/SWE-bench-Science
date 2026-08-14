@@ -1,0 +1,12 @@
+{
+  "task_id": "037",
+  "title": "Repair an inconsistent multiframe MR reconstruction",
+  "domain": "medical-imaging",
+  "language": "python",
+  "source_repository": "https://github.com/nipy/nibabel",
+  "source_commit": "5d10c5b8bb09576e24e9d316da1019fb909d7d32",
+  "source_license": "BSD-3-Clause",
+  "license_source": "COPYING",
+  "gpl_family": false,
+  "public_payload_sha256": "fb9bb76d90c34bd297b4e977cb1d92ba7dee1a873395301d008ff466d43481a8"
+}

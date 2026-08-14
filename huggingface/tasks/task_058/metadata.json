@@ -1,0 +1,12 @@
+{
+  "task_id": "058",
+  "title": "Repair a valid OpenMC fixed-source workflow",
+  "domain": "monte-carlo-particle-transport",
+  "language": "python-cpp",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "b630748484220716e8abd0185080b07930f00d71b51c1cef8e052642220fc750"
+}

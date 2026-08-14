@@ -1,0 +1,12 @@
+{
+  "task_id": "116",
+  "title": "Repair mode-dependent structural analysis observations",
+  "domain": "structural-engineering-finite-element-resilience",
+  "language": "python",
+  "source_repository": "https://github.com/JWock82/Pynite",
+  "source_commit": "",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "dbc513a429a96f2f932c6361a67d673a4473c834f540432b3c60d51c91cfcc9d"
+}

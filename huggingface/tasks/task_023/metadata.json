@@ -1,0 +1,12 @@
+{
+  "task_id": "023",
+  "title": "Restore continuous NPT periodic-boundary unwrapping",
+  "domain": "molecular-dynamics-periodic-boundary-analysis",
+  "language": "python",
+  "source_repository": "https://github.com/MDAnalysis/mdanalysis",
+  "source_commit": "2acd594449c02c2a354b07291031d89b50b52186",
+  "source_license": "AGPL-family",
+  "license_source": "LICENSE",
+  "gpl_family": true,
+  "public_payload_sha256": "153dcbad858d54261690a0f653963b8ef0fcbdb44087021be51c37bc07fc0f30"
+}

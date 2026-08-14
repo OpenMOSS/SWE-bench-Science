@@ -1,0 +1,12 @@
+{
+  "task_id": "022",
+  "title": "Repair an inconsistent volume-to-surface projection",
+  "domain": "neuroimaging",
+  "language": "python",
+  "source_repository": "https://github.com/nilearn/nilearn",
+  "source_commit": "fefa4d30c262384ebda0f1123a1691abf466a9f0",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "99582a2c2af2ba02e144bae7f74fc0d2921c2b6f81e05bb9be8dcc8de6f6fe74"
+}

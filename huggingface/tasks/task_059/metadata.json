@@ -1,0 +1,12 @@
+{
+  "task_id": "059",
+  "title": "Restore physical consistency in calibrated cell morphometry",
+  "domain": "microscopy-image-analysis",
+  "language": "python",
+  "source_repository": "https://github.com/scikit-image/scikit-image",
+  "source_commit": "e4e3ab682f0ff13460877624ecf068b9652ae071",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "901ed621baea7c793b6ec8f1278ce8a570ffd0d08cdef7aacda99e36258ae651"
+}

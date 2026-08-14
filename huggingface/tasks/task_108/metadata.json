@@ -1,0 +1,12 @@
+{
+  "task_id": "108",
+  "title": "Restore stable Jacobi theta evaluations across difficult regimes",
+  "domain": "computational-mathematics-special-functions",
+  "language": "python",
+  "source_repository": "https://github.com/mpmath/mpmath",
+  "source_commit": "5e683847c782a4c38ec71b8a88e6b1fbd903548f",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "444409e8fe5c224b3165318b5a161d72cb6c9781565eabad46a5c08fe59685dc"
+}

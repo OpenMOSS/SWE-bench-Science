@@ -1,0 +1,12 @@
+{
+  "task_id": "086",
+  "title": "Repair a silent MatGL fine-tuning incompatibility",
+  "domain": "atomistic-machine-learning-potentials",
+  "language": "python",
+  "source_repository": "https://github.com/materialyzeai/matgl",
+  "source_commit": "02b415ba8bb25244bc5e3ad970491f0fbbea0292",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "dd83643eed59e22c0cf5fa9d29e4de990944b8add3edd5058391df75a585f537"
+}

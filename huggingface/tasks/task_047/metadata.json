@@ -1,0 +1,12 @@
+{
+  "task_id": "047",
+  "title": "Repair an inconsistent broadband microwave composite",
+  "domain": "microwave-network-analysis",
+  "language": "python",
+  "source_repository": "https://github.com/scikit-rf/scikit-rf",
+  "source_commit": "a6dae181dbcf76fc738fc7fbc03d7de0a6c22634",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "fa85f0105f3ab7a955fd95d203fbe54b220508b0f1d04065e60bc9bb1aac505b"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "031",
+  "title": "Restore documented average-reference semantics for mixed-modality recordings",
+  "domain": "neurophysiology-signal-processing",
+  "language": "python",
+  "source_repository": "https://github.com/mne-tools/mne-python",
+  "source_commit": "3b3f3afb0e46a6ac6b97e6ecfbc2414497ea9a3a",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "77349ebbd1e954ff2b5cd76d5fb062c00be0eeb1aa4880537983797490a64c78"
+}

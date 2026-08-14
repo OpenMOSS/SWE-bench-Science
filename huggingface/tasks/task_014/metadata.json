@@ -1,0 +1,12 @@
+{
+  "task_id": "014",
+  "title": "Complete the native multi-equilibrium TERPSICHORE workflow",
+  "domain": "plasma-stability",
+  "language": "python",
+  "source_repository": "https://github.com/PlasmaControl/DESC",
+  "source_commit": "ab1c5a33031a2e64581f5e663ef8e2f6203a5220",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "96a3a4ff010c69e1334bd8f8ca21d9461508c60e7bdcc76d6982e7519a3dd5f7"
+}

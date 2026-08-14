@@ -1,0 +1,12 @@
+{
+  "task_id": "110",
+  "title": "Restore consistent cross-section analysis results",
+  "domain": "high-performance-fibers-and-composites",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "5da464679f638b67d9409b9d680c9a4e5f7bb314f46ae0fc14a693500f22d5bb"
+}

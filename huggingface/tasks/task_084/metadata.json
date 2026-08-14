@@ -1,0 +1,12 @@
+{
+  "task_id": "084",
+  "title": "Repair ABACUS relaxation archive/reload semantics",
+  "domain": "materials-science-scientific-data-semantics",
+  "language": "python",
+  "source_repository": "https://github.com/deepmodeling/dpdata",
+  "source_commit": "80abfc5037876c0e883dcb58cd96521397e3fe36",
+  "source_license": "LGPL-3.0-family",
+  "license_source": "LICENSE",
+  "gpl_family": true,
+  "public_payload_sha256": "0b14a30b4b7ceb203ee7c08d2196b2c8b6a4efa48f85b12627a87a49f5f8b83d"
+}

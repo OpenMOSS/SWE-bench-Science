@@ -1,0 +1,12 @@
+{
+  "task_id": "038",
+  "title": "Repair inconsistent crystal classification across equivalent representations",
+  "domain": "computational-crystallography-and-materials-symmetry",
+  "language": "c",
+  "source_repository": "https://github.com/spglib/spglib",
+  "source_commit": "",
+  "source_license": "BSD-3-Clause",
+  "license_source": "COPYING",
+  "gpl_family": false,
+  "public_payload_sha256": "74958da0acd4cffeaf90164cd4b44220fdd35e8c87441cd262c467a7c377f585"
+}

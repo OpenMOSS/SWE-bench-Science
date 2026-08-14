@@ -1,0 +1,12 @@
+{
+  "task_id": "007",
+  "title": "Repair unstable spectral registration for drifted MRS transients",
+  "domain": "magnetic-resonance-spectroscopy",
+  "language": "python",
+  "source_repository": "https://github.com/openmrslab/suspect",
+  "source_commit": "2254ab2ae6194b41487c933039c5f2ea204e5107",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "212b3be3c819f1587ea5e3bed18c94872ce7325e527a521f51ab37680bbfb004"
+}

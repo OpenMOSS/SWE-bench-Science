@@ -1,0 +1,12 @@
+{
+  "task_id": "119",
+  "title": "Repair a molecular curvature workflow for reaction-path analysis",
+  "domain": "quantum-chemistry-reaction-paths",
+  "language": "python",
+  "source_repository": "https://github.com/MolSSI/QCEngine",
+  "source_commit": "dd5eec6bfefa11ffe0ec81e2c4018003e8e39f2b",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "3871acb535cf909a57445869a10486318e8941c87fba318374acd51d562b1ee8"
+}

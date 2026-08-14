@@ -1,0 +1,12 @@
+{
+  "task_id": "045",
+  "title": "Repair inconsistent finite-volume operations on a connected multi-face grid",
+  "domain": "computational-oceanography-finite-volume-grids",
+  "language": "python",
+  "source_repository": "https://github.com/xgcm/xgcm",
+  "source_commit": "3831b46accbff35f06e4ed3831600d71d5d8da18",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "f7e001f18305b0978520b26cb621a76014f6e5d030992ae0bc4f03f76f4ad82b"
+}

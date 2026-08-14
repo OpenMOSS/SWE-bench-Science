@@ -1,0 +1,12 @@
+{
+  "task_id": "080",
+  "title": "Repair inconsistent geospatial raster remapping",
+  "domain": "geospatial-raster-reprojection",
+  "language": "python",
+  "source_repository": "https://github.com/xarray-contrib/xarray-spatial",
+  "source_commit": "7d252520dbf81b168a2789a6aedfb75d04a21061",
+  "source_license": "MIT",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "2e7d63a1052c7b94245de245deed7e14e20169bb0ad2447c854e4f1d6026fa6e"
+}

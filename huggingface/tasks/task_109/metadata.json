@@ -1,0 +1,12 @@
+{
+  "task_id": "109",
+  "title": "Repair paired wrinkle FE analysis",
+  "domain": "high-performance-fibers-and-composites",
+  "language": "python",
+  "source_repository": "https://github.com/elhajjar1/wrinkleFE",
+  "source_commit": "e81538d9a2ab5031559d0dd74b742ded5465406c",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "8570c909ae4c3289c01426c7f2720de40ea02ac9dd32e04d729be0a44d48ac5e"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "061",
+  "title": "Repair inconsistent celestial image representation in a mosaic",
+  "domain": "astronomical-image-processing",
+  "language": "python-c",
+  "source_repository": "https://github.com/astropy/reproject",
+  "source_commit": "62a0d3f037024d4dcf67857fb83d392f2e099ec0",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "3545f63f2d7b0f876e372badde8358dd51214f78bf0aa2e1a226547b0c480ce4"
+}

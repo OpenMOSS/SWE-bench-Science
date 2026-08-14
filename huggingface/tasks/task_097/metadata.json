@@ -1,0 +1,12 @@
+{
+  "task_id": "097",
+  "title": "Repair spin-model consistency in DeePMD-kit",
+  "domain": "magnetism-and-spin-models",
+  "language": "python",
+  "source_repository": "https://github.com/deepmodeling/deepmd-kit",
+  "source_commit": "6c3b985cbc6e2dec51976a20ae51214186c693b5",
+  "source_license": "UNKNOWN",
+  "license_source": "not-detected",
+  "gpl_family": false,
+  "public_payload_sha256": "0be2c62ea59a56d67afb0a87a5e2d6699169c73794c50b096a0d77f1f9474945"
+}

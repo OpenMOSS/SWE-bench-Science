@@ -1,0 +1,12 @@
+{
+  "task_id": "103",
+  "title": "Repair symmetric composite laminate ABD calculations",
+  "domain": "high-performance-fibers-and-composites",
+  "language": "python",
+  "source_repository": "https://github.com/SteveDoyle2/pyNastran",
+  "source_commit": "bdff2bb616847a058960c56328b68e36ab3764e3",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.md",
+  "gpl_family": false,
+  "public_payload_sha256": "637633ba5229cbf0bf969d215196618fbee0a970d14266a1c9942dbef3eabc86"
+}

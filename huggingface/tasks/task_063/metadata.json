@@ -1,0 +1,12 @@
+{
+  "task_id": "063",
+  "title": "Repair inconsistent population-history estimates after archive curation",
+  "domain": "population-genetics-tree-sequence-statistics",
+  "language": "c-python",
+  "source_repository": "https://github.com/tskit-dev/tskit",
+  "source_commit": "",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "05453c091458a8e2993e55e7114290a7e6aace041b41c59d8adae6ad38a2b926"
+}

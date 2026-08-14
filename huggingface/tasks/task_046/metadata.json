@@ -1,0 +1,12 @@
+{
+  "task_id": "046",
+  "title": "Repair an inconsistent X-ray spectral-timing analysis",
+  "domain": "astrophysical-xray-spectral-timing",
+  "language": "python",
+  "source_repository": "https://github.com/StingraySoftware/stingray",
+  "source_commit": "79b8f9bb9d122bd0176bb37f48f0fd4926eb9afb",
+  "source_license": "MIT",
+  "license_source": "LICENSE.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "f358c234dfb9d428b07da73956df43b4e327aa28922de1f7380efd56563d9435"
+}

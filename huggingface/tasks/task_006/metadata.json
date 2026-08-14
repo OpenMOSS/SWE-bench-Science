@@ -1,0 +1,12 @@
+{
+  "task_id": "006",
+  "title": "Repair inconsistent genomic interval enrichment counts",
+  "domain": "genomics-interval-statistics",
+  "language": "c++",
+  "source_repository": "https://github.com/arq5x/bedtools2",
+  "source_commit": "ac6b252a3a6df2498757d76190b2b164cc591453",
+  "source_license": "MIT",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "13d72d9ddbb69f144a85b474cae6106efe5bb7198ab09e144771589a4639ebc3"
+}

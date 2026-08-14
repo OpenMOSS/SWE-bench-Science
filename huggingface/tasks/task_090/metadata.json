@@ -1,0 +1,12 @@
+{
+  "task_id": "090",
+  "title": "Restore multidimensional NMR acquisition grids",
+  "domain": "nuclear-magnetic-resonance-spectroscopy",
+  "language": "python",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "dd119886283401127edc350f562371a2bad9d92d79cfe0488afeaa26a8dde9b4"
+}

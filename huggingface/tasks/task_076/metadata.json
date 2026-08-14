@@ -1,0 +1,12 @@
+{
+  "task_id": "076",
+  "title": "Repair a batched parametric tracking workflow",
+  "domain": "convex-optimization-parametric-workflows",
+  "language": "python",
+  "source_repository": "https://github.com/cvxpy/cvxpy",
+  "source_commit": "5f57b6408864caab207c28f773a14c6261689abe",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "c2303ccea73430e7cca4a82672bdf8c5ea7465237e18f465358267c979f4cb4d"
+}

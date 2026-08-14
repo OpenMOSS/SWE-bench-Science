@@ -1,0 +1,12 @@
+{
+  "task_id": "104",
+  "title": "Repair inconsistent finite-volume advection edge states",
+  "domain": "energy-materials-and-finite-volume-transport",
+  "language": "python",
+  "source_repository": "https://github.com/pybamm-team/PyBaMM",
+  "source_commit": "4cf09f36bb4afb42c661e8765e14b4527581eff7",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "b9b443a00cc7b5c3a4e14a66c2c1462517649ad3dda55c2db9c549ecf8a07e67"
+}

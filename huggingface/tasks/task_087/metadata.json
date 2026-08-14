@@ -1,0 +1,12 @@
+{
+  "task_id": "087",
+  "title": "Repair a silent diffusion-MRI denoising inconsistency",
+  "domain": "diffusion-mri-denoising",
+  "language": "python",
+  "source_repository": "https://github.com/dipy/dipy",
+  "source_commit": "ee6016ab81dd649ab40439d75212f35669302810",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "442792643e44ca3c36c70b3d63c80708e9f58b5972e5bdf43e90834720834814"
+}

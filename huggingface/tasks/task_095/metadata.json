@@ -1,0 +1,12 @@
+{
+  "task_id": "095",
+  "title": "Repair a repeated porous-electrode transport workflow",
+  "domain": "new-energy-materials",
+  "language": "python",
+  "source_repository": "https://github.com/PMEAL/OpenPNM",
+  "source_commit": "d8efaa211ea6721cc4a718890f11fb60b8b43326",
+  "source_license": "UNKNOWN",
+  "license_source": "not-detected",
+  "gpl_family": false,
+  "public_payload_sha256": "9682714aad6233c65f16201b2c737da9e0e133cf60cfc3203b375a3dd3b9487c"
+}

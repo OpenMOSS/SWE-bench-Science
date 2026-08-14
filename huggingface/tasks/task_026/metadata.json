@@ -1,0 +1,12 @@
+{
+  "task_id": "026",
+  "title": "Restore isentropic interpolation for terrain-following model data",
+  "domain": "atmospheric-science-isentropic-interpolation",
+  "language": "python",
+  "source_repository": "https://github.com/Unidata/MetPy",
+  "source_commit": "34d14b293c9e75dfff5422c0461d48731916d773",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE",
+  "gpl_family": false,
+  "public_payload_sha256": "c348e11ed68dcfeb5261e14bff46bd8dde6ee4658836b1824c7207d1a581e57d"
+}

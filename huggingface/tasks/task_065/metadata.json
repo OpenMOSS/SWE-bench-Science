@@ -1,0 +1,12 @@
+{
+  "task_id": "065",
+  "title": "Repair inconsistent particle-field visualization results",
+  "domain": "astrophysical hydrodynamics and particle-based field visualization",
+  "language": "python",
+  "source_repository": "https://github.com/yt-project/yt",
+  "source_commit": "c86781b8cbdeea8002c7846d37dc1250045146e6",
+  "source_license": "BSD-3-Clause",
+  "license_source": "COPYING.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "05e8764a37e3a9fe27c6802af7806b2b394b54c801c88ee9f929e90102959500"
+}

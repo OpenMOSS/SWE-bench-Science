@@ -1,0 +1,12 @@
+{
+  "task_id": "050",
+  "title": "Repair an inconsistent tensor-network state calculation",
+  "domain": "quantum-information-many-body-tensor-networks",
+  "language": "python",
+  "source_repository": "https://github.com/jcmgray/quimb",
+  "source_commit": "",
+  "source_license": "Apache-2.0",
+  "license_source": "LICENSE.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "860d67a6ca8a5631f9b564aaf11e06bc1bec2dc388f996ce265d1fd31cd00771"
+}

@@ -1,6 +1,6 @@
 # Hugging Face 数据与字段契约
 
-状态：`design-review`
+状态：`canary`
 
 本契约面向 OpenMOSS 的 private Hugging Face dataset。Dataset Viewer 的表格是
 老师要求的主要浏览入口；Pier task bundle 是下载后的运行入口。二者由相同的
@@ -11,7 +11,7 @@ release manifest 生成，不能人工维护两份不一致的数据。
 建议只有一个 canonical split：
 
 ```text
-data/tasks.parquet    119 rows, one row per release task
+huggingface/data/tasks.csv    119 rows, one row per release task
 ```
 
 `default`（107 题）和 `with_gpl`（119 题）是下载 selection，不复制成两份数据
@@ -24,10 +24,10 @@ selections/all-119.json
 
 运行工具默认读取前者；`--allow-GPL` 才允许读取后者。
 
-由于 Pier 当前不能直接下载 HF registry dataset，HF snapshot 同时携带一个最小
-materializer。用户先从 private HF repo 下载该工具和 manifest，再由它按 selection
-下载/展开 task files、拉取对应镜像并生成本地 `tasks-selected/`。Pier 只读取这个
-本地目录。
+由于 Pier 当前不能直接下载 HF registry dataset，HF snapshot 携带一个最小
+materializer。用户先下载表格、selection 和 thin task bundle，再由它生成本地
+`tasks-selected/`；其中 environment/verifier Dockerfile 只是 Pier 的格式入口，
+源码和私测仍由已发布镜像提供。
 
 ## 2. Dataset Viewer 最小列
 

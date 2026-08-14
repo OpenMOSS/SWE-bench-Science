@@ -1,0 +1,12 @@
+{
+  "task_id": "003",
+  "title": "Repair extxyz stress and virial tensor-label preservation",
+  "domain": "atomistic-machine-learning-data",
+  "language": "python",
+  "source_repository": "https://github.com/deepmodeling/dpdata",
+  "source_commit": "4d8048b51ee0cc00caa4854844c28b7f892fd908",
+  "source_license": "LGPL-3.0-family",
+  "license_source": "LICENSE",
+  "gpl_family": true,
+  "public_payload_sha256": "1f00289f07104c48c4894348dc606860079c7e5647e213570bb613d52603927e"
+}

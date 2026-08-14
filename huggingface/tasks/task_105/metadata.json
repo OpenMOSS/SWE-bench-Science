@@ -1,0 +1,12 @@
+{
+  "task_id": "105",
+  "title": "Restore a stereo-preserving tautomer workflow",
+  "domain": "drug-discovery-cheminformatics",
+  "language": "python-cpp",
+  "source_repository": "",
+  "source_commit": "",
+  "source_license": "BSD-3-Clause",
+  "license_source": "license.txt",
+  "gpl_family": false,
+  "public_payload_sha256": "d496a6d39aae48fa19d84c6a4abeb31ffdcb47c89055e7f92e5cd9cf6309608c"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "053",
+  "title": "Repair a representation-dependent physical surface Dice workflow",
+  "domain": "medical-image-segmentation-geometry",
+  "language": "python",
+  "source_repository": "https://github.com/Project-MONAI/MONAI",
+  "source_commit": "18daff1d8b26002b02de526cc19b92a9a4907f89",
+  "source_license": "UNKNOWN",
+  "license_source": "not-detected",
+  "gpl_family": false,
+  "public_payload_sha256": "1919cce5250d098fee5cb4ebead74a679efde0904619518a436697b3dec04030"
+}

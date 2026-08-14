@@ -1,0 +1,12 @@
+{
+  "task_id": "094",
+  "title": "Repair magnetic-space-group operations across archived settings",
+  "domain": "condensed-matter-magnetism-and-magnetic-symmetry",
+  "language": "python",
+  "source_repository": "https://github.com/materialsproject/pymatgen",
+  "source_commit": "",
+  "source_license": "MIT",
+  "license_source": "LICENSE.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "83caaa6fe0d259a727975a11f4606bee8784fe286c6fec89eb78769b09ba9b44"
+}

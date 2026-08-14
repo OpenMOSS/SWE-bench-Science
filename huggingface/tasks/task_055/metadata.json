@@ -1,0 +1,12 @@
+{
+  "task_id": "055",
+  "title": "Restore a scientific template-comparison workflow",
+  "domain": "astronomical-spectroscopy",
+  "language": "python",
+  "source_repository": "https://github.com/astropy/specutils",
+  "source_commit": "0613ba1ba86fd7ae79e9d89c8ffd24004a891aee",
+  "source_license": "BSD-3-Clause",
+  "license_source": "LICENSE.rst",
+  "gpl_family": false,
+  "public_payload_sha256": "900f504762e2ea9497cc7f4600e112e0a84757ba37e1c3403073fceb8c2ab4ad"
+}
