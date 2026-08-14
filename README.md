@@ -1,15 +1,17 @@
 # SWE-bench Science Release
 
+根目录 [MIT license](LICENSE) 只覆盖本项目自有的发布工具和文档。第三方题目材料
+继续适用其 upstream license；请先阅读 [NOTICE.md](NOTICE.md) 和逐题元数据。
+
 这是 **SWE-bench Science** 的独立发布整理仓库。它从旧 authoring 仓库读取公开
 题目和私测，生成不带旧 Git 历史的发布 task bundle、Hugging Face 表格和按题目
 分离的 environment/verifier 构建上下文。当前已导入 119 道题，002 有一个本地
 `linux/amd64` canary 镜像对；其余镜像字段保持空白，等待 Docker Hub 命名空间和
 逐题构建验收。
 
-本仓库不绑定 GitHub remote。后续即使不创建 GitHub 仓库，也可以作为本地
-发布工作区生成 Hugging Face dataset 和 Docker Hub 镜像清单；如将来在
-OpenMOSS 下建立 GitHub 仓库，它只承担工具版本管理和审阅，不成为 HF 数据集
-运行时依赖。
+OpenMOSS GitHub 仓库只承担工具版本管理、构建审阅和发布控制面，不成为 HF 数据集
+运行时下载源码的依赖。完整题目源码和私有测试仍只用于本地 staging 与 Docker
+image 构建，不进入本仓库。
 
 ## 仓库边界
 
