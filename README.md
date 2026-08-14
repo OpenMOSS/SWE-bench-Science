@@ -111,7 +111,8 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 .venv/bin/pier run \
 
 对于 Codex，`run_batch.py` 会从所选 env profile 自动读取 `MODEL`、
 `CODEX_BASE_URL`、`CODEX_WIRE_API=responses|chat`、`CODEX_VERSION` 和
-`CODEX_REASONING_EFFORT`，生成 Pier 原生 `config_toml`。`OPENAI_API_KEY` 只由 Pier
+`CODEX_REASONING_EFFORT`，生成 Pier 原生 `config_toml`，并默认使用一个仅修正
+npm optional platform package 的运行时 Codex adapter。`OPENAI_API_KEY` 只由 Pier
 加载到 agent 进程；切换中转站就是改用另一个 `--env-file`。其他 agent 仍可用重复
 的 `--model`、`--agent-env` 和 `--agent-kwarg` 原样传给 Pier。
 短测可以用 `--agent-timeout-multiplier 0.0223` 将本任务默认约 5400 秒 agent

@@ -117,8 +117,10 @@ python3 tools/run_batch.py --path tasks-selected-small \
 The runner translates these fields into Pier's native Codex `config_toml` and
 derives the network allowlist from the endpoint. Switching relay, protocol, or
 credential means selecting another env file; task files and images do not
-change. Advanced users can disable this translation with `--no-auto-provider`
-and pass repeated `--agent-kwarg` / `--agent-env` values directly to Pier.
+change. It also uses a runtime-only Codex adapter to install npm's optional
+linux-x64 package correctly; no agent binary is placed in task images. Advanced
+users can disable these defaults with `--no-auto-provider` and
+`--no-auto-agent-adapter`, then pass repeated `--agent-kwarg` / `--agent-env` values directly to Pier.
 For a short smoke, add `--agent-timeout-multiplier 0.0223` (approximately 120
 seconds against the default task timeout); verifier timeout remains separate.
 

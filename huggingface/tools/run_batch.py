@@ -116,11 +116,17 @@ def main() -> int:
     parser.add_argument("--job-name")
     parser.add_argument("--platform", default="linux/amd64")
     parser.add_argument("--pier-bin", default="pier", help="Pier executable or absolute path")
+    parser.add_argument("--agent-import-path")
     parser.add_argument("--skip-pull", action="store_true", help="Use images already present locally")
     parser.add_argument(
         "--no-auto-provider",
         action="store_true",
         help="Do not translate CODEX_* values from --env-file into native Pier kwargs",
+    )
+    parser.add_argument(
+        "--no-auto-agent-adapter",
+        action="store_true",
+        help="Use Pier's built-in agent class instead of the runtime-only Codex adapter",
     )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
@@ -138,6 +144,10 @@ def main() -> int:
         pull_images(dirs, platform=args.platform)
     models = list(args.model)
     agent_kwargs = list(args.agent_kwarg)
+    agent_import_path = args.agent_import_path
+    if args.agent == "codex" and not args.no_auto_agent_adapter and not agent_import_path:
+        package = Path(__file__).resolve().parent.name
+        agent_import_path = f"{package}.pier_adapters:ScienceBenchCodex"
     provider_metadata: dict[str, object] | None = None
     if args.agent == "codex" and not args.no_auto_provider:
         profile_env = dict(os.environ)
@@ -171,6 +181,8 @@ def main() -> int:
         command.extend(["--verifier-timeout-multiplier", str(args.verifier_timeout_multiplier)])
     if args.env_file:
         command.extend(["--env-file", str(args.env_file)])
+    if agent_import_path:
+        command.extend(["--agent-import-path", agent_import_path])
     for model in models:
         command.extend(["--model", model])
     for value in args.agent_env:
@@ -189,6 +201,7 @@ def main() -> int:
         "image_refs": image_refs,
         "platform": args.platform,
         "pier_command": redacted_command(command),
+        "agent_import_path": agent_import_path,
         "provider": provider_metadata,
     }
     metadata_path = root / "batch-run.json"
@@ -200,6 +213,11 @@ def main() -> int:
     # Pier may build an ephemeral environment+agent image. Keep that derived
     # build on the same architecture as the prebuilt task images.
     pier_environment["DOCKER_DEFAULT_PLATFORM"] = args.platform
+    tool_root = str(Path(__file__).resolve().parent.parent)
+    existing_pythonpath = pier_environment.get("PYTHONPATH", "")
+    pier_environment["PYTHONPATH"] = os.pathsep.join(
+        value for value in (tool_root, existing_pythonpath) if value
+    )
     return subprocess.run(command, check=False, env=pier_environment).returncode
 
 
