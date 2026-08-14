@@ -1,0 +1,24 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Generated release output and local source imports.
+build/
+dist/
+staging/
+imports/
+workspaces/
+jobs/
+trials/
+
+# Author-only material must never enter the release repository.
+private/
+secrets/
+**/solution/
+**/author_notes/
+**/reference_patches/
+*.patch
