@@ -158,6 +158,11 @@ def main() -> int:
             models.append(profile.model)
         if not any(value.startswith(("config_toml=", "config_toml_file=")) for value in agent_kwargs):
             agent_kwargs.append("config_toml=" + render_codex_config(profile))
+        # Pier normally strips a provider prefix before invoking Codex. Gateways
+        # may use that prefix for routing, so preserve the exact model identifier
+        # unless the caller supplied an explicit command override.
+        if not any(value.startswith("command_model_name=") for value in agent_kwargs):
+            agent_kwargs.append("command_model_name=" + profile.model)
         if profile.version and not any(value.startswith("version=") for value in agent_kwargs):
             agent_kwargs.append("version=" + profile.version)
         if profile.reasoning_effort and not any(
