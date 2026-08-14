@@ -121,6 +121,10 @@ change. It also uses a runtime-only Codex adapter to install npm's optional
 linux-x64 package correctly; no agent binary is placed in task images. Advanced
 users can disable these defaults with `--no-auto-provider` and
 `--no-auto-agent-adapter`, then pass repeated `--agent-kwarg` / `--agent-env` values directly to Pier.
+Provider-qualified model names are preserved through Codex's
+`command_model_name`; this matters for gateways that route `provider/model-name`
+differently from the unqualified `model-name`. An explicit
+`--agent-kwarg command_model_name=...` still takes precedence.
 For a short smoke, add `--agent-timeout-multiplier 0.0223` (approximately 120
 seconds against the default task timeout); verifier timeout remains separate.
 

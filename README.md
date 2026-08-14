@@ -115,6 +115,9 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64 .venv/bin/pier run \
 npm optional platform package 的运行时 Codex adapter。`OPENAI_API_KEY` 只由 Pier
 加载到 agent 进程；切换中转站就是改用另一个 `--env-file`。其他 agent 仍可用重复
 的 `--model`、`--agent-env` 和 `--agent-kwarg` 原样传给 Pier。
+如果 `MODEL` 含有 provider 前缀（例如 `provider/model-name`），runner 会同时设置
+Codex 的 `command_model_name`，避免 Pier 默认截断前缀导致网关路由失败；显式传入
+同名 `--agent-kwarg` 时以用户值为准。
 短测可以用 `--agent-timeout-multiplier 0.0223` 将本任务默认约 5400 秒 agent
 上限压到约 120 秒；这只限制 agent 阶段，verifier 仍按自己的 timeout 运行。
 
