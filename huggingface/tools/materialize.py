@@ -10,7 +10,6 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GPL_IDS = {"003", "021", "023", "057", "066", "074", "075", "083", "084", "085", "100", "118"}
 
 
 def normalize_task_id(value: str) -> str:
@@ -50,13 +49,22 @@ def load_rows() -> list[dict[str, object]]:
     return [json.loads(line) for line in (ROOT / "manifests" / "tasks.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
-def task_source(task_path: str, *, root: Path = ROOT) -> Path:
+def task_source(
+    task_path: str,
+    *,
+    root: Path = ROOT,
+    include_build_context: bool = False,
+) -> Path:
     source = root / task_path
-    if source.is_dir():
-        return source
+    if include_build_context:
+        if source.is_dir():
+            return source
+        raise FileNotFoundError(f"full build context is absent: {task_path}")
     snapshot_source = root / "huggingface" / task_path
     if snapshot_source.is_dir():
         return snapshot_source
+    if source.is_dir():
+        return source
     raise FileNotFoundError(f"task bundle is absent from local and HF snapshots: {task_path}")
 
 
@@ -68,8 +76,10 @@ def main() -> int:
         help="Task id selector; repeat or use commas/ranges, e.g. 002,005-007",
     )
     parser.add_argument(
-        "--allow-GPL", "--allow-gpl", action="store_true", dest="allow_gpl",
-        help="Allow the 12 GPL-family tasks in the materialized selection",
+        "--allow-restricted-licenses",
+        action="store_true",
+        dest="allow_restricted_licenses",
+        help="Allow GPL-family and non-commercial/restricted-license tasks in the materialized selection",
     )
     parser.add_argument(
         "--include-build-context",
@@ -89,19 +99,31 @@ def main() -> int:
         row for row in available_rows
         if selected is None or str(row["release_id"]) in selected
     ]
-    gated = [str(row["release_id"]) for row in matched if bool(row.get("gpl_family"))]
-    if gated and not args.allow_gpl:
+    restricted_gated = [
+        str(row["release_id"])
+        for row in matched
+        if str(row.get("license_gate", "none")) != "none"
+    ]
+    if selected is not None and restricted_gated and not args.allow_restricted_licenses:
         raise ValueError(
-            "GPL-family task selection requires --allow-GPL: " + ", ".join(gated)
+            "restricted-license task selection requires --allow-restricted-licenses: "
+            + ", ".join(restricted_gated)
         )
-    rows = [row for row in matched if args.allow_gpl or not bool(row.get("gpl_family"))]
+    rows = [
+        row for row in matched
+        if str(row.get("license_gate", "none")) == "none"
+        or args.allow_restricted_licenses
+    ]
     if args.output.exists():
         if not args.force:
             raise FileExistsError(f"output exists; use --force: {args.output}")
         shutil.rmtree(args.output)
     args.output.mkdir(parents=True)
     for row in rows:
-        source = task_source(str(row["task_path"]))
+        source = task_source(
+            str(row["task_path"]),
+            include_build_context=args.include_build_context,
+        )
         destination = args.output / source.name
         if args.include_build_context:
             if not (source / "environment" / "repo").is_dir():
@@ -126,7 +148,7 @@ def main() -> int:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(path, target)
     selection = {
-        "allow_gpl": args.allow_gpl,
+        "allow_restricted_licenses": args.allow_restricted_licenses,
         "task_ids": [str(row["release_id"]) for row in rows],
     }
     (args.output / "selection.json").write_text(json.dumps(selection, indent=2) + "\n", encoding="utf-8")

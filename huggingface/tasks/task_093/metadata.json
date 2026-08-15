@@ -5,8 +5,10 @@
   "language": "python",
   "source_repository": "https://github.com/Project-MONAI/MONAI",
   "source_commit": "5a644e4edcc37e5c963e52fda6fab4c85b3ff02e",
-  "source_license": "UNKNOWN",
-  "license_source": "not-detected",
+  "source_license": "Apache-2.0",
+  "license_source": "github-api:LICENSE@5a644e4edcc37e5c963e52fda6fab4c85b3ff02e",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "0756b99aa4bc899129a72159146d991cddcd1544c136b1d3e76eb47f583c1cf3"
 }

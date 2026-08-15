@@ -3,10 +3,12 @@
   "title": "Repair inconsistent satellite parallax geolocation",
   "domain": "remote-sensing-and-geostationary-geolocation",
   "language": "python",
-  "source_repository": "",
-  "source_commit": "",
-  "source_license": "UNKNOWN",
-  "license_source": "not-detected",
-  "gpl_family": false,
+  "source_repository": "https://github.com/pytroll/satpy",
+  "source_commit": "0ef189634030bda38bd069de30b60f8769995050",
+  "source_license": "GPL-3.0-or-later",
+  "license_source": "source/satpy/utils.py",
+  "gpl_family": true,
+  "restricted_license": true,
+  "license_gate": "gpl-family",
   "public_payload_sha256": "551331a7c8d9ec732af39574c53fd2f2139520ba8eb5a322aed7d412101fe61d"
 }

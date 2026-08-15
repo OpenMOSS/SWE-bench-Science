@@ -69,9 +69,6 @@ PYTHON_STDLIB_DEPENDENCIES = {
 PYTHON_STDLIB_DEPENDENCIES_NORMALIZED = {
     name.replace("_", "-") for name in PYTHON_STDLIB_DEPENDENCIES
 }
-GPL_IDS = {
-    "003", "021", "023", "057", "066", "074", "075", "083", "084", "085", "100", "118"
-}
 GENERATED_NAMES = {".git", "__pycache__", ".pytest_cache", "outputs", "build", "dist"}
 FORBIDDEN_NAMES = {"solution", "oracle", "reference_patches", "author_notes", "provenance.json"}
 
@@ -150,6 +147,8 @@ def detect_license(source: Path) -> tuple[str, str]:
         if "VERSION 2" in normalized:
             return "GPL-2.0-family", candidates[0].name
         return "GPL-family", candidates[0].name
+    if "ACADEMIC NON-COMMERCIAL SOFTWARE LICENSE AGREEMENT" in normalized:
+        return "Academic-NonCommercial", candidates[0].name
     if (
         "REDISTRIBUTION AND USE IN SOURCE AND BINARY FORMS" in normalized
         and "NEITHER THE NAME" in normalized
@@ -167,6 +166,22 @@ def detect_license(source: Path) -> tuple[str, str]:
     if "APACHE LICENSE" in normalized and "VERSION 2.0" in normalized:
         return "Apache-2.0", candidates[0].name
     return "UNKNOWN", candidates[0].name
+
+
+def is_gpl_family_license(value: str) -> bool:
+    return "GPL" in value.upper()
+
+
+def is_restricted_license(value: str) -> bool:
+    return is_gpl_family_license(value) or value == "Academic-NonCommercial"
+
+
+def license_gate(value: str) -> str:
+    if is_gpl_family_license(value):
+        return "gpl-family"
+    if value == "Academic-NonCommercial":
+        return "noncommercial"
+    return "none"
 
 
 def render_template(
@@ -421,6 +436,9 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         encoding="utf-8",
     )
     public_hash = tree_sha256(environment_dir / "public")
+    gpl_family = is_gpl_family_license(source_license)
+    restricted_license = is_restricted_license(source_license)
+    gate = license_gate(source_license)
     release_metadata = {
         "task_id": task_id,
         "title": title,
@@ -430,7 +448,9 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "source_commit": base_commit,
         "source_license": source_license,
         "license_source": license_source,
-        "gpl_family": task_id in GPL_IDS,
+        "gpl_family": gpl_family,
+        "restricted_license": restricted_license,
+        "license_gate": gate,
         "public_payload_sha256": public_hash,
     }
     (task_dir / "metadata.json").write_text(
@@ -447,7 +467,9 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "base_commit": base_commit,
         "source_license": source_license,
         "license_source": license_source,
-        "gpl_family": task_id in GPL_IDS,
+        "gpl_family": gpl_family,
+        "restricted_license": restricted_license,
+        "license_gate": gate,
         "task_path": f"tasks/{source_name}",
         "environment_image": "",
         "verifier_image": "",

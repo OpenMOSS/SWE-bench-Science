@@ -8,5 +8,7 @@
   "source_license": "AGPL-family",
   "license_source": "COPYING",
   "gpl_family": true,
+  "restricted_license": true,
+  "license_gate": "gpl-family",
   "public_payload_sha256": "2db37177603a05c62b276b94c738f8592f40853359df72a3f25205c1d5bb5748"
 }

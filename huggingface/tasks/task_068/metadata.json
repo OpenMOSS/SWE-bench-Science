@@ -8,5 +8,7 @@
   "source_license": "BSD-3-Clause",
   "license_source": "LICENSE",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "200dced78b8f36c974b68150c631e9247accbaf38a5b7ccea50c46cee503252a"
 }

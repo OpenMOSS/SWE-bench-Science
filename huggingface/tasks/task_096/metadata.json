@@ -5,8 +5,10 @@
   "language": "python",
   "source_repository": "https://github.com/CLIMADA-project/climada_python",
   "source_commit": "104dfdb64ed00fce6c49a5d67be371f4fca016dd",
-  "source_license": "UNKNOWN",
-  "license_source": "not-detected",
-  "gpl_family": false,
+  "source_license": "GPL-3.0",
+  "license_source": "github-api:LICENSE@104dfdb64ed00fce6c49a5d67be371f4fca016dd",
+  "gpl_family": true,
+  "restricted_license": true,
+  "license_gate": "gpl-family",
   "public_payload_sha256": "5da44df229cac52680b35b0d4806ec17dd1e8a8851512c04cbcdf3159e88c977"
 }

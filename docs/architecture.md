@@ -16,7 +16,7 @@ SWE-bench Science 的发布需要同时满足：
    Docker Hub 发布 `119 x n` 份题目镜像；
 5. verifier 能在干净源码上应用 agent patch，并重新编译 C/C++ 等任务；
 6. 发布物不包含标准答案 patch；
-7. 107 道默认题和 12 道 GPL-family 题有明确但非强制的下载入口；
+7. 100 道默认题和 19 道 restricted-license 题有明确但非强制的下载入口；
 8. Hugging Face + Docker Hub 可以独立于 GitHub 工作。
 
 ## 2. 官方 benchmark 核对结论
@@ -35,9 +35,9 @@ held-out tests 和 grader。这证明 task environment 与 verifier 是两个按
 是本设计的主要参考。
 
 DeepSWE 的公开 GitHub authoring 仓库包含 `solution.patch`，但其 README 明确说明
-该 patch 不参与评分。老师对本数据集提出了更严格的发布要求，因此 SWE-bench
-Science 的 HF/release 仓库**不复制这一部分**：标准答案只可留在独立、受控的
-作者材料区，不能进入本仓库、HF dataset 或镜像。
+该 patch 不参与评分。SWE-bench Science 采用更严格的发布边界：HF/release 仓库
+**不复制这一部分**，标准答案只可留在独立、受控的作者材料区，不能进入本仓库、
+HF dataset 或镜像。
 
 ### 2.2 Pier
 
@@ -199,9 +199,9 @@ COPY private_tests/ /tests/private_tests/
 - 不执行或读取标准答案 patch。
 
 `[verifier.environment].docker_image` 可以直接记录预构建 verifier 镜像；同时可在
-私有 authoring 输入中保留 tests Dockerfile 以支持可复现重建。HF 是否公开 tests
-Verifier tests remain inside the verifier image and are never mounted into the
-agent environment; agent isolation and the absence of reference answers are
+私有 authoring 输入中保留 tests Dockerfile 以支持可复现重建。Verifier tests
+remain inside the verifier image and are never mounted into the agent
+environment; agent isolation and the absence of reference answers are
 unconditional release requirements.
 
 ## 7. 编译型题目
@@ -284,7 +284,7 @@ bundle 中记录的 digest。
 
 ### Hugging Face
 
-OpenMOSS 下的 private dataset 是发布索引和可下载任务包，display title 为
+OpenMOSS 下的 Hugging Face dataset 是发布索引和可下载任务包，display title 为
 `SWE-bench Science`，repo id 为 `OpenMOSS-Team/SWE-bench-Science`。
 
 HF 包含：数据表、统计、dataset card、task.toml、instruction，以及经批准的
@@ -323,21 +323,26 @@ Pier 当前不直接解析或下载 HF registry dataset，因此需要一个显�
 - 旧编号转换只允许存在于一次性、本地且不提交的导入配置中；
 - 新仓库从空 Git 历史开始，不复制旧仓库 commits。
 
-## 11. GPL-family 入口
+## 11. Restricted-license 入口
 
-GPL-family 不是 DeepSWE/Pier 字段，而是本项目的分发选择策略：
+`restricted_license` 和 `--allow-restricted-licenses` 不是 DeepSWE/Pier 字段，而是
+本项目的分发选择策略：
 
-- 默认下载/构建清单包含 107 道非 GPL-family 题；
-- `--allow-GPL` 明确选择全部 119 道；
-- 12 道 gated release id 为 `003, 021, 023, 057, 066, 074, 075, 083,
-  084, 085, 100, 118`；
-- Pier 本身只运行已经下载到本地的目录，不负责解释 GPL flag；
+- 默认下载/构建清单包含 100 道 unrestricted-license 题；
+- `--allow-restricted-licenses` 明确加入 18 道 GPL/LGPL/AGPL-family 题和
+  019 academic non-commercial 题，共 119 道；
+- 19 道 gated release id 为 `003, 019, 020, 021, 023, 032, 057, 066,
+  074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`；
+- 其中 `019` 为 academic non-commercial license，其余 18 道为
+  GPL/LGPL/AGPL-family；
+- Pier 本身只运行已经下载到本地的目录，不负责解释 license gate；
 - 该入口不替代上游 license、notice、source offer 等实际合规义务；
 - 按此前约定，不做 Docker registry hostname 的强制检查。
 
-`--allow-GPL` 的具体入口属于 HF materializer：默认只 materialize/pull
-`default-107.json` 中的任务和镜像，显式传入该参数后才读取 `all-119.json`。
-直接对已经 materialize 的目录运行 Pier 不再重复做 license gate。
+`--allow-restricted-licenses` 的具体入口属于 HF materializer：默认只
+materialize/pull `default-100.json` 中的任务和镜像；显式传入后可 materialize
+`all-119.json` 对应集合。直接对已经 materialize 的目录运行 Pier 不再重复做
+license gate。
 
 ## 12. 批量评测
 
@@ -361,7 +366,8 @@ replicate id 和结果路径。失败重试只重跑明确 task/trial，不重�
 1. **任务导入与审计**：从 authoring 输入生成 001..119 的 canonical manifest。
 2. **镜像构建**：按题目构建 environment/verifier，固定 `linux/amd64` digest 并
    在每批完成后清理本地缓存。
-3. **HF 发布**：生成 119 行、统计表、GPL 两个 selection manifest 和薄 task bundle。
+3. **HF 发布**：生成 119 行、统计表、两个 license selection manifest 和薄 task
+   bundle。
 4. **新用户验收**：从全新目录下载 HF、配置外置 provider profile、运行 002 和
    固定批量清单。
 5. **重复评测**：保存 selection hash、Pier/agent/model/provider 元数据、每题
@@ -369,9 +375,9 @@ replicate id 和结果路径。失败重试只重跑明确 task/trial，不重�
 
 任何阶段失败都不得用空 digest、伪造统计或旧 GHCR 链接继续发布。
 
-`source_license = UNKNOWN` 的行保留显式标记，不会被工具猜测或改写。任何从镜像
-中提取、再分发这些题目源码的使用者，都必须先根据上游仓库的 LICENSE/COPYING
-和仓库声明完成许可证审阅。
+当前 release 的 119 行都已经记录 source license，不含 `UNKNOWN`。任何后续导入
+如果无法确认许可证，必须保持显式缺失标记并在发布前完成人工审阅；工具不能猜测
+或把缺失许可证改写成默认值。
 
 ## 14. 已冻结的发布参数
 
@@ -379,7 +385,8 @@ replicate id 和结果路径。失败重试只重跑明确 task/trial，不重�
 - Hugging Face：`OpenMOSS-Team/SWE-bench-Science`，display title 为
   `SWE-bench Science`。
 - Docker Hub：`kevinxulearning`；不发布 GHCR 镜像。
-- 默认选择：107 道非 GPL-family 题；全量选择必须显式使用 `--allow-GPL`。
+- 默认选择：100 道 unrestricted-license 题；全量 119 题必须显式使用
+  `--allow-restricted-licenses`。
 - 运行架构：所有已发布 environment/verifier 镜像为 `linux/amd64`。
 - 结果汇总：Pier `result.json` 加 runner 生成的 `summary.json`/`summary.csv`。
 

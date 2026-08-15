@@ -14,7 +14,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "manifests" / "tasks.jsonl"
-GPL_IDS = {"003", "021", "023", "057", "066", "074", "075", "083", "084", "085", "100", "118"}
 TASK_ID_RE = re.compile(r"^(?:task_)?(\d{1,3})$")
 
 
@@ -293,24 +292,35 @@ def cleanup_batch(builder: str, references: list[str]) -> None:
     subprocess.run(["docker", "buildx", "prune", "--builder", builder, "--force"], cwd=ROOT, check=False)
 
 
-def selected_ids(args: argparse.Namespace) -> list[str]:
+def default_selection_path() -> Path:
+    matches = sorted((ROOT / "huggingface" / "selections").glob("default-*.json"))
+    if len(matches) != 1:
+        raise FileNotFoundError("expected exactly one huggingface/selections/default-*.json")
+    return matches[0]
+
+
+def selected_ids(args: argparse.Namespace, rows: dict[str, dict[str, object]]) -> list[str]:
     if args.task_id:
         values = [normalize_task_id(value) for value in args.task_id]
     else:
-        selection_path = ROOT / args.selection
+        selection_path = ROOT / args.selection if args.selection else default_selection_path()
         payload = json.loads(selection_path.read_text(encoding="utf-8"))
         values = [normalize_task_id(str(value)) for value in payload.get("task_ids", [])]
     values = list(dict.fromkeys(values))
-    if any(task_id in GPL_IDS for task_id in values) and not args.allow_gpl:
-        raise ValueError("GPL-family tasks require --allow-GPL")
+    restricted_ids = [
+        task_id for task_id in values
+        if str(rows[task_id].get("license_gate", "none")) != "none"
+    ]
+    if restricted_ids and not args.allow_restricted_licenses:
+        raise ValueError("restricted-license tasks require --allow-restricted-licenses")
     return values
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task-id", action="append", help="Explicit task id; repeatable")
-    parser.add_argument("--selection", default="huggingface/selections/default-107.json")
-    parser.add_argument("--allow-GPL", dest="allow_gpl", action="store_true")
+    parser.add_argument("--selection", default=None)
+    parser.add_argument("--allow-restricted-licenses", action="store_true")
     parser.add_argument("--batch-size", type=int, default=10)
     parser.add_argument("--registry", default="docker.io/kevinxulearning")
     parser.add_argument("--tag", default="v0.1.0")
@@ -325,7 +335,7 @@ def main() -> int:
     if args.batch_size <= 0:
         raise ValueError("--batch-size must be positive")
     rows = {str(row["release_id"]): row for row in load_rows()}
-    task_ids = selected_ids(args)
+    task_ids = selected_ids(args, rows)
     skipped: list[str] = []
     if args.resume:
         remaining: list[str] = []

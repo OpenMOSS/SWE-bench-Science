@@ -5,8 +5,10 @@
   "language": "python",
   "source_repository": "https://github.com/shapely/shapely",
   "source_commit": "d2872f6c4d7c99b16f8a71d99cd56d0a5fe54695",
-  "source_license": "UNKNOWN",
-  "license_source": "not-detected",
+  "source_license": "BSD-3-Clause",
+  "license_source": "github-api:LICENSE.txt@d2872f6c4d7c99b16f8a71d99cd56d0a5fe54695",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "281a98b13117b5df40f97a7237a835fd669856b82c6afb0913e700dc35f33055"
 }

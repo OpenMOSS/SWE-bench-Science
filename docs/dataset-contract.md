@@ -2,9 +2,9 @@
 
 状态：`release-ready`
 
-本契约面向 OpenMOSS 的 private Hugging Face dataset。Dataset Viewer 的表格是
-老师要求的主要浏览入口；Pier task bundle 是下载后的运行入口。二者由相同的
-release manifest 生成，不能人工维护两份不一致的数据。
+本契约面向 OpenMOSS 的 Hugging Face dataset。Dataset Viewer 的表格是主要浏览
+入口；Pier task bundle 是下载后的运行入口。二者由相同的 release manifest 生成，
+不能人工维护两份不一致的数据。
 
 ## 1. 数据配置
 
@@ -14,15 +14,16 @@ release manifest 生成，不能人工维护两份不一致的数据。
 huggingface/data/tasks.csv    119 rows, one row per release task
 ```
 
-`default`（107 题）和 `with_gpl`（119 题）是下载 selection，不复制成两份数据
-表。生成两个固定清单：
+`default`（100 题）和 `all`（119 题）是下载 selection，不复制成多份数据表。
+生成两个固定清单：
 
 ```text
-selections/default-107.json
+selections/default-100.json
 selections/all-119.json
 ```
 
-运行工具默认读取前者；`--allow-GPL` 才允许读取后者。
+运行工具默认读取前者；`--allow-restricted-licenses` 才允许包含
+GPL/LGPL/AGPL-family 题和 academic non-commercial 题 `019`。
 
 由于 Pier 当前不能直接下载 HF registry dataset，HF snapshot 携带一个最小
 materializer。用户先下载表格、selection 和 thin task bundle，再由它生成本地
@@ -35,12 +36,14 @@ materializer。用户先下载表格、selection 和 thin task bundle，再由�
 | --- | --- | --- | --- |
 | `task_id` | string | 是 | 三位 release id，范围 `001..119` |
 | `title` | string | 是 | 人类可读题目标题 |
-| `domain` | string | 是 | 论文约定的科学领域 |
+| `domain` | string | 是 | 科学领域分组 |
 | `language` | string | 是 | 主要实现/构建语言 |
 | `repository_url` | string | 是 | 上游源码仓库 |
 | `base_commit` | string | 是 | 固定 40 位 commit SHA |
 | `source_license` | string | 是 | SPDX 或经审阅的 family label |
-| `gpl_family` | bool | 是 | 是否需要 `--allow-GPL` |
+| `gpl_family` | bool | 是 | 是否属于 GPL/LGPL/AGPL-family |
+| `restricted_license` | bool | 是 | 是否需要 `--allow-restricted-licenses` |
+| `license_gate` | string | 是 | `none`、`gpl-family` 或 `noncommercial` |
 | `environment_image` | string | 是 | Docker Hub 引用，固定 digest |
 | `verifier_image` | string | 是 | Docker Hub 引用，固定 digest |
 | `task_path` | string | 是 | HF snapshot 中的本地 Pier task 目录 |
@@ -68,6 +71,8 @@ verifier_build_fingerprint
 source_license
 license_source
 gpl_family
+restricted_license
+license_gate
 agent_timeout_sec
 verifier_timeout_sec
 cpus
@@ -103,7 +108,7 @@ agent/model 结果与 task table 分开：
 
 card 必须由 119 行 canonical data 生成以下表格，不能手填猜测数字：
 
-- 总题数、默认题数、GPL-family 题数；
+- 总题数、默认题数、restricted-license 题数、GPL-family 题数；
 - scientific domain 分布；
 - language 分布；
 - source license 分布；
@@ -111,8 +116,10 @@ card 必须由 119 行 canonical data 生成以下表格，不能手填猜测数
 - amd64 覆盖率；
 - verifier canary 通过/基础设施失败数。
 
-已冻结的全局数字为：119 total、107 default、12 GPL-family。其余统计由发布脚本
-从 canonical rows 自动生成；缺失值保留为空或 `UNKNOWN`，不会填零冒充统计结果。
+已冻结的全局数字为：119 total、100 default、19 restricted-license、18
+GPL-family。其余统计由发布脚本从 canonical rows 自动生成。当前 release 不含
+`UNKNOWN` source license；后续导入若无法确认许可证，必须保留显式缺失值并在
+发布前审阅，不能填零或猜测。
 
 ## 6. 发布内容禁止项
 
@@ -137,14 +144,15 @@ HF snapshot、release Git 和两类 Docker image 都要扫描：
 - 一个 task id 必须唯一映射到一组 public payload、environment digest 和 verifier
   digest。
 
-## 8. GPL selection
+## 8. Restricted license selection
 
-12 个 GPL-family release id：
+19 个 restricted-license release id：
 
 ```text
-003 021 023 057 066 074 075 083 084 085 100 118
+003 019 020 021 023 032 057 066 074 075 082 083 084 085 096 097 098 100 118
 ```
 
-`default-107.json` 必须排除它们，`all-119.json` 必须恰好包含 119 个唯一 id。
-`--allow-GPL` 只切换 selection；不修改任务内容，不绕过许可证 notice/source
-义务，也不改变 Pier 行为。
+其中 `019` 为 academic non-commercial license；其余 18 个为 GPL/LGPL/AGPL-family。
+`default-100.json` 必须排除这些题，`all-119.json` 必须恰好包含 119 个唯一 id。
+`--allow-restricted-licenses` 只切换 selection；不修改任务内容，不绕过许可证
+notice/source 义务，也不改变 Pier 行为。

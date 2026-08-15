@@ -74,7 +74,10 @@ def selection_payload(root: Path, dirs: list[Path]) -> dict[str, object]:
         task_ids = [str(value) for value in payload.get("task_ids", [])]
     else:
         task_ids = [path.name.removeprefix("task_") for path in dirs]
-        payload = {"allow_gpl": None, "task_ids": task_ids}
+        payload = {
+            "allow_restricted_licenses": None,
+            "task_ids": task_ids,
+        }
     canonical = json.dumps({"task_ids": task_ids}, sort_keys=True).encode("utf-8")
     payload["task_ids"] = task_ids
     payload["selection_sha256"] = hashlib.sha256(canonical).hexdigest()
@@ -223,7 +226,7 @@ def main() -> int:
 
     metadata = {
         "task_ids": selection["task_ids"],
-        "allow_gpl": selection.get("allow_gpl"),
+        "allow_restricted_licenses": selection.get("allow_restricted_licenses"),
         "selection_sha256": selection["selection_sha256"],
         "image_refs": image_refs,
         "platform": args.platform,

@@ -8,5 +8,7 @@
   "source_license": "LGPL-2.1-family",
   "license_source": "LICENSE",
   "gpl_family": true,
+  "restricted_license": true,
+  "license_gate": "gpl-family",
   "public_payload_sha256": "0274c5f903a8b34858e57c8d192eb528d3610c6be05065ef78c5ebbd27498b83"
 }

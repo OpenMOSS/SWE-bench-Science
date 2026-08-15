@@ -9,6 +9,7 @@ tags:
   - code-agents
   - scientific-computing
   - benchmark
+license: mit
 ---
 
 # SWE-bench Science
@@ -23,16 +24,17 @@ immutable `linux/amd64` Docker Hub digests.
 | Metric | Value |
 | --- | ---: |
 | Total tasks | 119 |
-| Default non-GPL-family tasks | 107 |
-| GPL/LGPL/AGPL-family opt-in tasks | 12 |
+| Default unrestricted-license tasks | 100 |
+| Restricted-license opt-in tasks | 19 |
+| GPL/LGPL/AGPL-family tasks | 18 |
 | Task environment images | 119 Docker Hub digests |
 | Separate verifier images | 119 Docker Hub digests |
 | `linux/amd64` coverage | 119/119 |
 
 The complete generated tables are in [`data/tasks.csv`](data/tasks.csv) and
-[`data/statistics.md`](data/statistics.md). `UNKNOWN` in a license field means
-that the upstream metadata did not expose a machine-detectable license; the
-value is retained explicitly rather than replaced with a guess.
+[`data/statistics.md`](data/statistics.md). License values are recorded from
+the upstream repository, source metadata, or source file headers; non-SPDX
+family labels are kept explicit when a project does not use a standard SPDX id.
 
 ## What Is In The Dataset
 
@@ -48,9 +50,6 @@ not per-task image variants.
 
 ## Quick Start
 
-The dataset repository is currently private, so the Hugging Face account must
-have access to `OpenMOSS-Team/SWE-bench-Science`.
-
 ```bash
 python3 -m pip install "huggingface_hub[cli]"
 hf auth login
@@ -63,7 +62,7 @@ uv tool install "datacurve-pier==0.3.0"
 docker login
 ```
 
-Materialize the default 107-task selection:
+Materialize the default 100-task selection:
 
 ```bash
 python3 tools/materialize.py --output tasks-selected --force
@@ -73,20 +72,23 @@ Materialize a specific list, including inclusive ranges:
 
 ```bash
 python3 tools/materialize.py \
-  --task-id 002,019,030-034 \
+  --task-id 002,005-007 \
   --output tasks-selected-small --force
 ```
 
-GPL-family tasks require the explicit gate:
+Restricted-license tasks require an explicit gate. This includes GPL-family
+tasks and task 019, whose upstream license is academic non-commercial:
 
 ```bash
 python3 tools/materialize.py \
-  --task-id 003,021,023 --allow-GPL \
-  --output tasks-selected-gpl --force
+  --allow-restricted-licenses \
+  --output tasks-selected-all --force
 ```
 
-The 12 gated ids are `003, 021, 023, 057, 066, 074, 075, 083, 084, 085,
-100, 118`. The materializer records the exact result in `selection.json`.
+The 18 GPL-family ids are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082,
+083, 084, 085, 096, 097, 098, 100, 118`. Task `019` uses an academic
+non-commercial license. All 19 ids require `--allow-restricted-licenses`.
+The materializer records the exact result in `selection.json`.
 
 ## Run An Evaluation
 

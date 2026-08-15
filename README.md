@@ -1,9 +1,10 @@
 # SWE-bench Science
 
 SWE-bench Science is a benchmark of software-engineering tasks from scientific
-computing repositories. The release contains 119 tasks, 107 non-GPL-family tasks
-in the default selection, and 12 GPL-family tasks behind an explicit
-`--allow-GPL` selection gate.
+computing repositories. The release contains 119 tasks: 100 unrestricted-license
+tasks in the default selection and 19 restricted-license tasks enabled only by
+the explicit `--allow-restricted-licenses` gate. The restricted set contains
+18 GPL/LGPL/AGPL-family tasks plus one academic non-commercial task.
 
 This repository is the release control plane for
 [OpenMOSS/SWE-bench-Science](https://github.com/OpenMOSS/SWE-bench-Science).
@@ -35,8 +36,9 @@ they are not published once per task.
 
 The standard benchmark entry point is `pier run -p ...`. This repository also
 ships `tools/run_batch.py` as a convenience wrapper. It adds explicit task
-selection, GPL gating, immutable-image pre-pulls, gateway profile translation,
-and a flat result summary without changing Pier's task or verifier semantics.
+selection, license gating, immutable-image pre-pulls, gateway profile
+translation, and a flat result summary without changing Pier's task or verifier
+semantics.
 
 ## Prerequisites
 
@@ -44,7 +46,7 @@ and a flat result summary without changing Pier's task or verifier semantics.
   machines use Docker Desktop's amd64 emulation for these images.
 - Python 3.11 or newer.
 - `uv` (or an equivalent Python environment manager).
-- Access to the private Hugging Face dataset and Docker Hub images.
+- Access to the Hugging Face dataset and Docker Hub images.
 - An API credential for the selected agent/provider when running a real agent.
 
 Install the runner:
@@ -65,9 +67,8 @@ hf download OpenMOSS-Team/SWE-bench-Science \
   --repo-type dataset --local-dir .
 ```
 
-The dataset is currently private, so the Hugging Face account must have access
-to it. Docker Hub authentication is needed when the image repositories are
-private:
+Docker Hub authentication is recommended for reliable pulls and may be required
+by Docker Hub rate limits:
 
 ```bash
 docker login
@@ -79,23 +80,26 @@ The materializer always writes an explicit `selection.json`, so the selected
 task set is reproducible and does not depend on runner sampling behavior.
 
 ```bash
-# Default: all 107 non-GPL-family tasks.
+# Default: all 100 unrestricted-license tasks.
 python3 tools/materialize.py --output tasks-selected --force
 
 # One task, a comma-separated list, or inclusive ranges.
 python3 tools/materialize.py \
-  --task-id 002,019,030-034 \
+  --task-id 002,005-007 \
   --output tasks-selected-small --force
 
-# GPL-family tasks require the explicit gate.
+# Restricted-license tasks require an explicit gate. This includes GPL-family
+# tasks and task 019, whose upstream license is academic non-commercial.
 python3 tools/materialize.py \
-  --task-id 003,021,023 \
-  --allow-GPL --output tasks-selected-gpl --force
+  --allow-restricted-licenses \
+  --output tasks-selected-all --force
 ```
 
-The 12 GPL-family ids are `003, 021, 023, 057, 066, 074, 075, 083, 084,
-085, 100, 118`. `--allow-GPL` is a distribution-selection option; it does not
-change scoring and does not replace the upstream license obligations.
+The 18 GPL-family ids are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082,
+083, 084, 085, 096, 097, 098, 100, 118`. Task `019` uses an academic
+non-commercial license. All 19 ids require `--allow-restricted-licenses`.
+This gate is a distribution-selection option; it does not change scoring and
+does not replace the upstream license obligations.
 
 ## Run With Pier Directly
 
@@ -207,8 +211,8 @@ the task requires it.
 
 The repository's own tools and documentation use the root MIT license. Task
 source and fixtures retain the upstream license recorded in
-`huggingface/data/tasks.csv` and `NOTICE.md`; GPL-family tasks are explicitly
-gated as described above.
+`huggingface/data/tasks.csv` and `NOTICE.md`; restricted-license tasks are
+explicitly gated as described above.
 
 More detail is available in [docs/architecture.md](docs/architecture.md),
 [docs/dataset-contract.md](docs/dataset-contract.md), and the

@@ -5,8 +5,10 @@
   "language": "python",
   "source_repository": "https://github.com/sunpy/sunpy",
   "source_commit": "470d13491dd2c2a9440b3c657af33373ca8d47c1",
-  "source_license": "UNKNOWN",
-  "license_source": "LICENSE.rst",
+  "source_license": "BSD-2-Clause",
+  "license_source": "source/LICENSE.rst",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "a591ac607343a9b65f004f2bb3c8f0ed66be521758113f17975e7e639cd5a232"
 }

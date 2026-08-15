@@ -7,7 +7,8 @@ operational verification steps.
 
 - [x] 119 canonical release ids (`001` through `119`), with the replacement
       payload used for `001` and no legacy id exposed.
-- [x] 12 GPL-family ids are separated from the default selection.
+- [x] 18 GPL-family ids and one academic non-commercial id are separated from
+      the default selection.
 - [x] 119 environment image digests and 119 verifier image digests are recorded.
 - [x] Every published image resolves to `linux/amd64`.
 - [x] Every verifier image is based on the corresponding environment digest.
@@ -18,7 +19,7 @@ operational verification steps.
 ## Dataset Integrity
 
 - [x] Dataset Viewer table is generated from the canonical 119-row manifest.
-- [x] `default-107.json` excludes exactly the 12 GPL-family ids.
+- [x] `default-100.json` excludes exactly the 19 restricted-license ids.
 - [x] `all-119.json` contains exactly 119 unique ids.
 - [x] Task bundles contain no reference-answer patch, credential, trajectory, or
       private verifier test.
@@ -44,8 +45,9 @@ available for diagnosis.
 ## User-Facing Interfaces
 
 - [x] Exact task ids, comma-separated ids, and inclusive ranges are supported.
-- [x] The default non-GPL selection and explicit `--allow-GPL` selection are
-      both reproducible through `selection.json`.
+- [x] The default unrestricted selection and full
+      `--allow-restricted-licenses` selection are reproducible through
+      `selection.json`.
 - [x] Direct Pier commands and the optional `run_batch.py` wrapper are documented.
 - [x] Codex Responses/Chat, Claude Code, and mini-swe-agent profile examples are
       included without credentials.

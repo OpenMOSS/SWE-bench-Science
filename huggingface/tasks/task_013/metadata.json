@@ -5,8 +5,10 @@
   "language": "python",
   "source_repository": "https://github.com/PlasmaControl/DESC",
   "source_commit": "ab1c5a33031a2e64581f5e663ef8e2f6203a5220",
-  "source_license": "UNKNOWN",
-  "license_source": "not-detected",
+  "source_license": "MIT",
+  "license_source": "github-api:LICENSE@ab1c5a33031a2e64581f5e663ef8e2f6203a5220",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "26223383f9ae3d913f440b76d92579dbf8a8db816c578b4b3f9d1ceacac2f0d5"
 }

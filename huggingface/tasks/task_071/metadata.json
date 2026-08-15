@@ -5,8 +5,10 @@
   "language": "python",
   "source_repository": "https://github.com/silx-kit/pyFAI",
   "source_commit": "3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
-  "source_license": "UNKNOWN",
-  "license_source": "not-detected",
+  "source_license": "MIT",
+  "license_source": "github-api:copyright@3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "a594aff3f42be0d163e6fc22059215b3192da8418a22bb76724ae9799f7f36b0"
 }

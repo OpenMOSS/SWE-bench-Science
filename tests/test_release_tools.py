@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.generate_huggingface import GPL_IDS, load_rows, write_selection
+from scripts.generate_huggingface import gpl_ids, load_rows, restricted_ids, write_selection
 from scripts.import_task import base_image_for, dependency_lines, normalize_task_id
 from scripts.materialize import (
     expand_task_selectors,
@@ -28,13 +29,19 @@ class ReleaseToolTests(unittest.TestCase):
     def test_manifest_has_119_rows_and_exact_gpl_gate(self) -> None:
         summary = validate(require_images=False)
         self.assertEqual(summary["rows"], 119)
-        self.assertEqual(summary["gpl_family"], 12)
+        self.assertEqual(summary["gpl_family"], 18)
+        self.assertEqual(summary["restricted_license"], 19)
+        self.assertEqual(summary["unrestricted"], 100)
         rows = load_rows()
-        self.assertEqual(sum(bool(row.get("gpl_family")) for row in rows), len(GPL_IDS))
         self.assertEqual(
             {str(row["release_id"]) for row in rows if bool(row.get("gpl_family"))},
-            GPL_IDS,
+            {
+                "003", "020", "021", "023", "032", "057", "066", "074", "075",
+                "082", "083", "084", "085", "096", "097", "098", "100", "118",
+            },
         )
+        self.assertEqual(sum(bool(row.get("gpl_family")) for row in rows), len(gpl_ids(rows)))
+        self.assertEqual(restricted_ids(rows), gpl_ids(rows) | {"019"})
 
     def test_selection_writer_is_explicit_and_does_not_add_aliases(self) -> None:
         rows = [row for row in load_rows() if str(row["release_id"]) in {"001", "002"}]
@@ -43,6 +50,8 @@ class ReleaseToolTests(unittest.TestCase):
             write_selection(rows, path)
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["task_ids"], ["001", "002"])
+            self.assertFalse(payload["allow_restricted_licenses"])
+            self.assertNotIn("allow_gpl", payload)
             self.assertNotIn("120", payload["task_ids"])
 
     def test_materializer_rejects_legacy_id(self) -> None:
@@ -57,6 +66,70 @@ class ReleaseToolTests(unittest.TestCase):
         )
         with self.assertRaises(ValueError):
             expand_task_selectors(["007-005"])
+
+    def test_materializer_default_is_unrestricted_and_explicit_restricted_requires_gate(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "default"
+            subprocess.run(
+                [
+                    "python3", str(root / "scripts" / "materialize.py"),
+                    "--output", str(output),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            selection = json.loads((output / "selection.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(selection["task_ids"]), 100)
+            self.assertFalse(selection["allow_restricted_licenses"])
+            self.assertNotIn("allow_gpl", selection)
+            explicit = subprocess.run(
+                [
+                    "python3", str(root / "scripts" / "materialize.py"),
+                    "--task-id", "002,019", "--output", str(Path(directory) / "restricted"),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(explicit.returncode, 0)
+            self.assertIn("requires --allow-restricted-licenses: 019", explicit.stderr)
+            gpl = subprocess.run(
+                [
+                    "python3", str(root / "scripts" / "materialize.py"),
+                    "--task-id", "003", "--output", str(Path(directory) / "gpl"),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(gpl.returncode, 0)
+            self.assertIn("requires --allow-restricted-licenses: 003", gpl.stderr)
+            legacy_flag = subprocess.run(
+                [
+                    "python3", str(root / "scripts" / "materialize.py"),
+                    "--allow-GPL", "--output", str(Path(directory) / "legacy"),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(legacy_flag.returncode, 0)
+            self.assertIn("unrecognized arguments: --allow-GPL", legacy_flag.stderr)
+            with_restricted = Path(directory) / "with_restricted"
+            subprocess.run(
+                [
+                    "python3", str(root / "scripts" / "materialize.py"),
+                    "--allow-restricted-licenses", "--output", str(with_restricted),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            with_restricted_selection = json.loads(
+                (with_restricted / "selection.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(len(with_restricted_selection["task_ids"]), 119)
+            self.assertTrue(with_restricted_selection["allow_restricted_licenses"])
+            self.assertNotIn("allow_gpl", with_restricted_selection)
 
     def test_result_summary_flattens_trial_reward_and_failure(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -5,8 +5,10 @@
   "language": "python",
   "source_repository": "https://github.com/deepmodeling/deepmd-kit",
   "source_commit": "44f44acb2b9a56f55609ec7f0594d9b6fa01cb92",
-  "source_license": "UNKNOWN",
-  "license_source": "LICENSE",
-  "gpl_family": false,
+  "source_license": "LGPL-3.0-or-later",
+  "license_source": "source/LICENSE",
+  "gpl_family": true,
+  "restricted_license": true,
+  "license_gate": "gpl-family",
   "public_payload_sha256": "1eb7c271d3ba3c73397b1816eb9611b768d65b17e5f5fa1d083fecbc6472ea2e"
 }

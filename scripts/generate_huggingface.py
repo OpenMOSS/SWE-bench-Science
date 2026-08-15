@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the Hugging Face table, statistics and GPL selections."""
+"""Generate the Hugging Face table, statistics and license-gated selections."""
 
 from __future__ import annotations
 
@@ -12,11 +12,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GPL_IDS = {"003", "021", "023", "057", "066", "074", "075", "083", "084", "085", "100", "118"}
 FIELDS = [
     "task_id", "title", "domain", "language", "repository_url", "base_commit",
-    "source_license", "gpl_family", "environment_image", "verifier_image",
-    "image_platform", "task_path", "status",
+    "source_license", "gpl_family", "restricted_license", "license_gate",
+    "environment_image", "verifier_image", "image_platform", "task_path", "status",
 ]
 THIN_TASK_FILES = (
     "task.toml",
@@ -36,6 +35,22 @@ def load_rows() -> list[dict[str, object]]:
     ]
 
 
+def gpl_ids(rows: list[dict[str, object]]) -> set[str]:
+    return {str(row["release_id"]) for row in rows if bool(row.get("gpl_family"))}
+
+
+def restricted_ids(rows: list[dict[str, object]]) -> set[str]:
+    return {
+        str(row["release_id"])
+        for row in rows
+        if bool(row.get("restricted_license", row.get("gpl_family")))
+    }
+
+
+def license_gate(row: dict[str, object]) -> str:
+    return str(row.get("license_gate", "none"))
+
+
 def write_csv(rows: list[dict[str, object]], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
@@ -53,7 +68,9 @@ def write_selection(rows: list[dict[str, object]], path: Path) -> None:
         json.dumps(
             {
                 "task_ids": [str(row["release_id"]) for row in rows],
-                "allow_gpl": any(bool(row.get("gpl_family")) for row in rows),
+                "allow_restricted_licenses": any(
+                    license_gate(row) != "none" for row in rows
+                ),
             },
             indent=2,
         )
@@ -70,10 +87,12 @@ def write_statistics(rows: list[dict[str, object]], path: Path) -> None:
 
     environment_count = sum(bool(row.get("environment_image")) for row in rows)
     verifier_count = sum(bool(row.get("verifier_image")) for row in rows)
+    gated_count = len(gpl_ids(rows))
+    restricted_count = len(restricted_ids(rows))
     lines = [
         "# Generated Release Statistics",
         "",
-        f"Canonical rows: **{len(rows)}**; default non-GPL rows: **{len(rows) - len(GPL_IDS)}**; GPL-family rows: **{len(GPL_IDS)}**.",
+        f"Canonical rows: **{len(rows)}**; default unrestricted rows: **{len(rows) - restricted_count}**; restricted-license rows: **{restricted_count}**; GPL-family rows: **{gated_count}**.",
         "",
         f"Environment image references: **{environment_count}/{len(rows)}**; verifier image references: **{verifier_count}/{len(rows)}**.",
         "",
@@ -85,6 +104,23 @@ def write_statistics(rows: list[dict[str, object]], path: Path) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def metadata_from_row(row: dict[str, object]) -> dict[str, object]:
+    return {
+        "task_id": str(row["release_id"]),
+        "title": row.get("title", ""),
+        "domain": row.get("domain", ""),
+        "language": row.get("language", ""),
+        "source_repository": row.get("repository_url", ""),
+        "source_commit": row.get("base_commit", ""),
+        "source_license": row.get("source_license", ""),
+        "license_source": row.get("license_source", ""),
+        "gpl_family": bool(row.get("gpl_family")),
+        "restricted_license": bool(row.get("restricted_license", row.get("gpl_family"))),
+        "license_gate": row.get("license_gate", "none"),
+        "public_payload_sha256": row.get("public_payload_sha256", ""),
+    }
+
+
 def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
     task_root = output_root / "tasks"
     if task_root.exists():
@@ -94,6 +130,14 @@ def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
         destination = task_root / source.name
         for relative in THIN_TASK_FILES:
             source_file = source / relative
+            if relative == "metadata.json":
+                destination_file = destination / relative
+                destination_file.parent.mkdir(parents=True, exist_ok=True)
+                destination_file.write_text(
+                    json.dumps(metadata_from_row(row), indent=2) + "\n",
+                    encoding="utf-8",
+                )
+                continue
             if not source_file.is_file():
                 raise FileNotFoundError(source_file)
             destination_file = destination / relative
@@ -133,8 +177,12 @@ def main() -> int:
         raise ValueError("manifest must contain exactly release ids 001..119")
     write_csv(rows, args.output / "tasks.csv")
     write_statistics(rows, args.output / "statistics.md")
-    write_selection([row for row in rows if not bool(row.get("gpl_family"))], args.output.parent / "selections" / "default-107.json")
-    write_selection(rows, args.output.parent / "selections" / "all-119.json")
+    default_rows = [row for row in rows if license_gate(row) == "none"]
+    selections_dir = args.output.parent / "selections"
+    if selections_dir.exists():
+        shutil.rmtree(selections_dir)
+    write_selection(default_rows, selections_dir / f"default-{len(default_rows)}.json")
+    write_selection(rows, selections_dir / "all-119.json")
     write_snapshot(rows, args.output.parent)
     print(json.dumps({"rows": len(rows), "output": str(args.output)}, indent=2))
     return 0

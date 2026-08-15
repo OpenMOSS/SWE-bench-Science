@@ -1,6 +1,6 @@
 # Generated Release Statistics
 
-Canonical rows: **119**; default non-GPL rows: **107**; GPL-family rows: **12**.
+Canonical rows: **119**; default unrestricted rows: **100**; restricted-license rows: **19**; GPL-family rows: **18**.
 
 Environment image references: **119/119**; verifier image references: **119/119**.
 
@@ -136,10 +136,16 @@ Environment image references: **119/119**; verifier image references: **119/119*
 | Value | Count |
 | --- | ---: |
 | `AGPL-family` | 4 |
-| `Apache-2.0` | 10 |
-| `BSD-3-Clause` | 37 |
+| `Academic-NonCommercial` | 1 |
+| `Apache-2.0` | 13 |
+| `BSD-2-Clause` | 2 |
+| `BSD-3-Clause` | 38 |
+| `GPL-3.0` | 1 |
+| `GPL-3.0-or-later` | 1 |
 | `LGPL-2.1-family` | 2 |
+| `LGPL-3.0` | 1 |
 | `LGPL-3.0-family` | 6 |
+| `LGPL-3.0-or-later` | 2 |
 | `LGPL-family` | 1 |
-| `MIT` | 38 |
-| `UNKNOWN` | 21 |
+| `MIT` | 46 |
+| `NIST-PD-fallback` | 1 |

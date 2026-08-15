@@ -10,7 +10,6 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GPL_IDS = {"003", "021", "023", "057", "066", "074", "075", "083", "084", "085", "100", "118"}
 SECRET_RE = re.compile(r"(?i)(sk-[a-z0-9]{20,}|ghp_[a-z0-9]{20,}|bearer\s+[a-z0-9._-]{20,})")
 FORBIDDEN_PARTS = {"solution", "oracle", "author_notes", "reference_patches"}
 
@@ -54,6 +53,24 @@ def scan_files() -> list[str]:
     return findings
 
 
+def is_gpl_family_license(value: object) -> bool:
+    return "GPL" in str(value).upper()
+
+
+def is_restricted_license(row: dict[str, object]) -> bool:
+    return is_gpl_family_license(row.get("source_license")) or str(
+        row.get("source_license", "")
+    ) == "Academic-NonCommercial"
+
+
+def expected_license_gate(row: dict[str, object]) -> str:
+    if is_gpl_family_license(row.get("source_license")):
+        return "gpl-family"
+    if str(row.get("source_license", "")) == "Academic-NonCommercial":
+        return "noncommercial"
+    return "none"
+
+
 def validate(*, require_images: bool) -> dict[str, object]:
     rows = load_rows()
     ids = [str(row.get("release_id", "")) for row in rows]
@@ -66,8 +83,12 @@ def validate(*, require_images: bool) -> dict[str, object]:
             raise ValueError("legacy task id 120 is forbidden")
     for row in rows:
         task_id = str(row["release_id"])
-        if bool(row.get("gpl_family")) != (task_id in GPL_IDS):
+        if bool(row.get("gpl_family")) != is_gpl_family_license(row.get("source_license")):
             raise ValueError(f"GPL classification mismatch for {task_id}")
+        if bool(row.get("restricted_license")) != is_restricted_license(row):
+            raise ValueError(f"restricted-license classification mismatch for {task_id}")
+        if str(row.get("license_gate", "none")) != expected_license_gate(row):
+            raise ValueError(f"license_gate mismatch for {task_id}")
         if not (ROOT / str(row["task_path"])).is_dir():
             raise ValueError(f"missing task bundle for {task_id}")
         if require_images and (not row.get("environment_image") or not row.get("verifier_image")):
@@ -78,7 +99,8 @@ def validate(*, require_images: bool) -> dict[str, object]:
     return {
         "rows": len(rows),
         "gpl_family": sum(bool(row.get("gpl_family")) for row in rows),
-        "non_gpl": sum(not bool(row.get("gpl_family")) for row in rows),
+        "restricted_license": sum(bool(row.get("restricted_license")) for row in rows),
+        "unrestricted": sum(not bool(row.get("restricted_license")) for row in rows),
         "require_images": require_images,
     }
 

@@ -8,5 +8,7 @@
   "source_license": "Apache-2.0",
   "license_source": "LICENSE.txt",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "860d67a6ca8a5631f9b564aaf11e06bc1bec2dc388f996ce265d1fd31cd00771"
 }

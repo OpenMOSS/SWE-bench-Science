@@ -8,5 +8,7 @@
   "source_license": "MIT",
   "license_source": "LICENSE",
   "gpl_family": false,
+  "restricted_license": false,
+  "license_gate": "none",
   "public_payload_sha256": "bb313b40e78959c6b6aa7c2e1d88bc13135cabb91be96ead6c7b02b595e09c91"
 }
