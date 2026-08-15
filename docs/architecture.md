@@ -1,9 +1,9 @@
 # SWE-bench Science 架构与发布契约
 
-状态：`canary`
+状态：`release-ready`
 
 本文档冻结职责、发布边界和验收条件。当前 119 个 task bundle 已导入，task 002
-的 environment/verifier amd64 canary 已完成隔离和 Pier 端到端验收。
+的 environment/verifier amd64 镜像已完成隔离、digest 固定和 Pier 端到端验收。
 
 ## 1. 目标
 
@@ -200,7 +200,9 @@ COPY private_tests/ /tests/private_tests/
 
 `[verifier.environment].docker_image` 可以直接记录预构建 verifier 镜像；同时可在
 私有 authoring 输入中保留 tests Dockerfile 以支持可复现重建。HF 是否公开 tests
-由老师决定，但 agent 隔离和“不含标准答案”是无条件要求。
+Verifier tests remain inside the verifier image and are never mounted into the
+agent environment; agent isolation and the absence of reference answers are
+unconditional release requirements.
 
 ## 7. 编译型题目
 
@@ -274,16 +276,16 @@ command = "cd /app && mkdir -p /logs/artifacts && git add -A && git diff --cache
 timeout_sec = 300.0
 ```
 
-Docker Hub 是当前约定，不作为 runtime hostname 校验条件。表格中的镜像字段在
-老师提供最终链接前保持空值，不能填入猜测的 namespace。
+Docker Hub 是当前发布 registry，不作为 runtime hostname 校验条件。119 行表格的
+镜像字段均已填入 `kevinxulearning` 下的 immutable digest；运行时只信任 task
+bundle 中记录的 digest。
 
 ## 9. HF、Docker Hub 与 GitHub 的关系
 
 ### Hugging Face
 
 OpenMOSS 下的 private dataset 是发布索引和可下载任务包，display title 为
-`SWE-bench Science`。最终 repo id 由组织权限和命名规范确认，本文暂写作
-`openmoss/SWE-bench-Science`，不提前创建远端。
+`SWE-bench Science`，repo id 为 `OpenMOSS-Team/SWE-bench-Science`。
 
 HF 包含：数据表、统计、dataset card、task.toml、instruction，以及经批准的
 可公开任务材料。HF 不包含标准答案 patch、密钥和本地运行输出。
@@ -291,8 +293,8 @@ HF 包含：数据表、统计、dataset card、task.toml、instruction，以及
 ### Docker Hub
 
 Docker Hub 保存二进制运行环境：119 个 environment images 和 119 个 verifier
-images。HF 每行用 digest 引用它们。镜像 namespace 和可见性由老师后续提供；
-本设计不兼容/发布 GHCR，但也不在运行时硬编码 registry hostname 检查。
+images。HF 每行用 digest 引用它们，当前 namespace 为 `kevinxulearning`；本设计
+不兼容/发布 GHCR，但也不在运行时硬编码 registry hostname 检查。
 
 ### GitHub
 
@@ -356,31 +358,30 @@ replicate id 和结果路径。失败重试只重跑明确 task/trial，不重�
 
 ## 13. 发布阶段
 
-1. **设计冻结**：审阅本文和字段契约，不构建/上传。
-2. **单题 canary**：只导入 `002`，构建 amd64 environment + verifier，执行 no-op、
-   oracle/known-good、60/120 秒 agent smoke。
-3. **HF canary**：上传一行 private dataset，验证 Dataset Viewer、任务下载和 Pier
-   本地运行；确认无 solution patch。
-4. **批量构建**：由老师确认 Docker Hub namespace 后生成 119 + 119 镜像；每题
-   记录 digest、SBOM、build log 和 verifier smoke。
-5. **全量 HF**：生成 119 行、统计表、GPL 两个 selection manifest 和 task bundle。
-6. **新用户验收**：从全新目录下载 HF、配置 `.env`、运行 002，再跑固定批量清单。
+1. **任务导入与审计**：从 authoring 输入生成 001..119 的 canonical manifest。
+2. **镜像构建**：按题目构建 environment/verifier，固定 `linux/amd64` digest 并
+   在每批完成后清理本地缓存。
+3. **HF 发布**：生成 119 行、统计表、GPL 两个 selection manifest 和薄 task bundle。
+4. **新用户验收**：从全新目录下载 HF、配置外置 provider profile、运行 002 和
+   固定批量清单。
+5. **重复评测**：保存 selection hash、Pier/agent/model/provider 元数据、每题
+   reward、CTRf 和 verifier 日志。
 
 任何阶段失败都不得用空 digest、伪造统计或旧 GHCR 链接继续发布。
 
-在全量发布前，所有 `source_license = UNKNOWN` 必须通过上游 LICENSE/COPYING、
-仓库声明或人工审阅解析。无法确认许可证的任务不能靠默认值进入发布集。
+`source_license = UNKNOWN` 的行保留显式标记，不会被工具猜测或改写。任何从镜像
+中提取、再分发这些题目源码的使用者，都必须先根据上游仓库的 LICENSE/COPYING
+和仓库声明完成许可证审阅。
 
-## 14. 待老师确认的决策
+## 14. 已冻结的发布参数
 
-以下项目在实现前仍需确认，但不阻塞本地设计仓库建立：
-
-- Docker Hub organization/namespace 和 image visibility；
-- verifier image 是否允许成员拉取并离线查看测试；
-- HF repo id 的最终大小写/连字符形式；
-- HF task bundle 是否附带 environment/tests Dockerfile，或只放预构建 digest；
-- dataset card 的论文链接、作者、citation 和许可证；
-- 结果表是否需要公开 agent trial trajectory。
+- GitHub：`OpenMOSS/SWE-bench-Science`。
+- Hugging Face：`OpenMOSS-Team/SWE-bench-Science`，display title 为
+  `SWE-bench Science`。
+- Docker Hub：`kevinxulearning`；不发布 GHCR 镜像。
+- 默认选择：107 道非 GPL-family 题；全量选择必须显式使用 `--allow-GPL`。
+- 运行架构：所有已发布 environment/verifier 镜像为 `linux/amd64`。
+- 结果汇总：Pier `result.json` 加 runner 生成的 `summary.json`/`summary.csv`。
 
 ## 15. 本地 release 仓库的目标布局
 
@@ -411,7 +412,7 @@ imports/       旧 authoring 仓库的只读导入快照
 private/       经授权的 verifier/作者材料
 build/         Docker build contexts 和 logs
 staging/       尚未通过扫描的中间产物
-dist/          待上传的 HF snapshot/release bundle
+dist/          已生成的 HF snapshot/release bundle
 secrets/       Docker Hub/HF/provider credentials
 jobs,trials/   Pier 运行结果
 tasks/         逐题完整源码/build context；由 importer 本地生成，不进入 Git

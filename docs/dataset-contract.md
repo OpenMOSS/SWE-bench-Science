@@ -1,6 +1,6 @@
 # Hugging Face 数据与字段契约
 
-状态：`canary`
+状态：`release-ready`
 
 本契约面向 OpenMOSS 的 private Hugging Face dataset。Dataset Viewer 的表格是
 老师要求的主要浏览入口；Pier task bundle 是下载后的运行入口。二者由相同的
@@ -41,8 +41,8 @@ materializer。用户先下载表格、selection 和 thin task bundle，再由�
 | `base_commit` | string | 是 | 固定 40 位 commit SHA |
 | `source_license` | string | 是 | SPDX 或经审阅的 family label |
 | `gpl_family` | bool | 是 | 是否需要 `--allow-GPL` |
-| `environment_image` | string | 发布前可空 | Docker Hub 引用，最终固定 digest |
-| `verifier_image` | string | 发布前可空 | Docker Hub 引用，最终固定 digest |
+| `environment_image` | string | 是 | Docker Hub 引用，固定 digest |
+| `verifier_image` | string | 是 | Docker Hub 引用，固定 digest |
 | `task_path` | string | 是 | HF snapshot 中的本地 Pier task 目录 |
 
 不把 `agent_name`、`agent_version` 或 `model` 放进 task row，因为这些是评测配置，
@@ -111,8 +111,8 @@ card 必须由 119 行 canonical data 生成以下表格，不能手填猜测数
 - amd64 覆盖率；
 - verifier canary 通过/基础设施失败数。
 
-已冻结的全局数字只有：119 total、107 default、12 GPL-family。其余统计在导入
-数据完成后生成。缺数据时显示 `pending`，不能填零冒充已统计。
+已冻结的全局数字为：119 total、107 default、12 GPL-family。其余统计由发布脚本
+从 canonical rows 自动生成；缺失值保留为空或 `UNKNOWN`，不会填零冒充统计结果。
 
 ## 6. 发布内容禁止项
 

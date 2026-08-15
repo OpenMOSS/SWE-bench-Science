@@ -7,9 +7,14 @@ from pathlib import Path
 
 from scripts.generate_huggingface import GPL_IDS, load_rows, write_selection
 from scripts.import_task import base_image_for, dependency_lines, normalize_task_id
-from scripts.materialize import normalize_task_id as normalize_materialized_task_id, task_source
+from scripts.materialize import (
+    expand_task_selectors,
+    normalize_task_id as normalize_materialized_task_id,
+    task_source,
+)
 from scripts.provider_config import render_codex_config, resolve_codex_profile
-from scripts.run_batch import redacted_command, task_dirs
+from scripts.run_batch import pier_version, redacted_command, task_dirs
+from scripts.summarize_results import write_summary
 from scripts.validate_release import validate
 
 
@@ -44,6 +49,51 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertEqual(normalize_materialized_task_id("2"), "002")
         with self.assertRaises(ValueError):
             normalize_materialized_task_id("120")
+
+    def test_materializer_expands_lists_and_ranges(self) -> None:
+        self.assertEqual(
+            expand_task_selectors(["002,005-007", "009"]),
+            {"002", "005", "006", "007", "009"},
+        )
+        with self.assertRaises(ValueError):
+            expand_task_selectors(["007-005"])
+
+    def test_result_summary_flattens_trial_reward_and_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            jobs = Path(directory) / "jobs"
+            trial = jobs / "job-1" / "task_002__trial-a" / "verifier"
+            trial.mkdir(parents=True)
+            (jobs / "job-1" / "result.json").write_text(
+                json.dumps(
+                    {
+                        "stats": {
+                            "evals": {
+                                "codex": {
+                                    "exception_stats": {
+                                        "AgentTimeoutError": ["task_002__trial-a"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (trial / "reward.json").write_text(
+                json.dumps(
+                    {
+                        "reward": 0.0,
+                        "public": {"passed": 1, "collected": 1},
+                        "private": {"passed": 0, "collected": 1},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            summary_json, summary_csv = write_summary(jobs)
+            payload = json.loads(summary_json.read_text(encoding="utf-8"))
+            self.assertEqual(payload["trial_count"], 1)
+            self.assertEqual(payload["rows"][0]["failure_class"], "AgentTimeoutError")
+            self.assertIn("task_id,trial_id", summary_csv.read_text(encoding="utf-8"))
 
     def test_materializer_falls_back_to_committed_hf_snapshot(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -83,6 +133,12 @@ class ReleaseToolTests(unittest.TestCase):
         rendered = redacted_command(["pier", "run", "--agent-env", "TOKEN=secret"])
         self.assertNotIn("TOKEN=secret", rendered)
         self.assertIn("<redacted>", rendered)
+        rendered_kwarg = redacted_command(["pier", "run", "--agent-kwarg", "api_token=secret"])
+        self.assertNotIn("api_token=secret", rendered_kwarg)
+        self.assertIn("api_token=<redacted>", rendered_kwarg)
+
+    def test_batch_runner_reads_pier_version_without_failing_missing_binary(self) -> None:
+        self.assertIsNone(pier_version("/path/that/does/not/exist"))
 
     def test_codex_gateway_profile_selects_wire_without_embedding_key(self) -> None:
         profile = resolve_codex_profile(

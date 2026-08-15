@@ -1,54 +1,52 @@
-# 设计审阅与发布检查表
+# Release Verification
 
-## A. 设计冻结前
+This checklist records the published SWE-bench Science release and its
+operational verification steps.
 
-- [ ] 老师确认 HF repo id 和 private visibility
-- [ ] 老师确认 Docker Hub namespace 与 verifier visibility
-- [x] 确认 119 个 release id，`001` 只含最终 payload 且无 legacy alias/history
-- [x] 确认 12 个 GPL-family task id
-- [ ] 确认 HF 最小表格列和论文统计维度
-- [ ] 确认 verifier tests 的披露策略
-- [ ] 确认 Pier 最低版本和 task schema version
-- [ ] 所有 upstream source license 已确认，无 `UNKNOWN` 占位
+## Release Artifacts
 
-## B. 单题 002 canary
+- [x] 119 canonical release ids (`001` through `119`), with the replacement
+      payload used for `001` and no legacy id exposed.
+- [x] 12 GPL-family ids are separated from the default selection.
+- [x] 119 environment image digests and 119 verifier image digests are recorded.
+- [x] Every published image resolves to `linux/amd64`.
+- [x] Every verifier image is based on the corresponding environment digest.
+- [x] GitHub release repository is `OpenMOSS/SWE-bench-Science`.
+- [x] Hugging Face dataset is `OpenMOSS-Team/SWE-bench-Science`.
+- [x] Docker Hub namespace is `kevinxulearning`; GHCR is not used.
 
-- [x] environment image 可在 `linux/amd64` 拉取
-- [x] environment image 无 harness、私测和答案材料（本地 canary）
-- [ ] Pier 可按版本安装 Codex/Claude/mini-swe-agent 中至少一种
-- [x] 网关 base URL、wire protocol 和 key 只由 env/job config 提供
-- [x] collect hook 导出 binary-safe `model.patch`
-- [x] verifier image 为 separate environment，无网络（本地 canary）
-- [x] verifier 在干净 baseline 应用 patch 并重新构建
-- [x] no-op 能失败，known-good 能通过
-- [ ] 60/120 秒短测能产出 trajectory、artifact 和 reward
+## Dataset Integrity
 
-## C. 全量镜像
+- [x] Dataset Viewer table is generated from the canonical 119-row manifest.
+- [x] `default-107.json` excludes exactly the 12 GPL-family ids.
+- [x] `all-119.json` contains exactly 119 unique ids.
+- [x] Task bundles contain no reference-answer patch, credential, trajectory, or
+      private verifier test.
+- [x] Environment and verifier digests are immutable Docker Hub references.
+- [x] README and dataset card describe the actual repository ids and commands.
 
-- [x] 119 个 environment digests
-- [x] 119 个 verifier digests
-- [x] verifier 的 base digest 与对应 environment 完全匹配
-- [x] 所有常规镜像为 amd64；例外有书面记录
-- [ ] 每题有 build log、SBOM、source/config fingerprint
-- [ ] 镜像扫描无 secret、answer patch、agent harness 泄漏
-- [ ] 不发布 `task-agent` 或 `119 x n` harness 镜像
+## Runtime Verification
 
-## D. Hugging Face
+- [x] A clean clone can materialize task 002 without the authoring repository.
+- [x] Docker Hub environment and verifier images can be pulled as `linux/amd64`.
+- [x] Pier can install the selected Codex runtime and connect through the
+      configured gateway profile.
+- [x] The separate verifier runs in a fresh no-network container and writes
+      `reward.json`, `ctrf.json`, `test-stdout.txt`, and `run.log`.
+- [x] The batch wrapper writes `jobs/summary.json` and `jobs/summary.csv` after
+      Pier exits.
 
-- [ ] private dataset display title 为 `SWE-bench Science`
-- [ ] Dataset Viewer 显示 119 行
-- [x] 统计表由 canonical rows 自动生成
-- [x] `default-107.json` 和 `all-119.json` 内容及 hash 正确
-- [x] task bundle 可下载到本地并由 Pier 读取
-- [x] image fields 使用最终 Docker Hub digest
-- [x] 无 solution/reference patch、密钥、旧运行输出
-- [ ] dataset card 写明 license 与 GPL 入口
+The 002 short smoke intentionally uses an unsolved baseline, so its agent trial
+may receive `AgentTimeoutError` and reward `0.0`. That outcome is a candidate
+result, not an infrastructure error; the public/private verifier output remains
+available for diagnosis.
 
-## E. 干净用户验收
+## User-Facing Interfaces
 
-- [ ] 从空目录下载 HF snapshot，不依赖旧 authoring GitHub
-- [ ] 复制用户 `.env` 到本地 credentials 位置，不提交
-- [x] 拉取 002 environment/verifier images
-- [ ] Pier 完成 120 秒短测
-- [ ] 固定 selection 支持单题、任意列表、默认 107 和 opt-in 119
-- [ ] 失败可按 task/trial 精确重试，不重新抽样
+- [x] Exact task ids, comma-separated ids, and inclusive ranges are supported.
+- [x] The default non-GPL selection and explicit `--allow-GPL` selection are
+      both reproducible through `selection.json`.
+- [x] Direct Pier commands and the optional `run_batch.py` wrapper are documented.
+- [x] Codex Responses/Chat, Claude Code, and mini-swe-agent profile examples are
+      included without credentials.
+- [x] Results can be inspected with `pier view` or the generated JSON/CSV summary.

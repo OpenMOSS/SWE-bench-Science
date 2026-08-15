@@ -13,13 +13,10 @@ tags:
 
 # SWE-bench Science
 
-> Generated from the canonical 119-row release manifest. All task environment
-> and verifier references point to immutable `linux/amd64` Docker Hub digests.
-
 SWE-bench Science evaluates coding agents on software-engineering problems from
-scientific computing repositories. Each task is paired with an isolated task
-environment and a separate verifier environment. Agent harnesses are selected
-at evaluation time through Pier and are not baked into per-task release images.
+scientific computing repositories. The release contains 119 tasks. Each task
+has an isolated environment image and a separate verifier image, both pinned to
+immutable `linux/amd64` Docker Hub digests.
 
 ## Dataset Summary
 
@@ -30,136 +27,169 @@ at evaluation time through Pier and are not baked into per-task release images.
 | GPL/LGPL/AGPL-family opt-in tasks | 12 |
 | Task environment images | 119 Docker Hub digests |
 | Separate verifier images | 119 Docker Hub digests |
-| linux/amd64 coverage | 119/119 |
+| `linux/amd64` coverage | 119/119 |
 
-Domain, language, license, and verifier-status tables will be generated from
-`data/tasks.csv`; they will not be maintained manually. `UNKNOWN` is retained
-when a sparse upstream source has no machine-detectable license; such rows need
-manual review before final publication.
+The complete generated tables are in [`data/tasks.csv`](data/tasks.csv) and
+[`data/statistics.md`](data/statistics.md). `UNKNOWN` in a license field means
+that the upstream metadata did not expose a machine-detectable license; the
+value is retained explicitly rather than replaced with a guess.
 
-## Task Format
+## What Is In The Dataset
 
-Each row records a stable task id, title, scientific domain, implementation
-language, upstream repository and base commit, source license, GPL-family gate,
-task environment image, verifier image, and local Pier task path.
+The snapshot contains the task table, statistics, fixed selections, thin
+Harbor/Pier task bundles, and the helper tools under `tools/`. It does not
+contain reference-answer patches, credentials, agent trajectories, or private
+verifier tests. The environment image contains the baseline source and public
+dependencies. The verifier image contains held-out tests and the grader.
 
-The downloadable task bundle follows the Harbor-compatible format consumed by
-Pier. The task environment and verifier run in separate containers. A trial
-exports the agent's Git diff as `model.patch`; the verifier applies it to a
-fresh baseline, rebuilds the project, and runs the grading contract offline.
-
-Pier currently runs local task directories rather than downloading this Hugging
-Face dataset directly. The release therefore includes a small materialization
-tool that resolves an explicit selection into a local `tasks-selected/`
-directory before `pier run -p tasks-selected`.
+Pier installs the selected agent harness at evaluation time. Codex, Claude Code,
+mini-swe-agent, and other Pier-supported agents are evaluation configuration,
+not per-task image variants.
 
 ## Quick Start
 
-A clean user can run the following after downloading this private dataset:
+The dataset repository is currently private, so the Hugging Face account must
+have access to `OpenMOSS-Team/SWE-bench-Science`.
 
 ```bash
 python3 -m pip install "huggingface_hub[cli]"
 hf auth login
-hf download <organization>/<dataset-repo> \
+hf download OpenMOSS-Team/SWE-bench-Science \
   --repo-type dataset --local-dir swe-bench-science
 cd swe-bench-science
 
-uv venv --python 3.12 .venv
-uv pip install "git+https://github.com/datacurve-ai/pier.git"
-
-# Default: the fixed 107-task non-GPL selection.
-python3 tools/materialize.py --output tasks-selected
-
-# Arbitrary explicit batch. A GPL-family id still requires --allow-GPL.
-python3 tools/materialize.py --task-id 002 --task-id 019 \
-  --output tasks-selected-small
-
-# Pull both prebuilt images per task as linux/amd64, then run Pier.
-python3 tools/run_batch.py --path tasks-selected-small \
-  --pier-bin .venv/bin/pier --agent nop --n-concurrent 2
+uv tool install "datacurve-pier==0.3.0"
+# Without uv: python3 -m pip install "datacurve-pier==0.3.0"
+docker login
 ```
 
-To materialize all tasks, including the 12 GPL-family tasks:
+Materialize the default 107-task selection:
 
 ```bash
-python3 tools/materialize.py --allow-GPL --output tasks-selected-all
+python3 tools/materialize.py --output tasks-selected --force
 ```
 
-The materializer writes the exact task ids to `selection.json`. The batch runner
-hashes that list, pulls the environment and verifier images, writes a redacted
-`batch-run.json`, and invokes Pier with `--no-force-build --no-delete`. It never
-uses runner-side random sampling. The selected `--platform` is also exported as
-`DOCKER_DEFAULT_PLATFORM` so Pier's ephemeral environment+agent image stays
-compatible with the prebuilt image architecture on an arm64 host.
-
-## Codex Gateway Profile
-
-Keep credentials outside the dataset checkout. Start from
-`profiles/codex.env.example`, place the real profile in a user-only directory,
-and select it per run:
+Materialize a specific list, including inclusive ranges:
 
 ```bash
-python3 tools/run_batch.py --path tasks-selected-small \
-  --pier-bin .venv/bin/pier --agent codex \
-  --env-file ~/.config/swe-bench-science/openai.env \
-  --n-concurrent 2 --n-attempts 1
+python3 tools/materialize.py \
+  --task-id 002,019,030-034 \
+  --output tasks-selected-small --force
 ```
 
-| Field | Purpose |
-| --- | --- |
-| `MODEL` | Model sent to Codex; CLI `--model` overrides it |
-| `OPENAI_API_KEY` | Gateway credential; never written to run metadata |
-| `CODEX_BASE_URL` | Selected relay or OpenAI-compatible endpoint |
-| `CODEX_WIRE_API` | `responses` or `chat` |
-| `CODEX_VERSION` | Installed `@openai/codex` version |
-| `CODEX_REASONING_EFFORT` | Codex reasoning effort |
+GPL-family tasks require the explicit gate:
 
-The runner translates these fields into Pier's native Codex `config_toml` and
-derives the network allowlist from the endpoint. Switching relay, protocol, or
-credential means selecting another env file; task files and images do not
-change. It also uses a runtime-only Codex adapter to install npm's optional
-linux-x64 package correctly; no agent binary is placed in task images. Advanced
-users can disable these defaults with `--no-auto-provider` and
-`--no-auto-agent-adapter`, then pass repeated `--agent-kwarg` / `--agent-env` values directly to Pier.
-Provider-qualified model names are preserved through Codex's
-`command_model_name`; this matters for gateways that route `provider/model-name`
-differently from the unqualified `model-name`. An explicit
-`--agent-kwarg command_model_name=...` still takes precedence.
-For a short smoke, add `--agent-timeout-multiplier 0.0223` (approximately 120
-seconds against the default task timeout); verifier timeout remains separate.
+```bash
+python3 tools/materialize.py \
+  --task-id 003,021,023 --allow-GPL \
+  --output tasks-selected-gpl --force
+```
 
-## Agent Harnesses
+The 12 gated ids are `003, 021, 023, 057, 066, 074, 075, 083, 084, 085,
+100, 118`. The materializer records the exact result in `selection.json`.
 
-Codex, Claude Code, mini-swe-agent, and other Pier-supported harnesses are trial
-configuration. They are not dataset columns and are not published once per
-task. Reproducible evaluation records pin the Pier version, agent/version,
-model/provider configuration, installation fingerprint, and both image digests.
+## Run An Evaluation
 
-## GPL-family Tasks
+Install Pier and run a no-op infrastructure smoke:
 
-The default download selection contains 107 tasks. Use the project download
-tool's explicit `--allow-GPL` option to materialize all 119 tasks. This option
-is a distribution selection and does not replace compliance with the upstream
-license of each source repository.
+```bash
+pier run -p tasks-selected-small \
+  --agent nop --env docker --n-concurrent 1 \
+  --no-force-build --no-delete --yes
+```
 
-## Security and Leakage Policy
+Run Claude Code, Codex, or mini-swe-agent by changing only the harness, model,
+and provider profile:
 
-The dataset does not distribute reference-answer patches, oracle solutions,
-author notes, credentials, or previous agent trajectories. Verifier material is
-never mounted into the agent environment. The verifier disclosure policy is
-pending final confirmation by the dataset owners.
+```bash
+# Claude Code
+pier run -p tasks-selected-small --agent claude-code --env docker \
+  --env-file ~/.config/swe-bench-science/claude.env \
+  --model anthropic/claude-opus-4-7 --n-concurrent 1
 
-## Images
+# Codex, using the Responses API
+pier run -p tasks-selected-small --agent codex --env docker \
+  --env-file ~/.config/swe-bench-science/codex.env \
+  --model openai/gpt-5 --n-concurrent 1
 
-Image references will point to immutable Docker Hub digests after the owners
-provide the final namespace and complete per-task validation. Blank image fields
-mean unpublished, not "use a default image".
+# mini-swe-agent
+pier run -p tasks-selected-small --agent mini-swe-agent --env docker \
+  --env-file ~/.config/swe-bench-science/mini-swe-agent.env \
+  --model openai/gpt-5 --n-concurrent 1
+```
 
-## Citation
+The repository also provides an optional wrapper that pre-pulls every immutable
+image and writes a flat summary:
 
-Pending the final paper citation.
+```bash
+python3 tools/run_batch.py \
+  --path tasks-selected-small \
+  --agent codex \
+  --env-file ~/.config/swe-bench-science/codex.env \
+  --n-concurrent 2 --n-attempts 1 \
+  --jobs-dir jobs --job-name codex-small
+```
 
-## License
+For a short agent smoke, add
+`--agent-timeout-multiplier 0.0223` (approximately 120 seconds against the
+default task timeout). This only limits the agent stage; scientific verifier
+builds and tests retain their own timeout.
 
-Dataset metadata license: pending owner confirmation. Each task row records the
-license of its upstream source repository separately.
+## Provider Profiles
+
+The examples in [`profiles/`](profiles/) are templates only. Copy them outside
+the checkout and set permissions to `600`:
+
+```bash
+mkdir -p ~/.config/swe-bench-science
+cp profiles/codex.env.example ~/.config/swe-bench-science/codex.env
+cp profiles/claude.env.example ~/.config/swe-bench-science/claude.env
+cp profiles/mini-swe-agent.env.example ~/.config/swe-bench-science/mini-swe-agent.env
+chmod 600 ~/.config/swe-bench-science/*.env
+```
+
+For Codex, set `MODEL`, `OPENAI_API_KEY`, `CODEX_BASE_URL`,
+`CODEX_WIRE_API=responses|chat`, `CODEX_VERSION`, and
+`CODEX_REASONING_EFFORT`. `CODEX_WIRE_API=responses` selects the OpenAI
+Responses API; `chat` selects Chat Completions. For Claude Code, set
+`ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_BASE_URL`, and optional
+`ANTHROPIC_CUSTOM_HEADERS`. mini-swe-agent uses the provider variables expected
+by its selected model adapter, commonly `OPENAI_API_KEY` and
+`OPENAI_BASE_URL`.
+
+The credential file is read by Pier at runtime. It is not written to task
+metadata, Dockerfiles, image layers, or result summaries.
+
+## Results
+
+Pier writes one aggregate result and one trial directory per task/attempt:
+
+```text
+jobs/<job-name>/result.json
+jobs/<job-name>/<task>__<trial>/verifier/reward.json
+jobs/<job-name>/<task>__<trial>/verifier/ctrf.json
+jobs/<job-name>/<task>__<trial>/verifier/test-stdout.txt
+```
+
+The wrapper additionally writes `jobs/summary.json` and `jobs/summary.csv`. For
+direct Pier runs, generate them with:
+
+```bash
+python3 tools/summarize_results.py --jobs-dir jobs
+```
+
+Use `pier view jobs` to inspect trajectories. Check `result.json`,
+`reward.json`, and `test-stdout.txt` together when an agent times out or a
+candidate fails.
+
+## Reproducibility And Licensing
+
+`selection.json` records the exact task ids. Each row in `data/tasks.csv` records
+the upstream repository, base commit, implementation language, source license,
+environment digest, and verifier digest. The project tools and metadata follow
+the release repository's MIT terms; task source and fixtures retain their
+upstream licenses, as documented in `NOTICE.md` in the GitHub release repository.
+
+The dataset is independent of GitHub at runtime. After this snapshot is
+downloaded, task materialization and evaluation use the local bundle plus Docker
+Hub image digests; no task definition is fetched from the authoring repository.

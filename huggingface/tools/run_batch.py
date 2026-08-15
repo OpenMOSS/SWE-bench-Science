@@ -18,6 +18,11 @@ except ImportError:  # Direct execution: python3 scripts/run_batch.py
     from provider_config import parse_dotenv, render_codex_config, resolve_codex_profile
 
 try:
+    from .summarize_results import write_summary
+except ImportError:  # Direct execution: python3 scripts/run_batch.py
+    from summarize_results import write_summary
+
+try:
     import tomllib
 except ModuleNotFoundError:  # Python 3.10 and earlier
     try:
@@ -93,9 +98,26 @@ def redacted_command(command: list[str]) -> str:
             redacted.extend([value, "config_toml=<provider-config>"])
             index += 2
             continue
+        if "=" in value:
+            key = value.split("=", 1)[0].lower()
+            if any(marker in key for marker in ("key", "token", "secret", "password", "authorization")):
+                redacted.append(key + "=<redacted>")
+                index += 1
+                continue
         redacted.append(value)
         index += 1
     return shlex.join(redacted)
+
+
+def pier_version(pier_bin: str) -> str | None:
+    try:
+        completed = subprocess.run(
+            [pier_bin, "--version"], capture_output=True, text=True, check=False
+        )
+    except OSError:
+        return None
+    value = (completed.stdout or completed.stderr).strip()
+    return value or None
 
 
 def main() -> int:
@@ -205,6 +227,12 @@ def main() -> int:
         "selection_sha256": selection["selection_sha256"],
         "image_refs": image_refs,
         "platform": args.platform,
+        "agent": args.agent,
+        "models": models,
+        "n_concurrent": args.n_concurrent,
+        "n_attempts": args.n_attempts,
+        "max_retries": args.max_retries,
+        "pier_version": pier_version(args.pier_bin),
         "pier_command": redacted_command(command),
         "agent_import_path": agent_import_path,
         "provider": provider_metadata,
@@ -223,7 +251,13 @@ def main() -> int:
     pier_environment["PYTHONPATH"] = os.pathsep.join(
         value for value in (tool_root, existing_pythonpath) if value
     )
-    return subprocess.run(command, check=False, env=pier_environment).returncode
+    returncode = subprocess.run(command, check=False, env=pier_environment).returncode
+    try:
+        summary_json, summary_csv = write_summary(args.jobs_dir)
+        print(json.dumps({"summary_json": str(summary_json), "summary_csv": str(summary_csv)}, indent=2))
+    except (OSError, ValueError) as exc:
+        print(f"warning: unable to write result summary: {exc}", file=sys.stderr)
+    return returncode
 
 
 if __name__ == "__main__":

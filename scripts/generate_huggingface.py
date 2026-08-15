@@ -105,13 +105,21 @@ def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
     shutil.copy2(ROOT / "manifests" / "tasks.jsonl", manifest_dir / "tasks.jsonl")
     tools_dir = output_root / "tools"
     tools_dir.mkdir(parents=True, exist_ok=True)
-    for script in ("materialize.py", "provider_config.py", "pier_adapters.py", "run_batch.py"):
+    for script in (
+        "materialize.py", "provider_config.py", "pier_adapters.py", "run_batch.py",
+        "summarize_results.py",
+    ):
         shutil.copy2(ROOT / "scripts" / script, tools_dir / script)
     profiles_dir = output_root / "profiles"
     profiles_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy2(
         ROOT / "profiles" / "codex.env.example",
         profiles_dir / "codex.env.example",
+    )
+    shutil.copy2(ROOT / "profiles" / "claude.env.example", profiles_dir / "claude.env.example")
+    shutil.copy2(
+        ROOT / "profiles" / "mini-swe-agent.env.example",
+        profiles_dir / "mini-swe-agent.env.example",
     )
 
 
