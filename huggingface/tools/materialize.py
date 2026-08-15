@@ -24,6 +24,16 @@ def load_rows() -> list[dict[str, object]]:
     return [json.loads(line) for line in (ROOT / "manifests" / "tasks.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def task_source(task_path: str, *, root: Path = ROOT) -> Path:
+    source = root / task_path
+    if source.is_dir():
+        return source
+    snapshot_source = root / "huggingface" / task_path
+    if snapshot_source.is_dir():
+        return snapshot_source
+    raise FileNotFoundError(f"task bundle is absent from local and HF snapshots: {task_path}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "tasks-selected")
@@ -51,7 +61,7 @@ def main() -> int:
         shutil.rmtree(args.output)
     args.output.mkdir(parents=True)
     for row in rows:
-        source = ROOT / str(row["task_path"])
+        source = task_source(str(row["task_path"]))
         destination = args.output / source.name
         if args.include_build_context:
             if not (source / "environment" / "repo").is_dir():

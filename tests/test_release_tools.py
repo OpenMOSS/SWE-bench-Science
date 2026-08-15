@@ -7,7 +7,7 @@ from pathlib import Path
 
 from scripts.generate_huggingface import GPL_IDS, load_rows, write_selection
 from scripts.import_task import base_image_for, dependency_lines, normalize_task_id
-from scripts.materialize import normalize_task_id as normalize_materialized_task_id
+from scripts.materialize import normalize_task_id as normalize_materialized_task_id, task_source
 from scripts.provider_config import render_codex_config, resolve_codex_profile
 from scripts.run_batch import redacted_command, task_dirs
 from scripts.validate_release import validate
@@ -44,6 +44,13 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertEqual(normalize_materialized_task_id("2"), "002")
         with self.assertRaises(ValueError):
             normalize_materialized_task_id("120")
+
+    def test_materializer_falls_back_to_committed_hf_snapshot(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            snapshot = root / "huggingface" / "tasks" / "task_002"
+            snapshot.mkdir(parents=True)
+            self.assertEqual(task_source("tasks/task_002", root=root), snapshot)
 
     def test_dependency_extractor_ignores_python_stdlib_names(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
