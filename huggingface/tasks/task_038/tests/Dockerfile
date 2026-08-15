@@ -1,2 +1,2 @@
-ARG VERIFIER_IMAGE=science-bench-task-verifier-pending:canary
+ARG VERIFIER_IMAGE=docker.io/kevinxulearning/swe-bench-science-verifier-c-task-038:v0.1.0@sha256:511507351b10162103c5f48282142f8b767230784456e9952c943657beddb7a9
 FROM ${VERIFIER_IMAGE}

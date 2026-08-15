@@ -13,8 +13,8 @@ tags:
 
 # SWE-bench Science
 
-> Generated from the canonical 119-row release manifest. Image references remain
-> blank until the Docker Hub namespace and immutable digests are supplied.
+> Generated from the canonical 119-row release manifest. All task environment
+> and verifier references point to immutable `linux/amd64` Docker Hub digests.
 
 SWE-bench Science evaluates coding agents on software-engineering problems from
 scientific computing repositories. Each task is paired with an isolated task
@@ -28,9 +28,9 @@ at evaluation time through Pier and are not baked into per-task release images.
 | Total tasks | 119 |
 | Default non-GPL-family tasks | 107 |
 | GPL/LGPL/AGPL-family opt-in tasks | 12 |
-| Task environment images | 1 local canary / 118 pending |
-| Separate verifier images | 1 local canary / 118 pending |
-| linux/amd64 coverage | pending |
+| Task environment images | 119 Docker Hub digests |
+| Separate verifier images | 119 Docker Hub digests |
+| linux/amd64 coverage | 119/119 |
 
 Domain, language, license, and verifier-status tables will be generated from
 `data/tasks.csv`; they will not be maintained manually. `UNKNOWN` is retained
@@ -55,7 +55,7 @@ directory before `pier run -p tasks-selected`.
 
 ## Quick Start
 
-After the image columns contain final Docker Hub digests, a clean user can run:
+A clean user can run the following after downloading this private dataset:
 
 ```bash
 python3 -m pip install "huggingface_hub[cli]"

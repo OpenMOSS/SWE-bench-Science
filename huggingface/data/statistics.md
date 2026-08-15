@@ -2,7 +2,7 @@
 
 Canonical rows: **119**; default non-GPL rows: **107**; GPL-family rows: **12**.
 
-Environment image references: **1/119**; verifier image references: **1/119**.
+Environment image references: **119/119**; verifier image references: **119/119**.
 
 ### Domain
 

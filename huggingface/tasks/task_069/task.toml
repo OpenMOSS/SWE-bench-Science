@@ -17,7 +17,7 @@ network_mode = "no-network"
 timeout_sec = 5400.0
 
 [environment]
-docker_image = "science-bench-task-environment-pending:canary"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-python-task-069:v0.1.0@sha256:104bacda92f0419c80454a4bd632d472b6ef53ac89c24c176266d226c3bfd7ba"
 os = "linux"
 allow_internet = false
 cpus = 2
@@ -31,7 +31,7 @@ environment_mode = "separate"
 timeout_sec = 1800.0
 
 [verifier.environment]
-docker_image = "science-bench-task-verifier-pending:canary"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-python-task-069:v0.1.0@sha256:d879cd88dc547a45e25105bb4aec34c8c1acaf22d97bc858719692283e547819"
 os = "linux"
 allow_internet = false
 cpus = 2

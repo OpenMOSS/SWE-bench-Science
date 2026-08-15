@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
+import time
 from pathlib import Path
 
 
@@ -43,12 +45,31 @@ def run(command: list[str], *, capture: bool = False) -> str:
     completed = subprocess.run(
         command,
         cwd=ROOT,
+        env=host_network_env(),
         check=True,
         text=True,
         stdout=subprocess.PIPE if capture else None,
         stderr=subprocess.STDOUT if capture else None,
     )
     return (completed.stdout or "").strip()
+
+
+def host_network_env() -> dict[str, str]:
+    """Translate Docker's host alias for commands executed on macOS itself."""
+    env = os.environ.copy()
+    for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
+        value = env.get(name)
+        if value:
+            env[name] = value.replace("host.docker.internal", "127.0.0.1")
+    return env
+
+
+def registry_network_env() -> dict[str, str]:
+    """Use the direct campus route for Docker Hub registry operations."""
+    env = host_network_env()
+    for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
+        env.pop(name, None)
+    return env
 
 
 def ensure_builder(name: str) -> None:
@@ -94,14 +115,20 @@ def inspect_platform(reference: str, digest: str) -> None:
     # limitation). Keep this probe diagnostic rather than turning a completed
     # push into a failed batch: the push digest plus the local architecture
     # check above are the release invariants.
-    probe = subprocess.run(
-        ["docker", "buildx", "imagetools", "inspect", f"{reference}@{digest}"],
-        cwd=ROOT,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        check=False,
-    )
+    try:
+        probe = subprocess.run(
+            ["docker", "buildx", "imagetools", "inspect", f"{reference}@{digest}"],
+            cwd=ROOT,
+            env=registry_network_env(),
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=False,
+            timeout=20,
+        )
+    except subprocess.TimeoutExpired as exc:
+        print(f"! remote inspect timed out for {reference}@{digest}: {exc}", flush=True)
+        return
     if probe.returncode != 0:
         print(f"! remote inspect unavailable for {reference}@{digest}: {probe.stdout.strip()}", flush=True)
     elif digest not in probe.stdout:
@@ -137,6 +164,13 @@ def build_push(
     ]
     for value in build_args:
         command.extend(["--build-arg", value])
+    # BuildKit recognizes these proxy build args without Dockerfile changes.
+    # Pass through only explicitly configured values so normal/offline builds
+    # keep their existing behavior and credentials are never invented here.
+    for name in ("HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "http_proxy", "https_proxy", "no_proxy"):
+        value = os.environ.get(name)
+        if value:
+            command.extend(["--build-arg", f"{name}={value}"])
     command.extend(["--file", str(dockerfile), str(context)])
     run(command)
     local_platform = run(
@@ -152,7 +186,7 @@ def build_push(
     ).strip()
     if local_platform != "linux/amd64":
         raise RuntimeError(f"built image is not linux/amd64: {reference} -> {local_platform}")
-    push_output = run(["docker", "push", reference], capture=True)
+    push_output = push_with_retry(reference)
     match = re.search(r"digest:\s*(sha256:[0-9a-f]{64})", push_output)
     if not match:
         raise RuntimeError(f"docker push did not return a digest for {reference}: {push_output}")
@@ -163,6 +197,36 @@ def build_push(
     )
     inspect_platform(reference, digest)
     return digest
+
+
+def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int = 600) -> str:
+    """Retry transient registry failures without rebuilding the local image."""
+    for attempt in range(1, attempts + 1):
+        try:
+            print("+ direct Docker Hub route", flush=True)
+            completed = subprocess.run(
+                ["docker", "push", reference],
+                cwd=ROOT,
+                env=registry_network_env(),
+                check=True,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                timeout=timeout_seconds,
+            )
+            return (completed.stdout or "").strip()
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            output = (getattr(exc, "stdout", "") or "").strip()
+            if isinstance(exc, subprocess.TimeoutExpired):
+                output = f"push timed out after {timeout_seconds}s; {output}"
+            print(
+                f"! docker push attempt {attempt}/{attempts} failed for {reference}: {output[-800:]}",
+                flush=True,
+            )
+            if attempt == attempts:
+                raise
+            time.sleep(5 * attempt)
+    raise AssertionError("unreachable")
 
 
 def update_manifest(task_id: str, *, env_ref: str, env_digest: str, verifier_ref: str, verifier_digest: str) -> None:

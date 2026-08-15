@@ -5,9 +5,9 @@
 
 这是 **SWE-bench Science** 的独立发布整理仓库。它从旧 authoring 仓库读取公开
 题目和私测，生成不带旧 Git 历史的发布 task bundle、Hugging Face 表格和按题目
-分离的 environment/verifier 构建上下文。当前已导入 119 道题，002 有一个本地
-`linux/amd64` canary 镜像对；其余镜像字段保持空白，等待 Docker Hub 命名空间和
-逐题构建验收。
+分离的 environment/verifier 构建上下文。当前已导入 119 道题，119 个
+`linux/amd64` environment 镜像和 119 个 verifier 镜像均已发布到 Docker Hub，
+并在 manifest 中固定为 immutable digest。
 
 OpenMOSS GitHub 仓库只承担工具版本管理、构建审阅和发布控制面，不成为 HF 数据集
 运行时下载源码的依赖。完整题目源码和私有测试仍只用于本地 staging 与 Docker
@@ -56,10 +56,9 @@ Pier 的 Docker backend 可能在评测机上临时派生
 
 ## 当前阶段
 
-当前阶段是 `batch-publish`：发布架构已冻结，119 个公开 task bundle 已导入，002
-的 environment/verifier 已推送到 Docker Hub 并按 digest 运行过 no-op verifier。
-正式发布仍需完成许可证复核、其余 Docker Hub digest、HF private dataset 上传和
-干净用户验收。
+当前阶段是 `release-ready`：119 个公开 task bundle、12 个 GPL-family 标记、
+119 个 Docker Hub environment/verifier digest 和 HF Viewer 表格均已生成，并已
+通过发布边界校验。HF dataset 上传后即可按本文档进行干净用户验收。
 
 ## 开箱使用
 

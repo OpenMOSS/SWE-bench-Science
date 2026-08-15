@@ -1,15 +1,24 @@
 ARG BASE_IMAGE=python:3.11-slim
 FROM ${BASE_IMAGE}
 
+ARG DEBIAN_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/debian
+ARG DEBIAN_SECURITY_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/debian-security
+ARG PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 ARG INSTALL_FORTRAN=0
 ARG INSTALL_OCTAVE=0
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_INDEX_URL=${PIP_INDEX_URL} \
     PIP_NO_CACHE_DIR=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN sed -i \
+        -e "s|http://deb.debian.org/debian-security|${DEBIAN_SECURITY_MIRROR}|g" \
+        -e "s|http://deb.debian.org/debian|${DEBIAN_MIRROR}|g" \
+        /etc/apt/sources.list.d/debian.sources
+
+RUN apt-get -o Acquire::Retries=10 update \
+    && apt-get -o Acquire::Retries=10 install -y --no-install-recommends \
         build-essential \
         ca-certificates \
         curl \
@@ -18,13 +27,13 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN if [ "${INSTALL_FORTRAN}" = "1" ]; then \
-        apt-get update \
-        && apt-get install -y --no-install-recommends gfortran \
+        apt-get -o Acquire::Retries=10 update \
+        && apt-get -o Acquire::Retries=10 install -y --no-install-recommends gfortran \
         && rm -rf /var/lib/apt/lists/*; \
     fi \
     && if [ "${INSTALL_OCTAVE}" = "1" ]; then \
-        apt-get update \
-        && apt-get install -y --no-install-recommends octave \
+        apt-get -o Acquire::Retries=10 update \
+        && apt-get -o Acquire::Retries=10 install -y --no-install-recommends octave \
         && rm -rf /var/lib/apt/lists/*; \
     fi
 
@@ -34,7 +43,17 @@ COPY public/ /app/task_074/
 COPY requirements.lock /app/task_074/requirements.lock
 
 RUN python -m pip install --no-cache-dir --upgrade pip \
-    && python -m pip install --no-cache-dir -r requirements.lock
+    && env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY \
+       -u http_proxy -u https_proxy -u all_proxy \
+       python -m pip install --no-cache-dir \
+        --index-url https://download.pytorch.org/whl/cpu \
+        torch==2.5.1+cpu \
+    && python -m pip install --no-cache-dir -r requirements.lock \
+    && env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY \
+       -u http_proxy -u https_proxy -u all_proxy \
+       python -m pip install --no-cache-dir \
+        --find-links https://data.pyg.org/whl/torch-2.5.0+cpu.html \
+        torch-scatter==2.1.2
 ENV PYTHONPATH=/app/task_074:/app/task_074/source
 
 RUN git init \

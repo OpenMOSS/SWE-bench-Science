@@ -17,7 +17,7 @@ network_mode = "no-network"
 timeout_sec = 5400.0
 
 [environment]
-docker_image = "science-bench-task-environment-pending:canary"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-matlab-octave-task-015:v0.1.0@sha256:b7ff9bd36cb3192e650ec44bf8e67c759a2082b0c7e4e75ed482995d476ba25b"
 os = "linux"
 allow_internet = false
 cpus = 2
@@ -31,7 +31,7 @@ environment_mode = "separate"
 timeout_sec = 1800.0
 
 [verifier.environment]
-docker_image = "science-bench-task-verifier-pending:canary"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-matlab-octave-task-015:v0.1.0@sha256:c177454ee8a6507ed2decf46b803a405d92b326da3d7de660197e125ff273699"
 os = "linux"
 allow_internet = false
 cpus = 2

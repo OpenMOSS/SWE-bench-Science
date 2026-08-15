@@ -25,10 +25,10 @@
 
 ## C. 全量镜像
 
-- [ ] 119 个 environment digests
-- [ ] 119 个 verifier digests
-- [ ] verifier 的 base digest 与对应 environment 完全匹配
-- [ ] 所有常规镜像为 amd64；例外有书面记录
+- [x] 119 个 environment digests
+- [x] 119 个 verifier digests
+- [x] verifier 的 base digest 与对应 environment 完全匹配
+- [x] 所有常规镜像为 amd64；例外有书面记录
 - [ ] 每题有 build log、SBOM、source/config fingerprint
 - [ ] 镜像扫描无 secret、answer patch、agent harness 泄漏
 - [ ] 不发布 `task-agent` 或 `119 x n` harness 镜像
@@ -37,11 +37,11 @@
 
 - [ ] private dataset display title 为 `SWE-bench Science`
 - [ ] Dataset Viewer 显示 119 行
-- [ ] 统计表由 canonical rows 自动生成
-- [ ] `default-107.json` 和 `all-119.json` 内容及 hash 正确
-- [ ] task bundle 可下载到本地并由 Pier 读取
-- [ ] image fields 使用最终 Docker Hub digest
-- [ ] 无 solution/reference patch、密钥、旧运行输出
+- [x] 统计表由 canonical rows 自动生成
+- [x] `default-107.json` 和 `all-119.json` 内容及 hash 正确
+- [x] task bundle 可下载到本地并由 Pier 读取
+- [x] image fields 使用最终 Docker Hub digest
+- [x] 无 solution/reference patch、密钥、旧运行输出
 - [ ] dataset card 写明 license 与 GPL 入口
 
 ## E. 干净用户验收

@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from scripts.generate_huggingface import GPL_IDS, load_rows, write_selection
-from scripts.import_task import normalize_task_id
+from scripts.import_task import base_image_for, dependency_lines, normalize_task_id
 from scripts.materialize import normalize_task_id as normalize_materialized_task_id
 from scripts.provider_config import render_codex_config, resolve_codex_profile
 from scripts.run_batch import redacted_command, task_dirs
@@ -44,6 +44,31 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertEqual(normalize_materialized_task_id("2"), "002")
         with self.assertRaises(ValueError):
             normalize_materialized_task_id("120")
+
+    def test_dependency_extractor_ignores_python_stdlib_names(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory)
+            (source / "requirements.txt").write_text(
+                "collections\nfunctools\nitertools\nnumpy>=2\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(dependency_lines(source, task_id="034", language="python"), ["numpy>=2", "pytest==8.3.5"])
+
+    def test_dependency_parser_preserves_markers_and_python_floor(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory)
+            (source / "pyproject.toml").write_text(
+                "requires-python = '>=3.12'\n"
+                "dependencies = [\n"
+                "  \"importlib-resources; python_version < '3.12'\",\n"
+                "]\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(base_image_for(source, "python"), "python:3.12-slim")
+            self.assertEqual(
+                dependency_lines(source, task_id="039", language="python"),
+                ["importlib-resources; python_version < '3.12'", "pytest==8.3.5"],
+            )
 
     def test_batch_runner_accepts_single_task_and_redacts_agent_env(self) -> None:
         root = Path(__file__).resolve().parents[1] / "tasks" / "task_002"

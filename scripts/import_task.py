@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import json
 import re
@@ -16,6 +17,58 @@ TASKS_ROOT = ROOT / "tasks"
 STAGING_ROOT = ROOT / "staging"
 TEMPLATES_ROOT = ROOT / "templates"
 MANIFEST_PATH = ROOT / "manifests" / "tasks.jsonl"
+PYTHON_STDLIB_DEPENDENCIES = {
+    "argparse",
+    "ast",
+    "asyncio",
+    "base64",
+    "collections",
+    "contextlib",
+    "copy",
+    "csv",
+    "dataclasses",
+    "datetime",
+    "functools",
+    "glob",
+    "hashlib",
+    "heapq",
+    "importlib",
+    "inspect",
+    "io",
+    "itertools",
+    "json",
+    "logging",
+    "math",
+    "multiprocessing",
+    "operator",
+    "os",
+    "pathlib",
+    "pickle",
+    "platform",
+    "pprint",
+    "random",
+    "re",
+    "shutil",
+    "sqlite3",
+    "statistics",
+    "string",
+    "subprocess",
+    "sys",
+    "tempfile",
+    "threading",
+    "time",
+    "traceback",
+    "typing",
+    "unittest",
+    "urllib",
+    "uuid",
+    "warnings",
+    "xml",
+    "zipfile",
+}
+PYTHON_STDLIB_DEPENDENCIES_NORMALIZED = {
+    name.replace("_", "-") for name in PYTHON_STDLIB_DEPENDENCIES
+}
 GPL_IDS = {
     "003", "021", "023", "057", "066", "074", "075", "083", "084", "085", "100", "118"
 }
@@ -132,14 +185,28 @@ def render_template(
         destination.chmod(0o755)
 
 
-def base_image_for(_language: str) -> str:
+def base_image_for(source: Path, _language: str) -> str:
     """Return the common amd64-capable base used for all language families.
 
     Python is the benchmark orchestration layer even for native projects. The
     image also installs C/C++/Fortran build tools, so source extensions can be
     rebuilt inside the task environment instead of relying on host binaries.
     """
-    return "python:3.11-slim"
+    requires_python = ""
+    pyproject = source / "pyproject.toml"
+    if pyproject.is_file():
+        match = re.search(r"requires-python\s*=\s*[\"']([^\"']+)", pyproject.read_text(encoding="utf-8", errors="replace"))
+        if match:
+            requires_python = match.group(1).replace(" ", "")
+    # Keep the release on stable CPython minors while satisfying declared
+    # lower/upper bounds. The task source remains the authority here.
+    if re.search(r"(?:>=|~=)3\.12", requires_python):
+        minor = "3.12"
+    elif re.search(r"(?:<|<=)3\.11", requires_python) and not re.search(r"(?:>=|~=)3\.11", requires_python):
+        minor = "3.10"
+    else:
+        minor = "3.11"
+    return f"python:{minor}-slim"
 
 
 def install_octave_for(language: str) -> bool:
@@ -166,7 +233,9 @@ def dependency_lines(source: Path, *, task_id: str, language: str) -> list[str]:
         for raw in requirements.read_text(encoding="utf-8", errors="replace").splitlines():
             value = raw.strip()
             if value and not value.startswith("#") and not value.startswith(("-e ", "--")):
-                lines.append(value)
+                dependency_name = value.lower().replace("_", "-")
+                if dependency_name not in PYTHON_STDLIB_DEPENDENCIES_NORMALIZED:
+                    lines.append(value)
 
     # A dependency list in pyproject is simple enough to parse without adding
     # a host-side TOML dependency; full build metadata stays inside the image.
@@ -181,9 +250,21 @@ def dependency_lines(source: Path, *, task_id: str, language: str) -> list[str]:
             if in_dependencies and value.startswith("]"):
                 break
             if in_dependencies:
-                match = re.match(r"[\\\"']([^\\\"']+)[\\\"']", value.rstrip(","))
-                if match:
-                    lines.append(match.group(1))
+                dependency = ""
+                literal = value.split("#", 1)[0].rstrip(",").strip()
+                try:
+                    parsed = ast.literal_eval(literal)
+                except (SyntaxError, ValueError):
+                    match = re.match(r"[\\\"']([^\\\"']+)[\\\"']", literal)
+                    if match:
+                        dependency = match.group(1)
+                else:
+                    if isinstance(parsed, str):
+                        dependency = parsed
+                if dependency:
+                    dependency_name = dependency.lower().replace("_", "-")
+                    if dependency_name not in PYTHON_STDLIB_DEPENDENCIES_NORMALIZED:
+                        lines.append(dependency)
 
     # The verifier entrypoint is pytest-based for every language family,
     # including native and Octave tasks, so keep the runner dependency explicit.
@@ -305,7 +386,7 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         environment_dir / "Dockerfile",
         task_id=task_id,
         replacements={
-            "ARG BASE_IMAGE=python:3.11-slim": f"ARG BASE_IMAGE={base_image_for(language)}",
+            "ARG BASE_IMAGE=python:3.11-slim": f"ARG BASE_IMAGE={base_image_for(public_source / 'source', language)}",
             "ARG INSTALL_FORTRAN=0": f"ARG INSTALL_FORTRAN={int(install_fortran_for(language))}",
             "ARG INSTALL_OCTAVE=0": f"ARG INSTALL_OCTAVE={int(install_octave_for(language))}",
         },
