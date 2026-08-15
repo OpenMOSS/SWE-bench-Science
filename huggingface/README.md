@@ -107,11 +107,6 @@ pier run -p tasks-selected-small --agent claude-code --env docker \
   --env-file ~/.config/swe-bench-science/claude.env \
   --model anthropic/claude-opus-4-7 --n-concurrent 1
 
-# Codex, using the Responses API
-pier run -p tasks-selected-small --agent codex --env docker \
-  --env-file ~/.config/swe-bench-science/codex.env \
-  --model openai/gpt-5 --n-concurrent 1
-
 # mini-swe-agent
 pier run -p tasks-selected-small --agent mini-swe-agent --env docker \
   --env-file ~/.config/swe-bench-science/mini-swe-agent.env \
@@ -158,7 +153,9 @@ by its selected model adapter, commonly `OPENAI_API_KEY` and
 `OPENAI_BASE_URL`.
 
 The credential file is read by Pier at runtime. It is not written to task
-metadata, Dockerfiles, image layers, or result summaries.
+metadata, Dockerfiles, image layers, or result summaries. For Codex profiles
+using `CODEX_BASE_URL` or `CODEX_WIRE_API`, use `tools/run_batch.py`: it
+translates those fields into the Codex `config_toml` required by the gateway.
 
 ## Results
 

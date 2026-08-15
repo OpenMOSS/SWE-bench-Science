@@ -116,11 +116,6 @@ pier run -p tasks-selected-small \
   --agent claude-code --env docker --env-file ~/.config/swe-bench-science/claude.env \
   --model anthropic/claude-opus-4-7 --n-concurrent 1
 
-# Codex
-pier run -p tasks-selected-small \
-  --agent codex --env docker --env-file ~/.config/swe-bench-science/codex.env \
-  --model openai/gpt-5 --n-concurrent 1
-
 # mini-swe-agent
 pier run -p tasks-selected-small \
   --agent mini-swe-agent --env docker \
@@ -130,7 +125,9 @@ pier run -p tasks-selected-small \
 
 The agent name and model name are independent. `--agent` selects the harness;
 `--model` selects the model/provider route. `--env-file` is loaded by Pier and
-is never copied into a task image.
+is never copied into a task image. For Codex profiles using `CODEX_BASE_URL` or
+`CODEX_WIRE_API`, use the wrapper below: it translates those fields into the
+Codex `config_toml` required by the gateway.
 
 ## Use The Convenience Runner
 
