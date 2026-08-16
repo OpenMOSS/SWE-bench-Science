@@ -153,7 +153,7 @@ Use `pier view jobs` to inspect trajectories. When diagnosing a failure, inspect
 
 ## Data And Licensing
 
-The Hugging Face dataset contains task metadata and thin task bundles. It does not contain reference-answer patches, credentials, agent trajectories, or private verifier tests. The canonical table is [`huggingface/data/tasks.csv`](huggingface/data/tasks.csv); the dataset's `data/train-00000-of-00001.parquet` is the Dataset Viewer entry point for the same table.
+The Hugging Face dataset contains task metadata and thin task bundles. It does not contain reference-answer patches, credentials, agent trajectories, or private verifier tests. The canonical table is [`huggingface/data/tasks.csv`](huggingface/data/tasks.csv). Hugging Face Dataset Viewer reads this CSV and generates its preview automatically; no checked-in Parquet copy is required.
 
 The project tools and documentation are released under the root MIT license. Task source, papers, figures, fixtures, and other third-party materials retain their upstream licenses. Audited material notices are included in the task bundles where applicable and summarized in [`NOTICE.md`](NOTICE.md).
 

@@ -36,7 +36,7 @@ SWE-bench Science evaluates coding agents on software-engineering tasks drawn fr
 
 ## Dataset Viewer And Files
 
-The Dataset Viewer table is backed by [`data/train-00000-of-00001.parquet`](data/train-00000-of-00001.parquet). It contains the same 119 rows as the canonical CSV export [`data/tasks.csv`](data/tasks.csv).
+The Dataset Viewer reads the canonical [`data/tasks.csv`](data/tasks.csv) table and generates its preview automatically. The release does not commit a duplicate Parquet export, so the CSV remains the single source of truth for the 119 task rows.
 
 The repository also includes:
 
