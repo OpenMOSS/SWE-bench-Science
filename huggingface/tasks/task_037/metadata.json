@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/nipy/nibabel",
   "source_commit": "5d10c5b8bb09576e24e9d316da1019fb909d7d32",
   "source_license": "MIT AND BSD-3-Clause",
-  "license_source": "COPYING",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",

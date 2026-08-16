@@ -17,7 +17,7 @@ network_mode = "no-network"
 timeout_sec = 5400.0
 
 [environment]
-docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-python-task-119:v0.1.1@sha256:2259431fe6b24ca89cb78517fc0882c2143c9bc1eb1846a3cb451b43d3eae3b5"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-python-task-119:v0.1.1@sha256:8b00c65ff5119f0b545cb71b624faa2a311ec0b91077f9a8e8948b0c114ffb19"
 os = "linux"
 allow_internet = false
 cpus = 2

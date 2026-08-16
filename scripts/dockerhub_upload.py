@@ -46,10 +46,21 @@ def token(repository: str, mount_from: tuple[str, ...] = ()) -> str:
     ]
     query_items.extend(("scope", f"repository:{source}:pull") for source in mount_from)
     query = urllib.parse.urlencode(query_items)
-    status, _, body = http(
-        f"https://auth.docker.io/token?{query}",
-        headers={"Authorization": f"Basic {basic}"},
-    )
+    last_error = None
+    for attempt in range(5):
+        try:
+            status, _, body = http(
+                f"https://auth.docker.io/token?{query}",
+                headers={"Authorization": f"Basic {basic}"},
+            )
+            break
+        except urllib.error.URLError as exc:
+            last_error = exc
+            if attempt == 4:
+                raise
+            time.sleep(2 * (attempt + 1))
+    else:
+        raise RuntimeError(f"Docker Hub token request failed: {last_error}")
     if status != 200:
         raise RuntimeError(f"Docker Hub token request failed ({status}): {body[:300]!r}")
     return str(json.loads(body)["token"])
