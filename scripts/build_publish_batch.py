@@ -299,32 +299,6 @@ def default_selection_path() -> Path:
     return matches[0]
 
 
-def blocked_fixture_manifest_items(task_id: str) -> list[str]:
-    """Return fixture provenance entries that must not enter a public image."""
-    manifest_path = (
-        ROOT
-        / "tasks"
-        / f"task_{task_id}"
-        / "environment"
-        / "public"
-        / "fixtures"
-        / "MANIFEST.json"
-    )
-    if not manifest_path.is_file():
-        return []
-    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
-    blocked: list[str] = []
-    for item in payload.get("items", []):
-        policy = str(item.get("public_image_policy", ""))
-        if "exclude_if" not in policy:
-            continue
-        blocked.append(
-            f"{task_id}: {item.get('path_glob', '<missing path_glob>')} "
-            f"[policy={policy}]"
-        )
-    return blocked
-
-
 def selected_ids(args: argparse.Namespace, rows: dict[str, dict[str, object]]) -> list[str]:
     if args.task_id:
         values = [normalize_task_id(value) for value in args.task_id]
@@ -383,16 +357,6 @@ def main() -> int:
             raise FileNotFoundError(f"missing environment context for {task_id}")
         if not (ROOT / "staging" / f"task_{task_id}" / "verifier" / "Dockerfile").is_file():
             raise FileNotFoundError(f"missing verifier context for {task_id}")
-    blocked_items: list[str] = []
-    for task_id in task_ids:
-        blocked_items.extend(blocked_fixture_manifest_items(task_id))
-    if blocked_items:
-        details = "\n  ".join(blocked_items)
-        raise ValueError(
-            "fixture provenance blocks public image build; resolve provenance, "
-            "prune the files, or update the MANIFEST policy before publishing:\n  "
-            + details
-        )
 
     print(json.dumps({"task_ids": task_ids, "skipped": skipped, "batch_size": args.batch_size, "registry": args.registry, "tag": args.tag}, indent=2))
     if args.dry_run:

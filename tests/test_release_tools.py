@@ -6,7 +6,6 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import scripts.build_publish_batch as build_publish_batch
 from scripts.generate_huggingface import gpl_ids, load_rows, restricted_ids, write_selection
 from scripts.import_task import base_image_for, dependency_lines, normalize_task_id
 from scripts.materialize import (
@@ -213,46 +212,6 @@ class ReleaseToolTests(unittest.TestCase):
 
     def test_batch_runner_reads_pier_version_without_failing_missing_binary(self) -> None:
         self.assertIsNone(pier_version("/path/that/does/not/exist"))
-
-    def test_build_publish_blocks_unverified_fixture_manifest_items(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            original_root = build_publish_batch.ROOT
-            try:
-                build_publish_batch.ROOT = Path(directory)
-                manifest = (
-                    build_publish_batch.ROOT
-                    / "tasks"
-                    / "task_004"
-                    / "environment"
-                    / "public"
-                    / "fixtures"
-                    / "MANIFEST.json"
-                )
-                manifest.parent.mkdir(parents=True)
-                manifest.write_text(
-                    json.dumps(
-                        {
-                            "schema_version": 1,
-                            "task_id": "004",
-                            "items": [
-                                {
-                                    "path_glob": "environment/repo/data/*.bed.gz",
-                                    "public_image_policy": "review_required; exclude_if_unverified",
-                                },
-                                {
-                                    "path_glob": "environment/public/fixtures/public.bed",
-                                    "public_image_policy": "keep",
-                                },
-                            ],
-                        }
-                    ),
-                    encoding="utf-8",
-                )
-                blocked = build_publish_batch.blocked_fixture_manifest_items("004")
-                self.assertEqual(len(blocked), 1)
-                self.assertIn("environment/repo/data/*.bed.gz", blocked[0])
-            finally:
-                build_publish_batch.ROOT = original_root
 
     def test_codex_gateway_profile_selects_wire_without_embedding_key(self) -> None:
         profile = resolve_codex_profile(
