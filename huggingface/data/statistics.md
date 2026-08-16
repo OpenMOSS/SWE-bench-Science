@@ -135,16 +135,19 @@ Environment image references: **119/119**; verifier image references: **119/119*
 
 | Value | Count |
 | --- | ---: |
-| `AGPL-family` | 2 |
+| `AGPL-family` | 1 |
 | `Academic-NonCommercial` | 1 |
 | `Apache-2.0` | 13 |
 | `BSD-2-Clause` | 2 |
-| `BSD-3-Clause` | 38 |
+| `BSD-3-Clause` | 37 |
 | `GPL-3.0` | 1 |
 | `GPL-3.0-or-later` | 1 |
-| `LGPL-2.1-family` | 2 |
+| `LGPL-2.1-family` | 1 |
+| `LGPL-2.1-family and MIT (upstream conflict)` | 1 |
 | `LGPL-3.0-family` | 8 |
-| `LGPL-3.0-or-later` | 3 |
-| `LGPL-family` | 1 |
-| `MIT` | 46 |
+| `LGPL-3.0-or-later` | 4 |
+| `MIT` | 45 |
+| `MIT AND BSD-3-Clause` | 1 |
+| `MIT AND LGPL-family AND BSD-3-Clause` | 1 |
+| `MIT/X11 (BSD-like; see upstream copyright manifest)` | 1 |
 | `NIST-PD-fallback` | 1 |

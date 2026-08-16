@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/CLIMADA-project/climada_python",
   "source_commit": "104dfdb64ed00fce6c49a5d67be371f4fca016dd",
   "source_license": "GPL-3.0",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "github-api:LICENSE@104dfdb64ed00fce6c49a5d67be371f4fca016dd",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
@@ -15,6 +15,8 @@
   "material_restricted": true,
   "materials_gate": true,
   "materials_manifest_sha256": "c7325fe752ddf486b488aff8c4fff66589c3c181eb8a7ccbc26fa3f0f43e7d6d",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "The retained CLIMADA-derived source is GPL-3.0; explicit restricted-license opt-in is required.",
   "public_payload_sha256": "d3e8a0ced0a9270cb722fb1a5d3c161dbc2747d97b4b1404ef4c1c2a2cdb6dca"
 }

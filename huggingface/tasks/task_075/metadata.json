@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/deepmodeling/deepmd-kit",
   "source_commit": "a9bcbc505de7d905dbc2a598b10c17a49e0131d8",
   "source_license": "LGPL-3.0-family",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
@@ -15,6 +15,8 @@
   "material_restricted": true,
   "materials_gate": true,
   "materials_manifest_sha256": "9621945cc7f599ea75931db429c641bb6a8db2ab3020497db5a1f2a9187101f7",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "The DeePMD-kit source snapshot is LGPL-3.0-family; explicit restricted-license opt-in is required for this task.",
   "public_payload_sha256": "bafffe305071135e9e917ef331a734a2f6500acf5b2bf8ed26df67f92de15566"
 }

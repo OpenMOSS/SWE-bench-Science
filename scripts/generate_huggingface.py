@@ -16,7 +16,8 @@ FIELDS = [
     "task_id", "title", "domain", "language", "repository_url", "base_commit",
     "source_license", "gpl_family", "restricted_license", "license_gate",
     "material_license", "material_license_source", "material_restricted", "materials_gate",
-    "materials_manifest_sha256", "restricted_reason",
+    "materials_manifest_sha256", "material_licenses", "materials_provenance",
+    "restricted_reason",
     "environment_image", "verifier_image", "image_platform", "task_path", "status",
 ]
 THIN_TASK_FILES = (
@@ -30,6 +31,7 @@ THIN_TASK_FILES = (
 OPTIONAL_THIN_TASK_FILES = (
     "environment/public/MATERIALS.json",
     "environment/public/MATERIALS_LICENSES.md",
+    "fixtures/PROVENANCE.md",
 )
 
 
@@ -65,6 +67,9 @@ def write_csv(rows: list[dict[str, object]], path: Path) -> None:
         for row in rows:
             values = {field: row.get(field, "") for field in FIELDS}
             values["task_id"] = row["release_id"]
+            values["material_licenses"] = json.dumps(
+                row.get("material_licenses", []), separators=(",", ":")
+            )
             writer.writerow(values)
 
 
@@ -128,6 +133,8 @@ def metadata_from_row(row: dict[str, object]) -> dict[str, object]:
         "material_restricted": bool(row.get("material_restricted")),
         "materials_gate": bool(row.get("materials_gate")),
         "materials_manifest_sha256": row.get("materials_manifest_sha256", ""),
+        "material_licenses": row.get("material_licenses", []),
+        "materials_provenance": row.get("materials_provenance", ""),
         "restricted_reason": row.get("restricted_reason", ""),
         "public_payload_sha256": row.get("public_payload_sha256", ""),
     }
@@ -140,16 +147,23 @@ def write_snapshot(
     replace_task_ids: set[str] | None = None,
 ) -> None:
     task_root = output_root / "tasks"
-    if replace_task_ids is None and task_root.exists():
-        shutil.rmtree(task_root)
+    # Keep previously committed optional provenance files when the imported
+    # authoring tree does not carry them. Every canonical task below is still
+    # overwritten file-by-file, while this preserves audited release notices.
     for row in rows:
         task_id = str(row["release_id"])
         if replace_task_ids is not None and task_id not in replace_task_ids:
             continue
-        source = ROOT / str(row["task_path"])
+        imported_source = ROOT / str(row["task_path"])
+        committed_source = task_root / Path(str(row["task_path"])).name
+        source = (
+            imported_source
+            if (imported_source / "task.toml").is_file()
+            else committed_source
+        )
         destination = task_root / source.name
-        if replace_task_ids is not None and destination.exists():
-            shutil.rmtree(destination)
+        # Do not delete the destination: optional release-only notices may be
+        # committed in the thin bundle even when they are absent from imports.
         for relative in THIN_TASK_FILES:
             source_file = source / relative
             if relative == "metadata.json":
@@ -167,6 +181,8 @@ def write_snapshot(
             shutil.copy2(source_file, destination_file)
         for relative in OPTIONAL_THIN_TASK_FILES:
             source_file = source / relative
+            if not source_file.is_file() and relative == "fixtures/PROVENANCE.md":
+                source_file = source / "environment" / "public" / relative
             if not source_file.is_file():
                 continue
             destination_file = destination / relative
@@ -194,6 +210,8 @@ def write_snapshot(
         ROOT / "profiles" / "mini-swe-agent.env.example",
         profiles_dir / "mini-swe-agent.env.example",
     )
+    if (ROOT / "NOTICE.md").is_file():
+        shutil.copy2(ROOT / "NOTICE.md", output_root / "NOTICE.md")
 
 
 def main() -> int:
@@ -211,7 +229,12 @@ def main() -> int:
         raise ValueError("manifest must contain exactly release ids 001..119")
     write_csv(rows, args.output / "tasks.csv")
     write_statistics(rows, args.output / "statistics.md")
-    default_rows = [row for row in rows if license_gate(row) == "none"]
+    # The default set excludes every restricted row, including material-only
+    # gates whose source code itself is permissively licensed.
+    default_rows = [
+        row for row in rows
+        if not bool(row.get("restricted_license", row.get("gpl_family")))
+    ]
     selections_dir = args.output.parent / "selections"
     if selections_dir.exists():
         shutil.rmtree(selections_dir)

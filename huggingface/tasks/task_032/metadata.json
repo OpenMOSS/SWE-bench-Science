@@ -1,12 +1,12 @@
 {
   "task_id": "032",
-  "title": "Restore equivalent GROMACS nonbonded representations",
-  "domain": "molecular-simulation-force-field-semantics",
+  "title": "Repair an inconsistent peptide energy after topology import",
+  "domain": "molecular-simulation",
   "language": "python",
   "source_repository": "https://github.com/openmm/openmm",
   "source_commit": "d2f76949b3ccac1139f0a0a0d1459aa47e2f0a98",
   "source_license": "MIT AND LGPL-family AND BSD-3-Clause",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "license.rst",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
@@ -15,6 +15,8 @@
   "material_restricted": true,
   "materials_gate": true,
   "materials_manifest_sha256": "a43f622287ae0e599204db58fb15d4c22e33975bd9609639356586f1126a89aa",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "The OpenMM source snapshot includes LGPL-covered CUDA and OpenCL platform components and therefore requires explicit restricted-license opt-in.",
   "public_payload_sha256": "60338d260fc28a955f702fe04a9a76487e8ef6296fea7e885c9f75bf132c8f3b"
 }

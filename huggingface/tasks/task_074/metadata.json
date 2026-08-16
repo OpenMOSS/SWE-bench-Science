@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/deepmodeling/DeePTB",
   "source_commit": "e365079ea71190aaa0dc96d22253d3888c47abf9",
   "source_license": "LGPL-3.0-family",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
@@ -15,6 +15,8 @@
   "material_restricted": true,
   "materials_gate": true,
   "materials_manifest_sha256": "adffb57a85b49134fd1804378407356148a377925ff011d805d3a5e34b906c8c",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "The DeePTB source snapshot is LGPL-3.0-family; explicit restricted-license opt-in is required. The cited article is CC BY-NC-ND and is not bundled.",
   "public_payload_sha256": "2383d14efcf296069395c4704ae80ca3ac084da33ac9c9f87e1e08a4693c2a98"
 }

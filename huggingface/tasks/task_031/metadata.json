@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/mne-tools/mne-python",
   "source_commit": "3b3f3afb0e46a6ac6b97e6ecfbc2414497ea9a3a",
   "source_license": "BSD-3-Clause",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE.txt",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "b04eeec751f5ffcf9dd8fd3e83d1d44be46e0a6085ba40d372492bb7f675a4e3",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "b0883c2ad7370e00fae5d015cce43f8996f59f9f36cf0cbc1b0b441d7b5d90fb"
 }

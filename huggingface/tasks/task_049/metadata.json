@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/zwicker-group/py-pde",
   "source_commit": "a9f8256c1b4b48ac73f3df35b3e570993501b333",
   "source_license": "MIT",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "ae153bd68ea5352c49651111c1c225e8f7ccc5fc0c3440f1942218da873b339f",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "1f8c10aeb2fa8a71d3384e7096729de509e81cbcc11a05c11546c10077e52c06"
 }

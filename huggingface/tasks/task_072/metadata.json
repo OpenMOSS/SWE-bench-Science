@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/pydicom/pydicom",
   "source_commit": "b69de21c8610853493bc81d3eac79644554e4bda",
   "source_license": "MIT",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "5e3eec9815dad551219073128d86675a463fd7ee9020c78350a4dc5de407e8ef",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "8d4349b082362535dfc9d35cf9fa1a79f4175e82a2900e0a33e0f23a92b98e65"
 }

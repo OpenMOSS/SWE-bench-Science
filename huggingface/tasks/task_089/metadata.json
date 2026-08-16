@@ -10,15 +10,15 @@
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "material_license": null,
-  "material_license_source": null,
+  "material_license": "",
+  "material_license_source": "",
   "material_restricted": false,
   "materials_gate": false,
-  "materials_manifest_sha256": null,
-  "restricted_reason": null,
-  "public_payload_sha256": "1aa83928a461ec6d8531b1c81d25c21cf4a8497ec1aeb7e84a6da9d7b18dd9f5",
+  "materials_manifest_sha256": "",
   "material_licenses": [
     "MIT"
   ],
-  "materials_provenance": "fixtures/PROVENANCE.md"
+  "materials_provenance": "fixtures/PROVENANCE.md",
+  "restricted_reason": "",
+  "public_payload_sha256": "1aa83928a461ec6d8531b1c81d25c21cf4a8497ec1aeb7e84a6da9d7b18dd9f5"
 }

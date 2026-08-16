@@ -24,7 +24,6 @@ RUN apt-get -o Acquire::Retries=10 update \
         curl \
         git \
         ripgrep \
-        libopenblas-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN if [ "${INSTALL_FORTRAN}" = "1" ]; then \

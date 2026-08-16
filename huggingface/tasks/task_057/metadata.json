@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/mdtraj/mdtraj",
   "source_commit": "b963d4f01290fef66cca714e4a53f4891096b69a",
   "source_license": "LGPL-2.1-family",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
@@ -15,6 +15,8 @@
   "material_restricted": true,
   "materials_gate": true,
   "materials_manifest_sha256": "85f053e1f9b99d7ce2a02d9f57b0c88a7b5d851e66a6d93c4c14a884b0c86099",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "LGPL-2.1-covered MDTraj source and the complete upstream manual require explicit restricted-license opt-in.",
   "public_payload_sha256": "eb03dbe285ebd8c27960ace18eed00b3dcf23274440180a598ad578ba05e6502"
 }

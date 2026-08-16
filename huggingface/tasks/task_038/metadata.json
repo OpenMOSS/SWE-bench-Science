@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/spglib/spglib",
   "source_commit": "",
   "source_license": "BSD-3-Clause",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "COPYING",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "cde0e5d6b19a6be1907d83aceadce31d5eabdb8386ce8b7fbfaabc08f8b0ebf2",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "d770bd89cde0d7ebe7ef628d9f4c5f28fe4267abef25159f14379e03a786ce28"
 }

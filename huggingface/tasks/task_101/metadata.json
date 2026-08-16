@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/pybamm-team/PyBaMM",
   "source_commit": "1e9fbcea25b78a0a633face62b077dae1f92bf62",
   "source_license": "BSD-3-Clause",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE.txt",
   "gpl_family": false,
   "restricted_license": true,
   "license_gate": "restricted-materials",
@@ -15,6 +15,8 @@
   "material_restricted": true,
   "materials_gate": true,
   "materials_manifest_sha256": "c64ced25c2a46f3486fe60f606d7684febb4adc983ecae35bdc92543528c7eb4",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "The required Chen2020 parameter CSVs are derived from a CC-BY-NC-ND article; explicit restricted-material opt-in is required.",
   "public_payload_sha256": "16dc3155055489b5b9ef1a9592d71ccb213c280eb10993c011234d6bec265d6e"
 }

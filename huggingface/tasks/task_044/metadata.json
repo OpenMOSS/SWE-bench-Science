@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/pybamm-team/PyBaMM",
   "source_commit": "a42d7a92dd9a2c63240c8ccb6f240e5c3c42de46",
   "source_license": "BSD-3-Clause",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE.txt",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "e2b4e018508a5d1fc30c97dc278fe89962d811608494c1c9796a01e93b7108c0",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "04feef6107c02cd8411cc3c572cc7920d0d6f393fccaca8db4e514c470098d4a"
 }

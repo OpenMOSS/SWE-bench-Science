@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/usnistgov/fipy",
   "source_commit": "11e5c6ae26207a60e223d46473ac364b352ac982",
   "source_license": "NIST-PD-fallback",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "source/LICENSE.rst",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "5280107b19f5194bc7d2420757586110ade8425ed6dc7c68c5d6e52e3948bfad",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "00da7b75f004dccce49efebd3092cd7a7a996acfcf8af9f5ccf8cc6a15f52616"
 }

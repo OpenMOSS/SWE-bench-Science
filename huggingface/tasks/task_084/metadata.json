@@ -10,15 +10,15 @@
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
-  "material_license": null,
-  "material_license_source": null,
+  "material_license": "",
+  "material_license_source": "",
   "material_restricted": false,
   "materials_gate": false,
-  "materials_manifest_sha256": null,
-  "restricted_reason": null,
-  "public_payload_sha256": "10df205f59e7cf7c7e6422df207e68ea5ba17619105bc2b77a5ace7cf1e5460c",
+  "materials_manifest_sha256": "",
   "material_licenses": [
     "LGPL-3.0-or-later"
   ],
-  "materials_provenance": "fixtures/PROVENANCE.md"
+  "materials_provenance": "fixtures/PROVENANCE.md",
+  "restricted_reason": "",
+  "public_payload_sha256": "10df205f59e7cf7c7e6422df207e68ea5ba17619105bc2b77a5ace7cf1e5460c"
 }

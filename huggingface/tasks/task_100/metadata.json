@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/DCoupry/autografs",
   "source_commit": "c2f22341f2b1eb2f619b76534cf4abe2e5e6b3a3",
   "source_license": "LGPL-2.1-family and MIT (upstream conflict)",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "COPYING",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
@@ -15,6 +15,8 @@
   "material_restricted": true,
   "materials_gate": true,
   "materials_manifest_sha256": "04e51ce99b0e2aa879dfdbb5e5b5bcc9599440b9193bcbcbe6c57e8f0908c487",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "The upstream AuToGraFS snapshot has unresolved LGPL-2.1 versus MIT declarations; only the retained code and independently generated synthetic data are distributed under explicit restricted opt-in.",
   "public_payload_sha256": "272b2765c1f70523a2609be4aee6a938e3d610f3cfe5816b197396482511b3da"
 }

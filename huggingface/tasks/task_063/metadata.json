@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/tskit-dev/tskit",
   "source_commit": "",
   "source_license": "MIT",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "9f3ccc9dceb3e2e4b65a40c04cc07a41c2c5ff6e63257650b1e29d8545839a34",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "11f85264ddf7364c99635fd16088b71210f583c264ab8595fddd62227b40a0a0"
 }

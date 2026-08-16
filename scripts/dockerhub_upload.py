@@ -10,6 +10,7 @@ import json
 import subprocess
 import tarfile
 import tempfile
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -141,11 +142,16 @@ def publish(image: str, repository: str, tag: str, mount_from: tuple[str, ...] =
         for attempt in range(3):
             try:
                 return upload_blob(repository, bearer, path, mount_from)
-            except RuntimeError as exc:
-                if "blob HEAD failed (401)" not in str(exc) or attempt == 2:
+            except (RuntimeError, urllib.error.URLError) as exc:
+                transient = isinstance(exc, urllib.error.URLError) or "blob HEAD failed (401)" in str(exc)
+                if not transient or attempt == 2:
                     raise
-                print("  registry token expired; refreshing", flush=True)
-                bearer = token(repository, mount_from)
+                if isinstance(exc, urllib.error.URLError):
+                    print(f"  registry connection reset; retrying ({exc})", flush=True)
+                else:
+                    print("  registry token expired; refreshing", flush=True)
+                    bearer = token(repository, mount_from)
+                time.sleep(2 * (attempt + 1))
         raise AssertionError("unreachable")
 
     with tempfile.TemporaryDirectory(prefix="science-docker-save-") as directory:

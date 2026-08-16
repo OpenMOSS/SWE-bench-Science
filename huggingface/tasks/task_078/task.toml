@@ -10,7 +10,7 @@ keywords = ["scientific-computing", "software-engineering"]
 [metadata]
 task_id = "078"
 language = "python"
-base_commit_hash = "eda83f4a57000d5f6763ee7afa9afacebbe0fd68"
+base_commit_hash = ""
 
 [agent]
 network_mode = "no-network"

@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/PMEAL/OpenPNM",
   "source_commit": "d8efaa211ea6721cc4a718890f11fb60b8b43326",
   "source_license": "MIT",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "github-api:LICENSE@d8efaa211ea6721cc4a718890f11fb60b8b43326",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "c96fa6a35f1d64bf5328f39c20e058bef62ed246271ce507ca39afc22103c231",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "6ec8718d7ed893b11b2250aac59dc8f4977497cc41395b5fa84f4787c5fdb645"
 }

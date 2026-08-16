@@ -5,16 +5,18 @@
   "language": "python",
   "source_repository": "https://github.com/biopython/biopython",
   "source_commit": "fb0e7f522d714d76eec42f5fd428eb7942a11dde",
-  "source_license": "Biopython-License-Agreement",
+  "source_license": "BSD-3-Clause",
   "license_source": "LICENSE.rst",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "material_license": "",
-  "material_license_source": "",
+  "material_license": null,
+  "material_license_source": null,
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
-  "public_payload_sha256": "f0e3d94a8e3658f6df1cf6f021a5c0785762bf5167049ec1c4eec8c4f19cc8cf"
+  "public_payload_sha256": "c77a56a3a0f491a8d8323bc49a7f61646abddac45c3db18dc37baa8d3722dc95"
 }

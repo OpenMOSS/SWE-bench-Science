@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "2e7d63a1052c7b94245de245deed7e14e20169bb0ad2447c854e4f1d6026fa6e"
 }

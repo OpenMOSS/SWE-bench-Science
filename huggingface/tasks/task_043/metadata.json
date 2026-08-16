@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/PMEAL/porespy",
   "source_commit": "f2360a52bc77ec917aa07ce0cf6128dc7687ea64",
   "source_license": "MIT",
-  "license_source": "manifests/materials.jsonl and retained upstream notices",
+  "license_source": "LICENSE",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -15,6 +15,8 @@
   "material_restricted": false,
   "materials_gate": false,
   "materials_manifest_sha256": "bcd5dd8b8c7bb4aeccaa91f8e56d0b0cacb3d51c3fa226e2e95c4ee369bb017a",
+  "material_licenses": [],
+  "materials_provenance": "",
   "restricted_reason": "",
   "public_payload_sha256": "30e2dc25b63a8bffbdcfbe59c9ddc617a30478957a7eba9f4b0ff624dfc64bd1"
 }
