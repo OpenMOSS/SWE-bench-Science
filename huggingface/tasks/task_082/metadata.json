@@ -1,5 +1,6 @@
 {
   "task_id": "082",
+  "science_knowledge_ablation": true,
   "title": "Repair a workflow consistency bug",
   "domain": "atomistic-machine-learning-and-molecular-simulation",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "020",
+  "science_knowledge_ablation": true,
   "title": "Complete an edge-graph geometry and force/virial capability for atomistic models",
   "domain": "atomistic-machine-learning-and-molecular-simulation",
   "language": "python",

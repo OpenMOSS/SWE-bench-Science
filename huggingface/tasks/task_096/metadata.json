@@ -1,5 +1,6 @@
 {
   "task_id": "096",
+  "science_knowledge_ablation": false,
   "title": "Repair a wrapped tropical-cyclone hazard workflow",
   "domain": "tropical-cyclone-hazard-monitoring",
   "language": "python",

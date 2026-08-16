@@ -1,5 +1,6 @@
 {
   "task_id": "001",
+  "science_knowledge_ablation": false,
   "title": "Repair omega-dependent range-separated PBE workflow in a real PySCF STRSF repository",
   "domain": "density-functional-theory",
   "language": "python",

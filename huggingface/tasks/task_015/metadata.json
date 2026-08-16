@@ -1,5 +1,6 @@
 {
   "task_id": "015",
+  "science_knowledge_ablation": true,
   "title": "Restore thermal-equilibrium invariants in a Liouville-space relaxation workflow",
   "domain": "magnetic-resonance-spin-dynamics",
   "language": "matlab-octave",

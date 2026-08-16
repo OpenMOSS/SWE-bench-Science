@@ -1,5 +1,6 @@
 {
   "task_id": "102",
+  "science_knowledge_ablation": false,
   "title": "Repair an inconsistent polymer coordinate workflow",
   "domain": "polymer-coordinate-generation",
   "language": "python",

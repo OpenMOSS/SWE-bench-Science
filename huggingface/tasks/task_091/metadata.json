@@ -1,5 +1,6 @@
 {
   "task_id": "091",
+  "science_knowledge_ablation": false,
   "title": "Repair a workflow regression",
   "domain": "materials-science-volumetric-data-semantics",
   "language": "python",

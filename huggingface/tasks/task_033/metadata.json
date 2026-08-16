@@ -1,5 +1,6 @@
 {
   "task_id": "033",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent energies across equivalent periodic representations",
   "domain": "periodic-electronic-structure",
   "language": "python",

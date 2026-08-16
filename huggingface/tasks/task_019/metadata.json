@@ -1,5 +1,6 @@
 {
   "task_id": "019",
+  "science_knowledge_ablation": true,
   "title": "Complete robust topic-to-cistrome binarization for independent probability matrices",
   "domain": "single-cell-chromatin-accessibility",
   "language": "python",

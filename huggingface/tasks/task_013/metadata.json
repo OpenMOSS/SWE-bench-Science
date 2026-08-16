@@ -1,5 +1,6 @@
 {
   "task_id": "013",
+  "science_knowledge_ablation": true,
   "title": "Establish boundary-regime operator and energy closure in the TERPSICHORE-native path",
   "domain": "plasma-stability",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "089",
+  "science_knowledge_ablation": false,
   "title": "Repair inconsistent ORCA excited-state oscillator strengths",
   "domain": "computational-chemistry-spectroscopy",
   "language": "python",

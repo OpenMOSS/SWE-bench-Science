@@ -1,5 +1,6 @@
 {
   "task_id": "030",
+  "science_knowledge_ablation": true,
   "title": "Repair format-conformant SHELX/AIRSS .res export in a crystallographic IO workflow",
   "domain": "crystallography-file-format-semantics",
   "language": "python",

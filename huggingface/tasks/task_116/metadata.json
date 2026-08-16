@@ -1,5 +1,6 @@
 {
   "task_id": "116",
+  "science_knowledge_ablation": false,
   "title": "Repair mode-dependent structural analysis observations",
   "domain": "structural-engineering-finite-element-resilience",
   "language": "python",

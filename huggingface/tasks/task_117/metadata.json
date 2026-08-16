@@ -1,5 +1,6 @@
 {
   "task_id": "117",
+  "science_knowledge_ablation": false,
   "title": "Repair inconsistent lateral-frame member observations",
   "domain": "structural-engineering-disaster-resilience",
   "language": "python",

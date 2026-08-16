@@ -1,5 +1,6 @@
 {
   "task_id": "006",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent genomic interval enrichment counts",
   "domain": "genomics-interval-statistics",
   "language": "c++",

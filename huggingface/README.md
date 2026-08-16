@@ -22,6 +22,8 @@ configs:
     features:
       - name: task_id
         dtype: string
+      - name: science_knowledge_ablation
+        dtype: bool
       - name: title
         dtype: string
       - name: domain
@@ -88,6 +90,10 @@ SWE-bench Science evaluates coding agents on software-engineering tasks drawn fr
 | Verifier images | 119 Docker Hub images |
 | Image platform | `linux/amd64` |
 
+The `science_knowledge_ablation` column is `true` for the 91-task science-knowledge
+split used by the ablation experiment. Its release IDs are `002-082`, `084`, `086`,
+`090`, `097-101`, `111`, and `114`; all other rows are `false`.
+
 ## Dataset Viewer And Files
 
 The Dataset Viewer reads the canonical [`data/tasks.csv`](data/tasks.csv) table and generates its preview automatically. The release does not commit a duplicate Parquet export, so the CSV remains the single source of truth for the 119 task rows.
@@ -102,6 +108,7 @@ The repository also includes:
 | `selections/` | Reproducible task selections |
 | `tasks/task_NNN/` | Thin Harbor/Pier task bundles |
 | `tools/` | Materialization, provider, batch, and summary tools |
+| `docs/run-batch.md` | Full provider and batch-runner reference |
 
 The environment image contains the baseline source, public fixtures, dependencies, and compilers. The separate verifier image contains held-out tests and the grader. The dataset does not contain reference-answer patches, credentials, agent trajectories, or private verifier tests.
 
@@ -131,6 +138,16 @@ Materialize one task, a comma-separated list, or inclusive ranges:
 python3 tools/materialize.py \
   --task-id 002,005-007 \
   --output tasks-selected-small --force
+~~~
+
+Materialize the complete 91-task science-knowledge ablation split. It contains
+restricted-license tasks, so the explicit license opt-in is required:
+
+~~~bash
+python3 tools/materialize.py \
+  --task-id 002-082,084,086,090,097-101,111,114 \
+  --allow-restricted-licenses \
+  --output tasks-science-knowledge-ablation --force
 ~~~
 
 Every materialization writes `selection.json` with the exact task IDs used for the run.
@@ -221,6 +238,10 @@ python3 tools/summarize_results.py --jobs-dir jobs
 ~~~
 
 Use `pier view jobs` to inspect trajectories.
+
+See [`docs/run-batch.md`](docs/run-batch.md) for the complete option reference,
+gateway/profile configuration, dry-run mode, retry and timeout controls, and
+result paths.
 
 ## Licensing And Attribution
 

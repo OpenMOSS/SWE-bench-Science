@@ -1,5 +1,6 @@
 {
   "task_id": "028",
+  "science_knowledge_ablation": true,
   "title": "Repair control-referenced relative responses in a single-cell perturbation workflow",
   "domain": "single-cell-perturbation-response-modeling",
   "language": "python",

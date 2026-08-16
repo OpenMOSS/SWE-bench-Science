@@ -1,5 +1,6 @@
 {
   "task_id": "092",
+  "science_knowledge_ablation": false,
   "title": "Repair inconsistent Chemprop reaction observations",
   "domain": "ai-chemistry-reaction-property-learning",
   "language": "python",

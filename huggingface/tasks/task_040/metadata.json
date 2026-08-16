@@ -1,5 +1,6 @@
 {
   "task_id": "040",
+  "science_knowledge_ablation": true,
   "title": "Restore consistent magnetic-dipole electromagnetic predictions",
   "domain": "computational-electromagnetics-and-geophysical-forward-modeling",
   "language": "python",

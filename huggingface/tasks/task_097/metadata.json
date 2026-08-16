@@ -1,5 +1,6 @@
 {
   "task_id": "097",
+  "science_knowledge_ablation": true,
   "title": "Repair spin-model consistency in DeePMD-kit",
   "domain": "magnetism-and-spin-models",
   "language": "python",

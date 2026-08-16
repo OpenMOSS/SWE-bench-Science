@@ -1,5 +1,6 @@
 {
   "task_id": "038",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent crystal classification across equivalent representations",
   "domain": "computational-crystallography-and-materials-symmetry",
   "language": "c",

@@ -1,5 +1,6 @@
 {
   "task_id": "029",
+  "science_knowledge_ablation": true,
   "title": "Restore annotation equivalence after circular-record orientation normalization",
   "domain": "genomics-sequence-annotation",
   "language": "python",

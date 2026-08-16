@@ -1,5 +1,6 @@
 {
   "task_id": "064",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent molecular-energy interpretation in a quantum-chemistry log parser",
   "domain": "computational-chemistry-scientific-data-parsing",
   "language": "python",

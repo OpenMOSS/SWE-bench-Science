@@ -1,5 +1,6 @@
 {
   "task_id": "003",
+  "science_knowledge_ablation": true,
   "title": "Repair extxyz stress and virial tensor-label preservation",
   "domain": "atomistic-machine-learning-data",
   "language": "python",

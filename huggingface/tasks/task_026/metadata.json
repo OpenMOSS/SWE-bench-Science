@@ -1,5 +1,6 @@
 {
   "task_id": "026",
+  "science_knowledge_ablation": true,
   "title": "Restore isentropic interpolation for terrain-following model data",
   "domain": "atmospheric-science-isentropic-interpolation",
   "language": "python",

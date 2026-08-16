@@ -12,8 +12,14 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCIENCE_KNOWLEDGE_ABLATION_IDS = {
+    *(f"{task_id:03d}" for task_id in range(2, 83)),
+    "084", "086", "090",
+    *(f"{task_id:03d}" for task_id in range(97, 102)),
+    "111", "114",
+}
 FIELDS = [
-    "task_id", "title", "domain", "language", "repository_url", "base_commit",
+    "task_id", "science_knowledge_ablation", "title", "domain", "language", "repository_url", "base_commit",
     "source_license", "gpl_family", "restricted_license", "license_gate",
     "material_license", "material_license_source", "material_restricted", "materials_gate",
     "materials_manifest_sha256", "material_licenses", "materials_provenance",
@@ -59,6 +65,13 @@ def license_gate(row: dict[str, object]) -> str:
     return str(row.get("license_gate", "none"))
 
 
+def science_knowledge_ablation(row: dict[str, object]) -> bool:
+    value = row.get("science_knowledge_ablation")
+    if value is not None:
+        return bool(value)
+    return str(row.get("release_id", "")) in SCIENCE_KNOWLEDGE_ABLATION_IDS
+
+
 def write_csv(rows: list[dict[str, object]], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
@@ -67,6 +80,7 @@ def write_csv(rows: list[dict[str, object]], path: Path) -> None:
         for row in rows:
             values = {field: row.get(field, "") for field in FIELDS}
             values["task_id"] = row["release_id"]
+            values["science_knowledge_ablation"] = science_knowledge_ablation(row)
             values["material_licenses"] = json.dumps(
                 row.get("material_licenses", []), separators=(",", ":")
             )
@@ -107,6 +121,8 @@ def write_statistics(rows: list[dict[str, object]], path: Path) -> None:
         "",
         f"Environment image references: **{environment_count}/{len(rows)}**; verifier image references: **{verifier_count}/{len(rows)}**.",
         "",
+        f"Science-knowledge ablation rows: **{sum(science_knowledge_ablation(row) for row in rows)}**.",
+        "",
     ]
     lines += table("Domain", Counter(str(row.get("domain", "")) for row in rows))
     lines += table("Language", Counter(str(row.get("language", "")) for row in rows))
@@ -118,6 +134,7 @@ def write_statistics(rows: list[dict[str, object]], path: Path) -> None:
 def metadata_from_row(row: dict[str, object]) -> dict[str, object]:
     return {
         "task_id": str(row["release_id"]),
+        "science_knowledge_ablation": science_knowledge_ablation(row),
         "title": row.get("title", ""),
         "domain": row.get("domain", ""),
         "language": row.get("language", ""),
@@ -178,6 +195,8 @@ def write_snapshot(
                 raise FileNotFoundError(source_file)
             destination_file = destination / relative
             destination_file.parent.mkdir(parents=True, exist_ok=True)
+            if source_file.resolve() == destination_file.resolve():
+                continue
             shutil.copy2(source_file, destination_file)
         for relative in OPTIONAL_THIN_TASK_FILES:
             source_file = source / relative
@@ -187,6 +206,8 @@ def write_snapshot(
                 continue
             destination_file = destination / relative
             destination_file.parent.mkdir(parents=True, exist_ok=True)
+            if source_file.resolve() == destination_file.resolve():
+                continue
             shutil.copy2(source_file, destination_file)
 
     manifest_dir = output_root / "manifests"
@@ -199,6 +220,9 @@ def write_snapshot(
         "summarize_results.py",
     ):
         shutil.copy2(ROOT / "scripts" / script, tools_dir / script)
+    docs_dir = output_root / "docs"
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ROOT / "docs" / "run-batch.md", docs_dir / "run-batch.md")
     profiles_dir = output_root / "profiles"
     profiles_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy2(

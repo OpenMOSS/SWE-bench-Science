@@ -1,5 +1,6 @@
 {
   "task_id": "111",
+  "science_knowledge_ablation": true,
   "title": "Restore consistent tapered-filament free response",
   "domain": "computational-mechanics-and-soft-filament-dynamics",
   "language": "python",

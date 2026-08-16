@@ -1,5 +1,6 @@
 {
   "task_id": "077",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent oriented-envelope fallback workflow",
   "domain": "computational-geometry",
   "language": "python",

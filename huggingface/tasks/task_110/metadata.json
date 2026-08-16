@@ -1,5 +1,6 @@
 {
   "task_id": "110",
+  "science_knowledge_ablation": false,
   "title": "Restore consistent cross-section analysis results",
   "domain": "high-performance-fibers-and-composites",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "054",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent tandem-mass spectral similarity workflow",
   "domain": "mass-spectrometry-spectral-similarity",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "002",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent reduced validation workflow",
   "domain": "density-functional-theory",
   "language": "python",

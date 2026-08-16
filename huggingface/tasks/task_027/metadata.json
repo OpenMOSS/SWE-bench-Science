@@ -1,5 +1,6 @@
 {
   "task_id": "027",
+  "science_knowledge_ablation": true,
   "title": "Restore consistent NMR peak-set encoding under batch padding",
   "domain": "ai4science-nmr-structure-elucidation",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "062",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent archived elasticity workflow",
   "domain": "computational-materials-science",
   "language": "python",

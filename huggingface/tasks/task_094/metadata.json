@@ -1,5 +1,6 @@
 {
   "task_id": "094",
+  "science_knowledge_ablation": false,
   "title": "Repair magnetic-space-group operations across archived settings",
   "domain": "condensed-matter-magnetism-and-magnetic-symmetry",
   "language": "python",

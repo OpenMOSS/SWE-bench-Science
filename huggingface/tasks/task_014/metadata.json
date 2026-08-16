@@ -1,5 +1,6 @@
 {
   "task_id": "014",
+  "science_knowledge_ablation": true,
   "title": "Complete the native multi-equilibrium TERPSICHORE workflow",
   "domain": "plasma-stability",
   "language": "python",

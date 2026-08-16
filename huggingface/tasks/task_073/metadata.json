@@ -1,5 +1,6 @@
 {
   "task_id": "073",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent alternate-conformer structure connectivity",
   "domain": "structural-biology-pdbx-macromolecular-connectivity",
   "language": "python",

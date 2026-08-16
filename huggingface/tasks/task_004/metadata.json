@@ -1,5 +1,6 @@
 {
   "task_id": "004",
+  "science_knowledge_ablation": true,
   "title": "Repair split-read exon-overlap filtering",
   "domain": "rna-seq-genomic-interval-semantics",
   "language": "c++",

@@ -1,5 +1,6 @@
 {
   "task_id": "108",
+  "science_knowledge_ablation": false,
   "title": "Restore stable Jacobi theta evaluations across difficult regimes",
   "domain": "computational-mathematics-special-functions",
   "language": "python",

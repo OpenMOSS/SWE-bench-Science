@@ -1,5 +1,6 @@
 {
   "task_id": "068",
+  "science_knowledge_ablation": true,
   "title": "Restore biologically consistent retrieval from a VCF archive",
   "domain": "genomic-variant-data-semantics",
   "language": "c",

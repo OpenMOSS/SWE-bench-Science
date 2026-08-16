@@ -1,5 +1,6 @@
 {
   "task_id": "024",
+  "science_knowledge_ablation": true,
   "title": "Restore coherent inference in a centered factorial-effects model",
   "domain": "probabilistic-scientific-computing",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "074",
+  "science_knowledge_ablation": true,
   "title": "Repair an ill-conditioned overlap band-postprocessing workflow",
   "domain": "electronic-structure-nonorthogonal-eigenproblems",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "039",
+  "science_knowledge_ablation": true,
   "title": "Repair a river-network sediment transport calculation",
   "domain": "earth-surface-dynamics-and-river-sediment-transport",
   "language": "python",

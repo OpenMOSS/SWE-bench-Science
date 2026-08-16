@@ -1,5 +1,6 @@
 {
   "task_id": "034",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent stochastic trajectory calculation",
   "domain": "stochastic-numerical-analysis",
   "language": "python",

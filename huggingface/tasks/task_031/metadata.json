@@ -1,5 +1,6 @@
 {
   "task_id": "031",
+  "science_knowledge_ablation": true,
   "title": "Restore documented average-reference semantics for mixed-modality recordings",
   "domain": "neurophysiology-signal-processing",
   "language": "python",

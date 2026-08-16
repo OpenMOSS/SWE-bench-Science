@@ -1,5 +1,6 @@
 {
   "task_id": "045",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent finite-volume operations on a connected multi-face grid",
   "domain": "computational-oceanography-finite-volume-grids",
   "language": "python",

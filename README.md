@@ -55,6 +55,10 @@ The Hugging Face dataset is the source for the task bundle. Docker Hub stores th
 
 The materializer writes an explicit `selection.json`, so a run is reproducible and does not depend on runner sampling behavior.
 
+The canonical table also contains the boolean `science_knowledge_ablation` field.
+It marks the 91-task science-knowledge ablation split: `002-082`, `084`, `086`,
+`090`, `097-101`, `111`, and `114`.
+
 ~~~bash
 # Default selection: 96 unrestricted-license tasks.
 python3 tools/materialize.py \
@@ -64,6 +68,15 @@ python3 tools/materialize.py \
 python3 tools/materialize.py \
   --task-id 002,005-007 \
   --output tasks-selected-small --force
+~~~
+
+To materialize the complete ablation split, include the restricted-license opt-in:
+
+~~~bash
+python3 tools/materialize.py \
+  --task-id 002-082,084,086,090,097-101,111,114 \
+  --allow-restricted-licenses \
+  --output tasks-science-knowledge-ablation --force
 ~~~
 
 Twenty-three tasks contain GPL/LGPL/AGPL-family code, academic non-commercial sources or materials, or restricted third-party data. They are excluded from the default selection and require an explicit opt-in:
@@ -162,4 +175,5 @@ The project tools and documentation are released under the root MIT license. Tas
 - [Dataset contract](docs/dataset-contract.md)
 - [Architecture](docs/architecture.md)
 - [Release checklist](docs/release-checklist.md)
+- [Batch runner reference](docs/run-batch.md)
 - [Hugging Face dataset card](huggingface/README.md)

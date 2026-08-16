@@ -1,5 +1,6 @@
 {
   "task_id": "080",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent geospatial raster remapping",
   "domain": "geospatial-raster-reprojection",
   "language": "python",

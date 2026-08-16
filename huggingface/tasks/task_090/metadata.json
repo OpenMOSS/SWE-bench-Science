@@ -1,5 +1,6 @@
 {
   "task_id": "090",
+  "science_knowledge_ablation": true,
   "title": "Restore multidimensional NMR acquisition grids",
   "domain": "nuclear-magnetic-resonance-spectroscopy",
   "language": "python",

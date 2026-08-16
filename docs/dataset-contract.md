@@ -36,6 +36,7 @@ materializer。用户先下载表格、selection 和 thin task bundle，再由�
 | 字段 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
 | `task_id` | string | 是 | 三位 release id，范围 `001..119` |
+| `science_knowledge_ablation` | bool | 是 | 是否属于 91 题科学知识拆分消融实验集合 |
 | `title` | string | 是 | 人类可读题目标题 |
 | `domain` | string | 是 | 科学领域分组 |
 | `language` | string | 是 | 主要实现/构建语言 |
@@ -67,6 +68,7 @@ Dataset Viewer 不必展示但生成/审计必须保留：
 schema_version
 release_version
 task_id
+science_knowledge_ablation
 source_tree_sha256
 public_payload_sha256
 environment_image_tag

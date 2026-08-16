@@ -1,5 +1,6 @@
 {
   "task_id": "048",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent alloy equilibrium assessment",
   "domain": "computational-thermodynamics-calphad",
   "language": "python",

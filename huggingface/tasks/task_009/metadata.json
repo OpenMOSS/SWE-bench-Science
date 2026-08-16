@@ -1,5 +1,6 @@
 {
   "task_id": "009",
+  "science_knowledge_ablation": true,
   "title": "Enable projection-wall external-region support in the TERPSICHORE-native path",
   "domain": "plasma-stability",
   "language": "python",

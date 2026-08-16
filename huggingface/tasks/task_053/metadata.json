@@ -1,5 +1,6 @@
 {
   "task_id": "053",
+  "science_knowledge_ablation": true,
   "title": "Repair a representation-dependent physical surface Dice workflow",
   "domain": "medical-image-segmentation-geometry",
   "language": "python",

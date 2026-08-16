@@ -1,5 +1,6 @@
 {
   "task_id": "118",
+  "science_knowledge_ablation": false,
   "title": "Repair inconsistent periodic molecular energy representations",
   "domain": "computational-high-energy-molecular-chemistry-periodic-models",
   "language": "python",

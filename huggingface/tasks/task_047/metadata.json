@@ -1,5 +1,6 @@
 {
   "task_id": "047",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent broadband microwave composite",
   "domain": "microwave-network-analysis",
   "language": "python",

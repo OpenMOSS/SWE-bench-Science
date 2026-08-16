@@ -1,5 +1,6 @@
 {
   "task_id": "056",
+  "science_knowledge_ablation": true,
   "title": "Repair a physically inconsistent orbital history export",
   "domain": "astrodynamics-and-orbital-mechanics",
   "language": "python",

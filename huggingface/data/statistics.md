@@ -4,6 +4,8 @@ Canonical rows: **119**; default unrestricted rows: **96**; restricted-license r
 
 Environment image references: **119/119**; verifier image references: **119/119**.
 
+Science-knowledge ablation rows: **91**.
+
 ### Domain
 
 | Value | Count |

@@ -1,5 +1,6 @@
 {
   "task_id": "032",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent peptide energy after topology import",
   "domain": "molecular-simulation",
   "language": "python",

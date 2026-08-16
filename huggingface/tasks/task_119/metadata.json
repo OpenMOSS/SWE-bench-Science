@@ -1,5 +1,6 @@
 {
   "task_id": "119",
+  "science_knowledge_ablation": false,
   "title": "Repair a molecular curvature workflow for reaction-path analysis",
   "domain": "quantum-chemistry-reaction-paths",
   "language": "python",

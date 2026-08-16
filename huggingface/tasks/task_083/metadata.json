@@ -1,5 +1,6 @@
 {
   "task_id": "083",
+  "science_knowledge_ablation": false,
   "title": "Repair bond-order species reporting",
   "domain": "computational-chemistry",
   "language": "python",

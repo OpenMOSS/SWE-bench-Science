@@ -1,5 +1,6 @@
 {
   "task_id": "113",
+  "science_knowledge_ablation": false,
   "title": "Repair an inconsistent solar-resource workflow",
   "domain": "renewable-energy-modelling",
   "language": "python",

@@ -1,5 +1,6 @@
 {
   "task_id": "112",
+  "science_knowledge_ablation": false,
   "title": "Repair an inconsistent hybrid-section plastic capacity workflow",
   "domain": "high-performance-fibers-and-composites",
   "language": "python",

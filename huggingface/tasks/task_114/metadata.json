@@ -1,5 +1,6 @@
 {
   "task_id": "114",
+  "science_knowledge_ablation": true,
   "title": "Repair an implausible storage history at a planning-epoch boundary",
   "domain": "power-system-energy-storage",
   "language": "python",

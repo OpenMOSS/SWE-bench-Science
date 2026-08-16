@@ -1,5 +1,6 @@
 {
   "task_id": "085",
+  "science_knowledge_ablation": false,
   "title": "Inconsistent archived observables",
   "domain": "computational-chemistry-and-solvation",
   "language": "fortran",

@@ -1,5 +1,6 @@
 {
   "task_id": "095",
+  "science_knowledge_ablation": false,
   "title": "Repair a repeated porous-electrode transport workflow",
   "domain": "new-energy-materials",
   "language": "python",

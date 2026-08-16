@@ -1,5 +1,6 @@
 {
   "task_id": "106",
+  "science_knowledge_ablation": false,
   "title": "Reproduce and extend a version-pinned MAP4/MAPC retrieval protocol",
   "domain": "chemoinformatics-molecular-fingerprints",
   "language": "python",

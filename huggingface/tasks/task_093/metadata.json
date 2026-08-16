@@ -1,5 +1,6 @@
 {
   "task_id": "093",
+  "science_knowledge_ablation": false,
   "title": "Repair a patient-space round trip in MONAI",
   "domain": "medical-image-processing",
   "language": "python",

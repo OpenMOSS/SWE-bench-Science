@@ -1,5 +1,6 @@
 {
   "task_id": "105",
+  "science_knowledge_ablation": false,
   "title": "Restore a stereo-preserving tautomer workflow",
   "domain": "drug-discovery-cheminformatics",
   "language": "python-cpp",

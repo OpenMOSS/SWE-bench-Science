@@ -1,5 +1,6 @@
 {
   "task_id": "107",
+  "science_knowledge_ablation": false,
   "title": "Repair a public symbolic workflow",
   "domain": "computer-algebra",
   "language": "python",

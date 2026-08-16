@@ -124,25 +124,28 @@ def pier_version(pier_bin: str) -> str | None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        epilog="Use docs/run-batch.md for provider profiles, gateway routing, and result paths.",
+    )
     parser.add_argument("--path", type=Path, required=True, help="Materialized task directory")
-    parser.add_argument("--agent", default="nop")
-    parser.add_argument("--env", default="docker")
-    parser.add_argument("--env-file", type=Path)
-    parser.add_argument("--model", action="append", default=[])
-    parser.add_argument("--agent-env", action="append", default=[])
-    parser.add_argument("--agent-kwarg", action="append", default=[])
-    parser.add_argument("--n-concurrent", type=int, default=1)
-    parser.add_argument("--n-attempts", type=int, default=1)
-    parser.add_argument("--max-retries", type=int, default=0)
-    parser.add_argument("--agent-timeout-multiplier", type=float)
-    parser.add_argument("--verifier-timeout-multiplier", type=float)
-    parser.add_argument("--jobs-dir", type=Path, default=Path("jobs"))
-    parser.add_argument("--job-name")
-    parser.add_argument("--platform", default="linux/amd64")
+    parser.add_argument("--agent", default="nop", help="Pier harness, for example codex, claude-code, mini-swe-agent, or nop")
+    parser.add_argument("--env", default="docker", help="Pier environment backend")
+    parser.add_argument("--env-file", type=Path, help="Provider/harness dotenv file")
+    parser.add_argument("--model", action="append", default=[], help="Model route; repeatable")
+    parser.add_argument("--agent-env", action="append", default=[], help="Extra harness environment KEY=VALUE; repeatable")
+    parser.add_argument("--agent-kwarg", action="append", default=[], help="Extra Pier agent keyword KEY=VALUE; repeatable")
+    parser.add_argument("--n-concurrent", type=int, default=1, help="Simultaneous tasks (default: 1)")
+    parser.add_argument("--n-attempts", type=int, default=1, help="Attempts per task (default: 1)")
+    parser.add_argument("--max-retries", type=int, default=0, help="Retries after attempt-level failure (default: 0)")
+    parser.add_argument("--agent-timeout-multiplier", type=float, help="Multiplier for the agent-stage timeout")
+    parser.add_argument("--verifier-timeout-multiplier", type=float, help="Multiplier for verifier/build timeouts")
+    parser.add_argument("--jobs-dir", type=Path, default=Path("jobs"), help="Pier jobs and summary directory")
+    parser.add_argument("--job-name", help="Stable name used in result paths")
+    parser.add_argument("--platform", default="linux/amd64", help="Docker platform (default: linux/amd64)")
     parser.add_argument("--pier-bin", default="pier", help="Pier executable or absolute path")
-    parser.add_argument("--agent-import-path")
-    parser.add_argument("--skip-pull", action="store_true", help="Use images already present locally")
+    parser.add_argument("--agent-import-path", help="Explicit Pier agent import path")
+    parser.add_argument("--skip-pull", action="store_true", help="Skip Docker pulls for refs already present locally")
     parser.add_argument(
         "--no-auto-provider",
         action="store_true",
@@ -153,7 +156,7 @@ def main() -> int:
         action="store_true",
         help="Use Pier's built-in agent class instead of the runtime-only Codex adapter",
     )
-    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--dry-run", action="store_true", help="Validate, pull, and record metadata without invoking Pier")
     args = parser.parse_args()
 
     root = args.path.resolve()

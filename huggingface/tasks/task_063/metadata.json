@@ -1,5 +1,6 @@
 {
   "task_id": "063",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent population-history estimates after archive curation",
   "domain": "population-genetics-tree-sequence-statistics",
   "language": "c-python",

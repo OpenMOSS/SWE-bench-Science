@@ -1,5 +1,6 @@
 {
   "task_id": "101",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent battery-model reproduction",
   "domain": "lithium-ion-battery-modeling",
   "language": "python",

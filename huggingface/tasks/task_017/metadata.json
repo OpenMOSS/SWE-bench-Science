@@ -1,5 +1,6 @@
 {
   "task_id": "017",
+  "science_knowledge_ablation": true,
   "title": "Repair dark-matter line-of-sight maps in Gammapy",
   "domain": "gamma-ray-astronomy-dark-matter",
   "language": "python",

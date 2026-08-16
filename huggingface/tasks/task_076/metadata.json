@@ -1,5 +1,6 @@
 {
   "task_id": "076",
+  "science_knowledge_ablation": true,
   "title": "Repair a batched parametric tracking workflow",
   "domain": "convex-optimization-parametric-workflows",
   "language": "python",

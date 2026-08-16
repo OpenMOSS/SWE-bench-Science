@@ -1,5 +1,6 @@
 {
   "task_id": "010",
+  "science_knowledge_ablation": true,
   "title": "Complete alternate perturbation-representation support",
   "domain": "plasma-stability",
   "language": "python",

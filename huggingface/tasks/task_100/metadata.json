@@ -1,5 +1,6 @@
 {
   "task_id": "100",
+  "science_knowledge_ablation": true,
   "title": "Repair calibrated framework embedding relaxation",
   "domain": "reticular-chemistry-and-framework-geometry",
   "language": "python",

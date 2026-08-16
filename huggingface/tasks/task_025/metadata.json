@@ -1,5 +1,6 @@
 {
   "task_id": "025",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent cross-protocol Osprey validation reports",
   "domain": "edited-magnetic-resonance-spectroscopy-workflow",
   "language": "matlab-octave",

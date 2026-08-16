@@ -1,5 +1,6 @@
 {
   "task_id": "084",
+  "science_knowledge_ablation": true,
   "title": "Repair ABACUS relaxation archive/reload semantics",
   "domain": "materials-science-scientific-data-semantics",
   "language": "python",

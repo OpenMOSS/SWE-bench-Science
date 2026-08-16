@@ -1,5 +1,6 @@
 {
   "task_id": "088",
+  "science_knowledge_ablation": false,
   "title": "Repair a boundary aggregation failure",
   "domain": "boundary-aggregation",
   "language": "python",

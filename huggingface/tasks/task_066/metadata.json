@@ -1,5 +1,6 @@
 {
   "task_id": "066",
+  "science_knowledge_ablation": true,
   "title": "Restore regional climate-model validation consistency",
   "domain": "earth-science-data-semantics",
   "language": "python",

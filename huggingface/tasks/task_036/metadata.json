@@ -1,5 +1,6 @@
 {
   "task_id": "036",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent sampling on a spherical curvilinear ocean grid",
   "domain": "computational-oceanography-and-spherical-geometry",
   "language": "python",

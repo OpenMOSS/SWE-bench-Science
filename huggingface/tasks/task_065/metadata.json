@@ -1,5 +1,6 @@
 {
   "task_id": "065",
+  "science_knowledge_ablation": true,
   "title": "Repair inconsistent particle-field visualization results",
   "domain": "astrophysical hydrodynamics and particle-based field visualization",
   "language": "python",

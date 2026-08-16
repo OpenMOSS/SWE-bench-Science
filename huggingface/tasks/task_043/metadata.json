@@ -1,5 +1,6 @@
 {
   "task_id": "043",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent porous-volume characterization",
   "domain": "porous-media-image-analysis",
   "language": "python",

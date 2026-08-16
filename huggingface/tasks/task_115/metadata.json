@@ -1,5 +1,6 @@
 {
   "task_id": "115",
+  "science_knowledge_ablation": false,
   "title": "Restore physically meaningful structural stability checks",
   "domain": "structural-engineering-and-disaster-resilience",
   "language": "python",

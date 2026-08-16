@@ -1,5 +1,6 @@
 {
   "task_id": "050",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent tensor-network state calculation",
   "domain": "quantum-information-many-body-tensor-networks",
   "language": "python",

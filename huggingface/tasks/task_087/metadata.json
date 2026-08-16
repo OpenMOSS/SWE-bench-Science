@@ -1,5 +1,6 @@
 {
   "task_id": "087",
+  "science_knowledge_ablation": false,
   "title": "Repair a silent diffusion-MRI denoising inconsistency",
   "domain": "diffusion-mri-denoising",
   "language": "python",

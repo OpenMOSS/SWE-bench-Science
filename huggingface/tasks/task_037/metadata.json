@@ -1,5 +1,6 @@
 {
   "task_id": "037",
+  "science_knowledge_ablation": true,
   "title": "Repair an inconsistent multiframe MR reconstruction",
   "domain": "medical-imaging",
   "language": "python",

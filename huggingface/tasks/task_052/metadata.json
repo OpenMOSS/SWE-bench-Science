@@ -1,5 +1,6 @@
 {
   "task_id": "052",
+  "science_knowledge_ablation": true,
   "title": "Restore a nonuniform finite-volume phase-field workflow",
   "domain": "computational-materials-finite-volume-pde",
   "language": "python",
