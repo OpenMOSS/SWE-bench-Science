@@ -352,6 +352,17 @@ class ReleaseToolTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "rematerialize"):
                 validate_artifact_hooks([task])
 
+    def test_verifier_entrypoint_discovers_custom_private_test_names(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        task_tests = root / "huggingface" / "tasks" / "task_030" / "tests"
+        grader = (task_tests / "grader.py").read_text(encoding="utf-8")
+        self.assertIn('"/tests/private_tests"', grader)
+        self.assertNotIn("test_task_030.py", grader)
+        compose = (task_tests / "docker-compose.yaml").read_text(encoding="utf-8")
+        self.assertIn("target: /tests/grader.py", compose)
+        dockerfile = (task_tests / "Dockerfile").read_text(encoding="utf-8")
+        self.assertIn("COPY grader.py /tests/grader.py", dockerfile)
+
     def test_dependency_extractor_ignores_python_stdlib_names(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory)

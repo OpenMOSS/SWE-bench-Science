@@ -1,0 +1,7 @@
+services:
+  main:
+    volumes:
+      - type: bind
+        source: ./grader.py
+        target: /tests/grader.py
+        read_only: true

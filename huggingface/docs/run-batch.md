@@ -138,6 +138,13 @@ verifier result therefore evaluates the agent workspace, not the untouched
 baseline. A missing `pre_artifacts.sh` is rejected by `run_batch.py`; rerun
 `materialize.py` with the current tools to regenerate the task selection.
 
+Private-test collection is directory-based. The verifier runs pytest on
+`/tests/private_tests`, so task authors may use names such as
+`test_res_export.py` or `test_scientific_invariants.py`; no
+`test_task_NNN.py` filename is required. The task's Compose override mounts the
+bundle's dynamic grader into an existing prebuilt verifier image, so correcting
+test discovery does not require rebuilding the image.
+
 ## Option Reference
 
 | Option | Default | Description |

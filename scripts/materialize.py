@@ -142,6 +142,8 @@ def main() -> int:
             "environment/Dockerfile",
             "tests/Dockerfile",
             "tests/test.sh",
+            "tests/grader.py",
+            "tests/docker-compose.yaml",
         ):
             path = source / relative
             if path.is_file():

@@ -37,6 +37,8 @@ def execute(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
 
 public = execute([sys.executable, "reproduce.py"], TASK_ROOT)
 junit = LOG_ROOT / "junit.xml"
+# Private tests are a task-owned directory. Their filenames are intentionally
+# unconstrained; pytest discovers every supported test module recursively.
 private = execute(
     [
         sys.executable,

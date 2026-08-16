@@ -598,6 +598,16 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
             task_dir / "tests" / name,
             task_id=task_id,
         )
+    render_template(
+        TEMPLATES_ROOT / "verifier" / "grader.py",
+        task_dir / "tests" / "grader.py",
+        task_id=task_id,
+    )
+    render_template(
+        TEMPLATES_ROOT / "task-tests" / "docker-compose.yaml",
+        task_dir / "tests" / "docker-compose.yaml",
+        task_id=task_id,
+    )
     shutil.copy2(
         TEMPLATES_ROOT / "task" / "pre_artifacts.sh",
         task_dir / "pre_artifacts.sh",

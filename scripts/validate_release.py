@@ -134,6 +134,12 @@ def validate(*, require_images: bool) -> dict[str, object]:
         thin_task_path = ROOT / "huggingface" / "tasks" / task_path.name
         if not task_path.is_dir() and not thin_task_path.is_dir():
             raise ValueError(f"missing task bundle for {task_id}")
+        for relative in (
+            "tests/grader.py",
+            "tests/docker-compose.yaml",
+        ):
+            if not (thin_task_path / relative).is_file():
+                raise ValueError(f"missing dynamic verifier entrypoint for {task_id}: {relative}")
         if policy:
             task_dir = ROOT / str(row["task_path"])
             materials_path = task_dir / "environment" / "public" / "MATERIALS.json"

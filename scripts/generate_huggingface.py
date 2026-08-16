@@ -34,12 +34,18 @@ THIN_TASK_FILES = (
     "environment/Dockerfile",
     "tests/Dockerfile",
     "tests/test.sh",
+    "tests/grader.py",
+    "tests/docker-compose.yaml",
 )
 OPTIONAL_THIN_TASK_FILES = (
     "environment/public/MATERIALS.json",
     "environment/public/MATERIALS_LICENSES.md",
     "fixtures/PROVENANCE.md",
 )
+THIN_TASK_TEMPLATES = {
+    "tests/grader.py": ROOT / "templates" / "verifier" / "grader.py",
+    "tests/docker-compose.yaml": ROOT / "templates" / "task-tests" / "docker-compose.yaml",
+}
 
 
 def load_rows() -> list[dict[str, object]]:
@@ -192,13 +198,29 @@ def write_snapshot(
                     encoding="utf-8",
                 )
                 continue
-            if not source_file.is_file():
-                raise FileNotFoundError(source_file)
             destination_file = destination / relative
             destination_file.parent.mkdir(parents=True, exist_ok=True)
-            if source_file.resolve() == destination_file.resolve():
-                continue
-            shutil.copy2(source_file, destination_file)
+            template = THIN_TASK_TEMPLATES.get(relative)
+            if template is not None and not source_file.is_file():
+                destination_file.write_text(
+                    template.read_text(encoding="utf-8").replace("__TASK_ID__", task_id),
+                    encoding="utf-8",
+                )
+            else:
+                if not source_file.is_file():
+                    raise FileNotFoundError(source_file)
+                if source_file.resolve() == destination_file.resolve():
+                    continue
+                shutil.copy2(source_file, destination_file)
+            if relative == "tests/Dockerfile":
+                dockerfile = destination_file.read_text(encoding="utf-8")
+                if "COPY grader.py /tests/grader.py" not in dockerfile:
+                    destination_file.write_text(
+                        dockerfile.rstrip() +
+                        "\n\nCOPY grader.py /tests/grader.py\n"
+                        "RUN chmod 755 /tests/grader.py\n",
+                        encoding="utf-8",
+                    )
         for relative in OPTIONAL_THIN_TASK_FILES:
             source_file = source / relative
             if not source_file.is_file() and relative == "fixtures/PROVENANCE.md":
