@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task_id": "074",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The DeePTB source snapshot is LGPL-3.0-family; explicit restricted-license opt-in is required. The cited article is CC BY-NC-ND and is not bundled.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/deepmodeling/DeePTB/tree/e365079ea71190aaa0dc96d22253d3888c47abf9",
+      "license": "LGPL-3.0-family",
+      "copyright": "DeePTB contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/public/paper.md and paper_assets/README.md",
+      "kind": "benchmark_authored_scientific_summary",
+      "source_url": "https://doi.org/10.1038/s41467-024-51006-4",
+      "modified": true,
+      "third_party_exceptions": "The Nature Communications article is cited only; no article body, figures, or derivative conversion is bundled.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/public_overlap_case.json",
+      "kind": "benchmark_authored_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "Deterministic matrices authored for the benchmark.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

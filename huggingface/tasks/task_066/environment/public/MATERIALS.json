@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "066",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The Iris source snapshot is LGPL-3.0-or-later; explicit restricted-license opt-in is required for this task.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/SciTools/iris/tree/0b569cdfad5e67f4aec3562bb26460020c7c7354",
+      "license": "LGPL-3.0-or-later",
+      "copyright": "Iris contributors; COPYING and COPYING.LESSER retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/public/paper_assets/cf_conventions_1.9.html and cf_conventions_1.10.html",
+      "kind": "standards_copies",
+      "source_url": "https://cfconventions.org/",
+      "license": "LicenseRef-CF-No-Snapshot-Grant-Found",
+      "copyright": "CF Metadata Conventions contributors",
+      "modified": true,
+      "third_party_exceptions": "Removed; canonical links remain in paper.md and Iris source documentation.",
+      "distribution_decision": "excluded"
+    },
+    {
+      "path": "environment/public/fixtures",
+      "kind": "benchmark_authored_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "NetCDF and CSV fixtures are deterministic benchmark material.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

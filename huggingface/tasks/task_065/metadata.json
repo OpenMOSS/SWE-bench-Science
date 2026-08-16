@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/yt-project/yt",
   "source_commit": "c86781b8cbdeea8002c7846d37dc1250045146e6",
   "source_license": "BSD-3-Clause",
-  "license_source": "COPYING.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "05e8764a37e3a9fe27c6802af7806b2b394b54c801c88ee9f929e90102959500"
+  "material_license": "BSD-3-Clause",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "743c5204f6f26d5b4a3eddd58e53b2373d0a50ec0fdb4c13e611c06a4b25c6d1",
+  "restricted_reason": "",
+  "public_payload_sha256": "73ff2fb54184a476d2c9a52fab7e72e01ae70582a6d2cc90bec61b68071c2413"
 }

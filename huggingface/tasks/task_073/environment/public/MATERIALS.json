@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "073",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/biotite-dev/biotite/tree/f8c3b8aa5473e078f91c86dcee7340eb9ed3eb97",
+      "license": "BSD-3-Clause",
+      "copyright": "Biotite contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/public_structure.cif",
+      "kind": "public_database_structure_adaptation",
+      "source_url": "https://www.rcsb.org/structure/3O5R",
+      "license": "CC0-1.0",
+      "copyright": "RCSB PDB entry 3O5R depositors; benchmark representation adaptation",
+      "modified": true,
+      "third_party_exceptions": "Entry DOI and depositor attribution are recorded in fixtures/README.md.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

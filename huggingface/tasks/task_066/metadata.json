@@ -5,10 +5,16 @@
   "language": "python",
   "source_repository": "https://github.com/SciTools/iris",
   "source_commit": "0b569cdfad5e67f4aec3562bb26460020c7c7354",
-  "source_license": "AGPL-family",
-  "license_source": "COPYING",
+  "source_license": "LGPL-3.0-or-later",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
-  "public_payload_sha256": "fbd0a732b640ea057c4f339c9c9de0d96c17f7e8a93a68e178f37df5471defc6"
+  "material_license": "LGPL-3.0-or-later",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": true,
+  "materials_gate": true,
+  "materials_manifest_sha256": "bba8dad05d78e0be623c0a69d7b96b985835a0a9e0fe5a911ca31e925798a6b8",
+  "restricted_reason": "The Iris source snapshot is LGPL-3.0-or-later; explicit restricted-license opt-in is required for this task.",
+  "public_payload_sha256": "c3f82c807772ab9a6a3fd61b0cc593173eadb82aa1d6eae635d722f76563dac5"
 }

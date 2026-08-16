@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 FIELDS = [
     "task_id", "title", "domain", "language", "repository_url", "base_commit",
     "source_license", "gpl_family", "restricted_license", "license_gate",
+    "material_license", "material_license_source", "material_restricted", "materials_gate",
+    "materials_manifest_sha256", "restricted_reason",
     "environment_image", "verifier_image", "image_platform", "task_path", "status",
 ]
 THIN_TASK_FILES = (
@@ -24,6 +26,10 @@ THIN_TASK_FILES = (
     "environment/Dockerfile",
     "tests/Dockerfile",
     "tests/test.sh",
+)
+OPTIONAL_THIN_TASK_FILES = (
+    "environment/public/MATERIALS.json",
+    "environment/public/MATERIALS_LICENSES.md",
 )
 
 
@@ -117,17 +123,33 @@ def metadata_from_row(row: dict[str, object]) -> dict[str, object]:
         "gpl_family": bool(row.get("gpl_family")),
         "restricted_license": bool(row.get("restricted_license", row.get("gpl_family"))),
         "license_gate": row.get("license_gate", "none"),
+        "material_license": row.get("material_license", ""),
+        "material_license_source": row.get("material_license_source", ""),
+        "material_restricted": bool(row.get("material_restricted")),
+        "materials_gate": bool(row.get("materials_gate")),
+        "materials_manifest_sha256": row.get("materials_manifest_sha256", ""),
+        "restricted_reason": row.get("restricted_reason", ""),
         "public_payload_sha256": row.get("public_payload_sha256", ""),
     }
 
 
-def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
+def write_snapshot(
+    rows: list[dict[str, object]],
+    output_root: Path,
+    *,
+    replace_task_ids: set[str] | None = None,
+) -> None:
     task_root = output_root / "tasks"
-    if task_root.exists():
+    if replace_task_ids is None and task_root.exists():
         shutil.rmtree(task_root)
     for row in rows:
+        task_id = str(row["release_id"])
+        if replace_task_ids is not None and task_id not in replace_task_ids:
+            continue
         source = ROOT / str(row["task_path"])
         destination = task_root / source.name
+        if replace_task_ids is not None and destination.exists():
+            shutil.rmtree(destination)
         for relative in THIN_TASK_FILES:
             source_file = source / relative
             if relative == "metadata.json":
@@ -140,6 +162,13 @@ def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
                 continue
             if not source_file.is_file():
                 raise FileNotFoundError(source_file)
+            destination_file = destination / relative
+            destination_file.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source_file, destination_file)
+        for relative in OPTIONAL_THIN_TASK_FILES:
+            source_file = source / relative
+            if not source_file.is_file():
+                continue
             destination_file = destination / relative
             destination_file.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source_file, destination_file)
@@ -170,6 +199,11 @@ def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "huggingface" / "data")
+    parser.add_argument(
+        "--task-id",
+        action="append",
+        help="Replace only this thin task snapshot; repeatable. Tables and manifests remain global.",
+    )
     args = parser.parse_args()
     rows = sorted(load_rows(), key=lambda row: str(row["release_id"]))
     expected = [f"{index:03d}" for index in range(1, 120)]
@@ -183,8 +217,26 @@ def main() -> int:
         shutil.rmtree(selections_dir)
     write_selection(default_rows, selections_dir / f"default-{len(default_rows)}.json")
     write_selection(rows, selections_dir / "all-119.json")
-    write_snapshot(rows, args.output.parent)
-    print(json.dumps({"rows": len(rows), "output": str(args.output)}, indent=2))
+    replace_task_ids = None
+    if args.task_id:
+        replace_task_ids = {
+            f"{int(value.removeprefix('task_')):03d}" for value in args.task_id
+        }
+        known_ids = {str(row["release_id"]) for row in rows}
+        unknown_ids = sorted(replace_task_ids - known_ids)
+        if unknown_ids:
+            raise ValueError(f"unknown task ids: {', '.join(unknown_ids)}")
+    write_snapshot(rows, args.output.parent, replace_task_ids=replace_task_ids)
+    print(
+        json.dumps(
+            {
+                "rows": len(rows),
+                "snapshot_tasks": len(rows) if replace_task_ids is None else len(replace_task_ids),
+                "output": str(args.output),
+            },
+            indent=2,
+        )
+    )
     return 0
 
 

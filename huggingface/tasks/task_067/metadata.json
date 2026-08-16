@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/Ouranosinc/xclim",
   "source_commit": "d1e654cf59a5d5761f5586bca1102a1590ae6e32",
   "source_license": "Apache-2.0",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "c92bab50be2064b2be6a92409c8b291f4c4187ddbe02bde1c154b45dc361c15d"
+  "material_license": "Apache-2.0",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "ab73bddee4e1a9cf953c5ffc9261de0b8a4bddbbe926d43a279dedf142bed459",
+  "restricted_reason": "",
+  "public_payload_sha256": "59d12e07a39bf7e5c8e3d1a3f966cac3a12eca55499b9b45a07ba77585a7486c"
 }

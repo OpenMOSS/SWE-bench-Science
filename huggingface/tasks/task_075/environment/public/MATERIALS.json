@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "075",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The DeePMD-kit source snapshot is LGPL-3.0-family; explicit restricted-license opt-in is required for this task.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/deepmodeling/deepmd-kit/tree/a9bcbc505de7d905dbc2a598b10c17a49e0131d8",
+      "license": "LGPL-3.0-family",
+      "copyright": "DeePMD-kit contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_scientific_summary",
+      "source_url": "https://doi.org/10.1063/5.0155600; https://doi.org/10.1016/j.cpc.2018.03.016; https://doi.org/10.1016/j.cpc.2020.107624; https://doi.org/10.1021/acs.jctc.2c00102",
+      "modified": true,
+      "third_party_exceptions": "Only benchmark-authored summary text and citations are bundled; no article text or figures are copied.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

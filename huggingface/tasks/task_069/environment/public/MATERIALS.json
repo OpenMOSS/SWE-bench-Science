@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "069",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/open2c/cooltools/tree/ba2be42c714fffb6b62ea13e7ecfbecb5f4a4d9a",
+      "license": "MIT",
+      "copyright": "cooltools contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/archive_contact_map.cool",
+      "kind": "benchmark_authored_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "Synthetic names, deterministic values, and benchmark generation metadata are used; the file is not copied from an archive.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

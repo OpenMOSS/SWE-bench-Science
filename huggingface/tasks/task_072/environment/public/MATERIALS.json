@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task_id": "072",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/pydicom/pydicom/tree/b69de21c8610853493bc81d3eac79644554e4bda",
+      "license": "MIT",
+      "copyright": "pydicom contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_standards_summary",
+      "source_url": "https://www.dicomstandard.org/current",
+      "modified": true,
+      "third_party_exceptions": "No DICOM standard text or patient data is copied.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/*.dcm",
+      "kind": "benchmark_authored_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "Synthetic anonymized DICOM objects with no clinical patient data.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

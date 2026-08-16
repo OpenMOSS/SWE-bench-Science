@@ -8,6 +8,24 @@ import json
 import re
 from pathlib import Path
 
+try:
+    from .material_policy import (
+        audited_source_license,
+        load_policies,
+        material_license_summary,
+        materials_digest,
+    )
+except ImportError:  # Direct execution from the scripts directory.
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from scripts.material_policy import (
+        audited_source_license,
+        load_policies,
+        material_license_summary,
+        materials_digest,
+    )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SECRET_RE = re.compile(r"(?i)(sk-[a-z0-9]{20,}|ghp_[a-z0-9]{20,}|bearer\s+[a-z0-9._-]{20,})")
@@ -37,7 +55,7 @@ def scan_files() -> list[str]:
             if "private_tests" in relative.parts and not (
                 len(relative.parts) >= 4
                 and relative.parts[0] == "staging"
-                and relative.parts[2] == "verifier"
+                and relative.parts[2] in {"verifier", "verifier_release"}
             ):
                 findings.append(f"private tests outside verifier staging: {relative}")
                 continue
@@ -58,9 +76,11 @@ def is_gpl_family_license(value: object) -> bool:
 
 
 def is_restricted_license(row: dict[str, object]) -> bool:
-    return is_gpl_family_license(row.get("source_license")) or str(
-        row.get("source_license", "")
-    ) == "Academic-NonCommercial"
+    return (
+        is_gpl_family_license(row.get("source_license"))
+        or str(row.get("source_license", "")) == "Academic-NonCommercial"
+        or bool(row.get("material_restricted"))
+    )
 
 
 def expected_license_gate(row: dict[str, object]) -> str:
@@ -68,11 +88,19 @@ def expected_license_gate(row: dict[str, object]) -> str:
         return "gpl-family"
     if str(row.get("source_license", "")) == "Academic-NonCommercial":
         return "noncommercial"
+    if bool(row.get("material_restricted")):
+        normalized_material_license = str(row.get("material_license", "")).upper().replace("-", "")
+        return (
+            "noncommercial"
+            if "NONCOMMERCIAL" in normalized_material_license
+            else "restricted-materials"
+        )
     return "none"
 
 
 def validate(*, require_images: bool) -> dict[str, object]:
     rows = load_rows()
+    material_policies = load_policies()
     ids = [str(row.get("release_id", "")) for row in rows]
     if len(ids) != len(set(ids)):
         raise ValueError("duplicate release_id")
@@ -83,6 +111,19 @@ def validate(*, require_images: bool) -> dict[str, object]:
             raise ValueError("legacy task id 120 is forbidden")
     for row in rows:
         task_id = str(row["release_id"])
+        policy = material_policies.get(task_id)
+        if policy:
+            expected_material_gate = bool(policy.get("requires_restricted_gate"))
+            if bool(row.get("materials_gate")) != expected_material_gate:
+                raise ValueError(f"materials_gate mismatch for {task_id}")
+            if bool(row.get("material_restricted")) != expected_material_gate:
+                raise ValueError(f"material_restricted mismatch for {task_id}")
+            if str(row.get("material_license", "")) != material_license_summary(policy):
+                raise ValueError(f"material license summary mismatch for {task_id}")
+            if str(row.get("source_license", "")) != audited_source_license(policy):
+                raise ValueError(f"audited source license mismatch for {task_id}")
+            if str(row.get("restricted_reason", "")) != str(policy.get("restricted_reason", "")):
+                raise ValueError(f"restricted reason mismatch for {task_id}")
         if bool(row.get("gpl_family")) != is_gpl_family_license(row.get("source_license")):
             raise ValueError(f"GPL classification mismatch for {task_id}")
         if bool(row.get("restricted_license")) != is_restricted_license(row):
@@ -91,6 +132,54 @@ def validate(*, require_images: bool) -> dict[str, object]:
             raise ValueError(f"license_gate mismatch for {task_id}")
         if not (ROOT / str(row["task_path"])).is_dir():
             raise ValueError(f"missing task bundle for {task_id}")
+        if policy:
+            task_dir = ROOT / str(row["task_path"])
+            materials_path = task_dir / "environment" / "public" / "MATERIALS.json"
+            if not materials_path.is_file():
+                raise ValueError(f"missing material manifest for {task_id}")
+            materials_payload = json.loads(materials_path.read_text(encoding="utf-8"))
+            if str(row.get("materials_manifest_sha256", "")) != materials_digest(materials_payload):
+                raise ValueError(f"material manifest digest mismatch for {task_id}")
+            for relative in policy.get("remove", []):
+                if (task_dir / str(relative)).exists():
+                    raise ValueError(f"excluded material remains in task {task_id}: {relative}")
+            for pattern in policy.get("remove_globs", []):
+                if next(task_dir.glob(str(pattern)), None) is not None:
+                    raise ValueError(
+                        f"excluded material glob remains in task {task_id}: {pattern}"
+                    )
+            for relative, allowed_names in dict(
+                policy.get("retain_subdirectories", {})
+            ).items():
+                parent = task_dir / str(relative)
+                allowed = {str(name) for name in allowed_names}
+                unexpected = sorted(
+                    child.name
+                    for child in parent.iterdir()
+                    if child.is_dir() and child.name not in allowed
+                )
+                if unexpected:
+                    raise ValueError(
+                        f"unexpected subdirectories remain in task {task_id} at "
+                        f"{relative}: {unexpected}"
+                    )
+            for relative, allowed_names in dict(policy.get("retain_files", {})).items():
+                parent = task_dir / str(relative)
+                allowed = {str(name) for name in allowed_names}
+                unexpected = sorted(
+                    child.name
+                    for child in parent.iterdir()
+                    if child.is_file() and child.name not in allowed
+                )
+                if unexpected:
+                    raise ValueError(
+                        f"unexpected files remain in task {task_id} at "
+                        f"{relative}: {unexpected}"
+                    )
+            for relative in policy.get("strip_notebook_outputs", []):
+                notebook = json.loads((task_dir / str(relative)).read_text(encoding="utf-8"))
+                if any(cell.get("outputs") for cell in notebook.get("cells", [])):
+                    raise ValueError(f"notebook outputs remain in task {task_id}: {relative}")
         if require_images and (not row.get("environment_image") or not row.get("verifier_image")):
             raise ValueError(f"missing image reference for {task_id}")
     findings = scan_files()

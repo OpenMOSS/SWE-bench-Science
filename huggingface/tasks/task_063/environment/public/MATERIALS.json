@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "063",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/tskit-dev/tskit",
+      "license": "MIT",
+      "copyright": "tskit contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md and paper_assets/PMC7337078, PMC11373519",
+      "kind": "article_and_figures",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7337078/; https://pmc.ncbi.nlm.nih.gov/articles/PMC11373519/",
+      "license": "CC-BY-4.0",
+      "copyright": "The respective article authors and journals",
+      "modified": true,
+      "third_party_exceptions": "JATS-to-Markdown conversions and localized figures are identified as modified copies; both PMC records carry CC BY 4.0.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures and manual",
+      "kind": "benchmark_material",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "Tree-sequence fixtures and explanatory manual are benchmark-authored.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

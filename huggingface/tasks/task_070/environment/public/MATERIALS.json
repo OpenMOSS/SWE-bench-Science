@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "070",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/levitsky/pyteomics/tree/f509b761a5231e9f108780c88c2b3781266e7b90",
+      "license": "Apache-2.0",
+      "copyright": "pyteomics contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/ProForma_v2.1_Final.pdf",
+      "kind": "standards_document",
+      "source_url": "https://github.com/HUPO-PSI/ProForma",
+      "license": "CC-BY-ND-4.0",
+      "copyright": "Human Proteome Organization Proteomics Standards Initiative",
+      "modified": false,
+      "third_party_exceptions": "The original PDF is retained unchanged with its copyright and license notice; no converted article text or figures are distributed.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_scientific_summary",
+      "source_url": "https://doi.org/10.1021/acs.jproteome.1c00771",
+      "modified": true,
+      "third_party_exceptions": "The public Markdown is newly authored summary text, not a conversion of the CC BY-ND document.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    },
+    {
+      "path": "environment/public/fixtures/precursor_annotation_batch.json",
+      "kind": "benchmark_authored_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "Deterministic synthetic annotation records.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

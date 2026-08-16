@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/astropy/reproject",
   "source_commit": "62a0d3f037024d4dcf67857fb83d392f2e099ec0",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "3545f63f2d7b0f876e372badde8358dd51214f78bf0aa2e1a226547b0c480ce4"
+  "material_license": "BSD-3-Clause; CC-BY-3.0",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "e018ba172e4f36e9ac6c2ba08a68c48265bf8ba6769a0d1e41ae1fd66097a064",
+  "restricted_reason": "",
+  "public_payload_sha256": "aa60b02d450e7fc23118652e520c2fab555aef639668366857d370813dd6a633"
 }

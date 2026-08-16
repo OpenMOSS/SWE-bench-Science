@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import os
 import re
@@ -11,9 +12,27 @@ import subprocess
 import time
 from pathlib import Path
 
+try:
+    from import_task import (
+        is_gpl_family_license,
+        is_restricted_license,
+        license_gate,
+        tree_sha256,
+    )
+    from material_policy import apply_task_policy, load_policies
+except ModuleNotFoundError:  # Imported as scripts.build_publish_batch in tests.
+    from scripts.import_task import (
+        is_gpl_family_license,
+        is_restricted_license,
+        license_gate,
+        tree_sha256,
+    )
+    from scripts.material_policy import apply_task_policy, load_policies
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "manifests" / "tasks.jsonl"
+PUBLISH_LOCK_PATH = ROOT / "build" / "publish.lock"
 TASK_ID_RE = re.compile(r"^(?:task_)?(\d{1,3})$")
 
 
@@ -27,12 +46,36 @@ def normalize_task_id(value: str) -> str:
     return task_id
 
 
+def acquire_publish_lock():
+    PUBLISH_LOCK_PATH.parent.mkdir(parents=True, exist_ok=True)
+    handle = PUBLISH_LOCK_PATH.open("a+")
+    if os.environ.get("SWE_BENCH_WAIT_FOR_PUBLISH_LOCK") == "1":
+        print("+ waiting for the image-publisher lock", flush=True)
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        return handle
+    try:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError as exc:
+        handle.close()
+        raise RuntimeError(
+            "another image publisher is already updating this release; wait for it to finish"
+        ) from exc
+    return handle
+
+
 def load_rows() -> list[dict[str, object]]:
     return [
         json.loads(line)
         for line in MANIFEST_PATH.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+
+
+def write_rows(rows: list[dict[str, object]]) -> None:
+    MANIFEST_PATH.write_text(
+        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
+        encoding="utf-8",
+    )
 
 
 def image_slug(value: str) -> str:
@@ -65,7 +108,11 @@ def host_network_env() -> dict[str, str]:
 
 def registry_network_env() -> dict[str, str]:
     """Use the direct campus route for Docker Hub registry operations."""
+    if os.environ.get("SWE_BENCH_USE_PROXY") == "1":
+        return host_network_env()
     env = host_network_env()
+    if os.environ.get("SWE_BENCH_REGISTRY_PROXY") == "1":
+        return env
     for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
         env.pop(name, None)
     return env
@@ -161,6 +208,11 @@ def build_push(
         "--metadata-file",
         str(metadata_path),
     ]
+    # A normal Docker Hub image is not guaranteed to expose a BuildKit cache
+    # manifest. Keep registry-cache import opt-in so transient registry/auth
+    # failures cannot cancel an otherwise valid local rebuild.
+    if os.environ.get("SWE_BENCH_REGISTRY_CACHE_FROM") == "1":
+        command.extend(["--cache-from", f"type=registry,ref={reference}"])
     for value in build_args:
         command.extend(["--build-arg", value])
     # BuildKit recognizes these proxy build args without Dockerfile changes.
@@ -198,11 +250,34 @@ def build_push(
     return digest
 
 
+def seed_registry_cache(reference: str) -> None:
+    """Pull the previous amd64 tag before replacing it, when it exists."""
+    print(f"+ docker pull --platform linux/amd64 {reference}", flush=True)
+    try:
+        completed = subprocess.run(
+            ["docker", "pull", "--platform", "linux/amd64", reference],
+            cwd=ROOT,
+            env=registry_network_env(),
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=False,
+            timeout=600,
+        )
+    except subprocess.TimeoutExpired as exc:
+        print(f"! cache seed timed out for {reference}: {exc}", flush=True)
+        return
+    if completed.returncode != 0:
+        print(f"! no reusable registry cache for {reference}: {completed.stdout[-800:]}", flush=True)
+
+
 def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int = 600) -> str:
     """Retry transient registry failures without rebuilding the local image."""
+    last_error: Exception | None = None
     for attempt in range(1, attempts + 1):
         try:
-            print("+ direct Docker Hub route", flush=True)
+            route = "configured proxy" if os.environ.get("SWE_BENCH_REGISTRY_PROXY") == "1" else "direct"
+            print(f"+ {route} Docker Hub route", flush=True)
             completed = subprocess.run(
                 ["docker", "push", reference],
                 cwd=ROOT,
@@ -218,14 +293,57 @@ def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int =
             output = (getattr(exc, "stdout", "") or "").strip()
             if isinstance(exc, subprocess.TimeoutExpired):
                 output = f"push timed out after {timeout_seconds}s; {output}"
+            last_error = exc
             print(
                 f"! docker push attempt {attempt}/{attempts} failed for {reference}: {output[-800:]}",
                 flush=True,
             )
-            if attempt == attempts:
-                raise
-            time.sleep(5 * attempt)
-    raise AssertionError("unreachable")
+            if attempt < attempts:
+                time.sleep(5 * attempt)
+    # Docker Desktop occasionally leaves a multi-layer upload in `Waiting`
+    # while the same registry is reachable.  A serialized Registry API upload
+    # reuses the local image and avoids daemon-wide upload fan-out.
+    repository_tag = reference.removeprefix("docker.io/")
+    repository, tag = repository_tag.rsplit(":", 1)
+    print(f"+ serialized Docker Hub Registry API upload for {reference}", flush=True)
+    try:
+        completed = subprocess.run(
+            [
+                "python3",
+                "scripts/dockerhub_upload.py",
+                "--image",
+                reference,
+                "--repository",
+                repository,
+                "--tag",
+                tag,
+            ],
+            cwd=ROOT,
+            env=registry_network_env(),
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=3600,
+        )
+        output = (completed.stdout or "").strip()
+        match = re.search(r"published .* (sha256:[0-9a-f]{64})$", output, re.MULTILINE)
+        if not match:
+            raise RuntimeError(f"serialized upload did not return a manifest digest: {output[-800:]}")
+        # Make the immutable remote manifest available to the next verifier
+        # build, which references the environment image by digest.
+        subprocess.run(
+            ["docker", "pull", "--platform", "linux/amd64", reference],
+            cwd=ROOT,
+            env=registry_network_env(),
+            check=True,
+            text=True,
+        )
+        return f"{output}\ndigest: {match.group(1)}"
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, RuntimeError) as exc:
+        if last_error is not None:
+            raise last_error from exc
+        raise
 
 
 def update_manifest(task_id: str, *, env_ref: str, env_digest: str, verifier_ref: str, verifier_digest: str) -> None:
@@ -253,10 +371,79 @@ def update_manifest(task_id: str, *, env_ref: str, env_digest: str, verifier_ref
         break
     else:
         raise ValueError(f"task {task_id} is absent from manifest")
-    MANIFEST_PATH.write_text(
-        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
-        encoding="utf-8",
+    write_rows(rows)
+
+
+def apply_material_metadata(task_id: str, row: dict[str, object]) -> None:
+    task_dir = ROOT / "tasks" / f"task_{task_id}"
+    metadata = apply_task_policy(task_id, task_dir)
+    if metadata is None:
+        return
+    public_metadata_path = task_dir / "environment" / "public" / "metadata.json"
+    if public_metadata_path.is_file():
+        public_metadata = json.loads(public_metadata_path.read_text(encoding="utf-8"))
+        if public_metadata.get("source_commit"):
+            row["base_commit"] = public_metadata["source_commit"]
+        if public_metadata.get("source_repository"):
+            row["repository_url"] = public_metadata["source_repository"]
+    audited_license = str(metadata.get("audited_source_license", ""))
+    if audited_license:
+        row["source_license"] = audited_license
+        row["license_source"] = "manifests/materials.jsonl and retained upstream notices"
+    materials_gate = bool(metadata.get("materials_gate"))
+    release_metadata = dict(metadata.get("release_metadata", {}))
+    row.update(
+        {
+            **release_metadata,
+            "gpl_family": is_gpl_family_license(str(row.get("source_license", ""))),
+            "material_license": metadata.get("materials_license_summary", ""),
+            "material_license_source": "environment/public/MATERIALS.json",
+            "material_restricted": materials_gate,
+            "materials_gate": materials_gate,
+            "materials_manifest_sha256": metadata.get("materials_manifest_sha256", ""),
+            "restricted_reason": metadata.get("restricted_reason", ""),
+            "public_payload_sha256": tree_sha256(task_dir / "environment" / "public"),
+        }
     )
+    restricted = is_restricted_license(str(row.get("source_license", ""))) or materials_gate
+    gate = license_gate(str(row.get("source_license", "")))
+    if gate == "none" and materials_gate:
+        gate = "restricted-materials"
+    row["restricted_license"] = restricted
+    row["license_gate"] = gate
+    task_metadata = task_dir / "metadata.json"
+    if task_metadata.is_file():
+        payload = json.loads(task_metadata.read_text(encoding="utf-8"))
+        payload.update(
+            {
+                **release_metadata,
+                "source_license": row["source_license"],
+                "license_source": row["license_source"],
+                "gpl_family": row["gpl_family"],
+                "restricted_license": restricted,
+                "license_gate": gate,
+                "material_license": row["material_license"],
+                "material_license_source": row["material_license_source"],
+                "material_restricted": materials_gate,
+                "materials_gate": materials_gate,
+                "materials_manifest_sha256": row["materials_manifest_sha256"],
+                "restricted_reason": row["restricted_reason"],
+                "public_payload_sha256": row["public_payload_sha256"],
+            }
+        )
+        task_metadata.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    if release_metadata.get("title"):
+        task_toml_path = task_dir / "task.toml"
+        if task_toml_path.is_file():
+            text = task_toml_path.read_text(encoding="utf-8")
+            text = re.sub(
+                r'^description = .*$',
+                f'description = {json.dumps(str(release_metadata["title"]))}',
+                text,
+                count=1,
+                flags=re.MULTILINE,
+            )
+            task_toml_path.write_text(text, encoding="utf-8")
 
 
 def update_task_bundle(task_id: str, env_image: str, verifier_image: str) -> None:
@@ -332,19 +519,43 @@ def main() -> int:
     )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
+    publish_lock = acquire_publish_lock()
     if args.batch_size <= 0:
         raise ValueError("--batch-size must be positive")
-    rows = {str(row["release_id"]): row for row in load_rows()}
+    row_list = load_rows()
+    rows = {str(row["release_id"]): row for row in row_list}
+    # Apply policy only to the requested release slice. Other audit batches
+    # may be preparing their override files concurrently, and a local rebuild
+    # must not mutate or require unrelated task contexts.
+    task_ids = selected_ids(args, rows)
+    policies = load_policies()
+    for task_id in task_ids:
+        if task_id in policies and (ROOT / "tasks" / f"task_{task_id}").is_dir():
+            apply_material_metadata(task_id, rows[task_id])
+    write_rows(row_list)
+    # Re-evaluate after policy application so a newly introduced material
+    # gate is enforced by --allow-restricted-licenses.
     task_ids = selected_ids(args, rows)
     skipped: list[str] = []
     if args.resume:
         remaining: list[str] = []
         for task_id in task_ids:
             row = rows[task_id]
+            environment_tag = str(row.get("environment_image_tag") or "")
+            verifier_tag = str(row.get("verifier_image_tag") or "")
+            expected_suffix = f"-task-{task_id}:{args.tag}"
             if (
                 row.get("status") == "dockerhub-published"
                 and str(row.get("environment_image_digest") or "").startswith("sha256:")
                 and str(row.get("verifier_image_digest") or "").startswith("sha256:")
+                and environment_tag.startswith(
+                    f"{args.registry}/swe-bench-science-environment-"
+                )
+                and verifier_tag.startswith(
+                    f"{args.registry}/swe-bench-science-verifier-"
+                )
+                and environment_tag.endswith(expected_suffix)
+                and verifier_tag.endswith(expected_suffix)
             ):
                 skipped.append(task_id)
             else:
@@ -378,6 +589,8 @@ def main() -> int:
                 # cleanup remains effective even if build_push raises after a
                 # successful local load or registry push.
                 references.extend([env_ref, verifier_ref])
+                if os.environ.get("SWE_BENCH_SEED_REGISTRY_CACHE") == "1":
+                    seed_registry_cache(env_ref)
                 env_digest = build_push(
                     builder=args.builder,
                     reference=env_ref,
@@ -385,6 +598,8 @@ def main() -> int:
                     context=ROOT / "tasks" / f"task_{task_id}" / "environment",
                     metadata_path=batch_root / f"task_{task_id}-environment.json",
                 )
+                if os.environ.get("SWE_BENCH_SEED_REGISTRY_CACHE") == "1":
+                    seed_registry_cache(verifier_ref)
                 verifier_digest = build_push(
                     builder=args.builder,
                     reference=verifier_ref,
@@ -400,7 +615,11 @@ def main() -> int:
                 print(json.dumps({"task_id": task_id, "environment": env_image, "verifier": verifier_image}, indent=2), flush=True)
         finally:
             cleanup_batch(args.builder, references)
-    run(["python3", "scripts/generate_huggingface.py"])
+    if task_ids:
+        generate_command = ["python3", "scripts/generate_huggingface.py"]
+        for task_id in task_ids:
+            generate_command.extend(["--task-id", task_id])
+        run(generate_command)
     print(json.dumps({"published_tasks": len(task_ids), "batches": (len(task_ids) + args.batch_size - 1) // args.batch_size}, indent=2))
     return 0
 
@@ -408,5 +627,5 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+    except (FileNotFoundError, RuntimeError, ValueError, json.JSONDecodeError) as exc:
         raise SystemExit(f"error: {exc}") from exc

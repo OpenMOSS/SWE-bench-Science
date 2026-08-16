@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task_id": "071",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/silx-kit/pyFAI/tree/3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
+      "license": "MIT/X11 (BSD-like; see upstream copyright manifest)",
+      "copyright": "pyFAI contributors; upstream copyright manifest retained",
+      "modified": false,
+      "third_party_exceptions": "Debian packaging may have separate terms and is not used as the task source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_scientific_summary",
+      "source_url": "https://doi.org/10.1107/S1600576715004306",
+      "modified": false,
+      "third_party_exceptions": "Only citation and benchmark-authored explanation are included.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/public_case.json",
+      "kind": "benchmark_authored_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "Deterministic synthetic detector panel.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

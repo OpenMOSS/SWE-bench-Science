@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "064",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/cclib/cclib/tree/593f0d67cf6a76f4a047f9a4856125c05947cff4",
+      "license": "BSD-3-Clause",
+      "copyright": "cclib contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/molecular_case.log",
+      "kind": "vendor_program_output",
+      "source_url": "https://orcaforum.kofo.mpg.de/",
+      "license": "LicenseRef-ORCA-No-Redistribution-Grant-Found",
+      "copyright": "ORCA and its contributors; output contains an All rights reserved notice",
+      "modified": false,
+      "third_party_exceptions": "Removed from the public environment and retained only as a verifier-side private fixture.",
+      "distribution_decision": "excluded"
+    },
+    {
+      "path": "environment/public/fixtures/molecular_case.xyz",
+      "kind": "benchmark_authored_smoke_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "Self-authored geometry for public parser smoke execution; not an ORCA output.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "067",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/Ouranosinc/xclim/tree/d1e654cf59a5d5761f5586bca1102a1590ae6e32",
+      "license": "Apache-2.0",
+      "copyright": "xclim contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_scientific_summary",
+      "source_url": "https://doi.org/10.5194/essd-12-1823-2020",
+      "modified": true,
+      "third_party_exceptions": "Only a short attributed summary and citation are included; the article body is not copied.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    },
+    {
+      "path": "environment/public/fixtures/seasonal_weather_case.json",
+      "kind": "benchmark_authored_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "Deterministic synthetic weather case.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

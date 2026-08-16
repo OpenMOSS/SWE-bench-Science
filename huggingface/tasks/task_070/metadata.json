@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/levitsky/pyteomics",
   "source_commit": "f509b761a5231e9f108780c88c2b3781266e7b90",
   "source_license": "Apache-2.0",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "3245e11806859843e00f907068319bf7bda844f2ef96396de5f571f8062aa7db"
+  "material_license": "Apache-2.0; CC-BY-ND-4.0",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "1a6dd13ea29f70098b84055742b13cefa7b6b27968057e655a3f50832b3dfed4",
+  "restricted_reason": "",
+  "public_payload_sha256": "dd10099299550a104358e0e689672b03775c4f450005954da2bcef0043499615"
 }

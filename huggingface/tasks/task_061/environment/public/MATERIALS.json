@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "061",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/astropy/reproject/tree/62a0d3f037024d4dcf67857fb83d392f2e099ec0",
+      "license": "BSD-3-Clause",
+      "copyright": "reproject contributors; LICENSE retained",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/eht_imaging_paper_iv.txt",
+      "kind": "article_text_conversion",
+      "source_url": "https://doi.org/10.3847/2041-8213/ab0e85",
+      "license": "CC-BY-3.0",
+      "copyright": "Event Horizon Telescope Collaboration; American Astronomical Society",
+      "modified": true,
+      "third_party_exceptions": "Attribution, DOI, citation, and license URL are recorded in the replacement README.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/wcs_paper_ii.pdf and wcs_paper_ii.txt",
+      "kind": "article_and_text_conversion",
+      "source_url": "https://doi.org/10.1051/0004-6361:20021327",
+      "license": "LicenseRef-No-Redistribution-Grant-Found",
+      "copyright": "Greisen and Calabretta; Astronomy & Astrophysics",
+      "modified": true,
+      "third_party_exceptions": "Removed because no redistribution grant was identified.",
+      "distribution_decision": "excluded"
+    },
+    {
+      "path": "environment/public/fixtures",
+      "kind": "benchmark_fixtures",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "modified": true,
+      "third_party_exceptions": "FITS inputs are deterministic benchmark-authored material.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

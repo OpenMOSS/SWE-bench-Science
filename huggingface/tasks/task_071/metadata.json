@@ -5,10 +5,16 @@
   "language": "python",
   "source_repository": "https://github.com/silx-kit/pyFAI",
   "source_commit": "3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
-  "source_license": "MIT",
-  "license_source": "github-api:copyright@3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
+  "source_license": "MIT/X11 (BSD-like; see upstream copyright manifest)",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "a594aff3f42be0d163e6fc22059215b3192da8418a22bb76724ae9799f7f36b0"
+  "material_license": "MIT/X11 (BSD-like; see upstream copyright manifest)",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "e5a71cd06c8ff5f7d398bb7f3bf88f311e894180c987ad62c1f3974ee527cbf7",
+  "restricted_reason": "",
+  "public_payload_sha256": "e666a4200d14dd0d85f114e38ebfc611e4a4e698f2b9e10087864cbe867471c6"
 }

@@ -13,7 +13,9 @@ from scripts.materialize import (
     normalize_task_id as normalize_materialized_task_id,
     task_source,
 )
+from scripts.material_policy import load_policies
 from scripts.provider_config import render_codex_config, resolve_codex_profile
+from scripts.publish_material_updates import requires_clean_rebuild
 from scripts.run_batch import pier_version, redacted_command, task_dirs
 from scripts.summarize_results import write_summary
 from scripts.validate_release import validate
@@ -30,18 +32,124 @@ class ReleaseToolTests(unittest.TestCase):
         summary = validate(require_images=False)
         self.assertEqual(summary["rows"], 119)
         self.assertEqual(summary["gpl_family"], 18)
-        self.assertEqual(summary["restricted_license"], 19)
-        self.assertEqual(summary["unrestricted"], 100)
         rows = load_rows()
-        self.assertEqual(
-            {str(row["release_id"]) for row in rows if bool(row.get("gpl_family"))},
-            {
-                "003", "020", "021", "023", "032", "057", "066", "074", "075",
-                "082", "083", "084", "085", "096", "097", "098", "100", "118",
-            },
-        )
+        self.assertEqual(summary["restricted_license"], len(restricted_ids(rows)))
+        self.assertEqual(summary["unrestricted"], 119 - len(restricted_ids(rows)))
+        gpl_gate_ids = {
+            str(row["release_id"])
+            for row in rows
+            if bool(row.get("gpl_family"))
+        }
+        self.assertEqual(gpl_gate_ids, gpl_ids(rows))
+        self.assertTrue(gpl_gate_ids)
         self.assertEqual(sum(bool(row.get("gpl_family")) for row in rows), len(gpl_ids(rows)))
-        self.assertEqual(restricted_ids(rows), gpl_ids(rows) | {"019"})
+        self.assertTrue(gpl_ids(rows) <= restricted_ids(rows))
+        self.assertTrue({"019", "026", "101", "102"} <= restricted_ids(rows))
+
+    def test_091_105_material_policies_are_complete(self) -> None:
+        policies = load_policies()
+        expected = {f"{task_id:03d}" for task_id in range(91, 106)}
+        self.assertTrue(expected.issubset(policies))
+        gated = {
+            task_id
+            for task_id in expected
+            if bool(policies[task_id].get("requires_restricted_gate"))
+        }
+        self.assertEqual(gated, {"096", "097", "098", "100", "101", "102"})
+        required_fields = {
+            "path", "source_url", "license", "copyright", "modified",
+            "third_party_exceptions", "distribution_decision",
+        }
+        for task_id in expected:
+            self.assertTrue(policies[task_id]["materials"])
+            for material in policies[task_id]["materials"]:
+                self.assertTrue(required_fields.issubset(material), (task_id, material))
+                self.assertIn(
+                    material["distribution_decision"],
+                    {"bundled", "restricted", "excluded"},
+                )
+
+    def test_031_045_material_policies_are_complete_and_only_032_is_gated(self) -> None:
+        policies = load_policies()
+        expected = {f"{task_id:03d}" for task_id in range(31, 46)}
+        self.assertTrue(expected.issubset(policies))
+        self.assertEqual(
+            {
+                task_id
+                for task_id in expected
+                if bool(policies[task_id].get("requires_restricted_gate"))
+            },
+            {"032"},
+        )
+        required_fields = {
+            "path", "source_url", "license", "copyright", "modified",
+            "third_party_exceptions", "distribution_decision",
+        }
+        for task_id in expected:
+            materials = policies[task_id]["materials"]
+            self.assertGreater(len(materials), 0)
+            for material in materials:
+                self.assertTrue(required_fields.issubset(material), (task_id, material))
+                self.assertIn(
+                    material["distribution_decision"],
+                    {"bundled", "restricted", "excluded"},
+                )
+        self.assertEqual(
+            {
+                task_id for task_id in expected
+                if requires_clean_rebuild(policies[task_id])
+            },
+            {"032", "033", "037", "038", "039", "041", "045"},
+        )
+        self.assertIn(
+            "environment/public/paper_assets/openmm_article.html",
+            policies["032"]["remove"],
+        )
+        self.assertTrue(
+            any(
+                material["path"]
+                == "environment/public/paper_assets/openmm_article.html"
+                and material["distribution_decision"] == "excluded"
+                for material in policies["032"]["materials"]
+            )
+        )
+
+    def test_046_060_material_policies_capture_remediation(self) -> None:
+        policies = load_policies()
+        expected = {f"{task_id:03d}" for task_id in range(46, 61)}
+        self.assertTrue(expected.issubset(policies))
+        self.assertEqual(
+            {
+                task_id
+                for task_id in expected
+                if bool(policies[task_id].get("requires_restricted_gate"))
+            },
+            {"057"},
+        )
+        required_fields = {
+            "path", "source_url", "license", "copyright", "modified",
+            "third_party_exceptions", "distribution_decision",
+        }
+        excluded_paths: set[str] = set()
+        for task_id in expected:
+            materials = policies[task_id]["materials"]
+            self.assertGreater(len(materials), 0)
+            for material in materials:
+                self.assertTrue(required_fields.issubset(material), (task_id, material))
+                self.assertIn(
+                    material["distribution_decision"],
+                    {"bundled", "restricted", "excluded"},
+                )
+                if material["distribution_decision"] == "excluded":
+                    excluded_paths.add(str(material["path"]))
+        self.assertTrue(
+            {
+                "environment/public/paper_assets/vaughan_nowak_1997 and "
+                "environment/public/paper_assets/ingram_2019",
+                "environment/public/paper_assets/fig1.png, fig2.png, and fig3.png",
+                "environment/public/paper_assets/leo-perturbations.png",
+            }.issubset(excluded_paths)
+        )
 
     def test_selection_writer_is_explicit_and_does_not_add_aliases(self) -> None:
         rows = [row for row in load_rows() if str(row["release_id"]) in {"001", "002"}]
@@ -81,7 +189,8 @@ class ReleaseToolTests(unittest.TestCase):
                 text=True,
             )
             selection = json.loads((output / "selection.json").read_text(encoding="utf-8"))
-            self.assertEqual(len(selection["task_ids"]), 100)
+            rows = load_rows()
+            self.assertEqual(len(selection["task_ids"]), len(rows) - len(restricted_ids(rows)))
             self.assertFalse(selection["allow_restricted_licenses"])
             self.assertNotIn("allow_gpl", selection)
             explicit = subprocess.run(
@@ -183,6 +292,39 @@ class ReleaseToolTests(unittest.TestCase):
                 encoding="utf-8",
             )
             self.assertEqual(dependency_lines(source, task_id="034", language="python"), ["numpy>=2", "pytest==8.3.5"])
+
+    def test_dependency_extractor_prefers_task_runtime_pins(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            public = Path(directory)
+            source = public / "source"
+            source.mkdir()
+            (source / "requirements.txt").write_text("pytest\n", encoding="utf-8")
+            (public / "task.json").write_text(
+                json.dumps(
+                    {
+                        "environment": {
+                            "runtime": {
+                                "python_packages": [
+                                    "numpy==1.26.4",
+                                    "openmm==8.5.2",
+                                    "pytest==8.3.2",
+                                ]
+                            }
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                dependency_lines(source, task_id="032", language="python"),
+                ["numpy==1.26.4", "openmm==8.5.2", "pytest==8.3.2"],
+            )
+            self.assertEqual(base_image_for(source, "python"), "python:3.11-slim")
+
+            payload = json.loads((public / "task.json").read_text(encoding="utf-8"))
+            payload["environment"]["runtime"]["base_image"] = "python:3.12-slim"
+            (public / "task.json").write_text(json.dumps(payload), encoding="utf-8")
+            self.assertEqual(base_image_for(source, "python"), "python:3.12-slim")
 
     def test_dependency_parser_preserves_markers_and_python_floor(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -11,6 +11,11 @@ import re
 import shutil
 from pathlib import Path
 
+try:
+    from .material_policy import apply_task_policy, load_policies
+except ImportError:  # Direct execution from the scripts directory.
+    from material_policy import apply_task_policy, load_policies
+
 
 ROOT = Path(__file__).resolve().parents[1]
 TASKS_ROOT = ROOT / "tasks"
@@ -126,6 +131,52 @@ def detect_license(source: Path) -> tuple[str, str]:
     )
     if not candidates:
         return "UNKNOWN", "not-detected"
+
+    spdx_re = re.compile(
+        r"SPDX-License-Identifier:\s*"
+        r"(AGPL-(?:2\.0|3\.0)(?:-only|-or-later)?|"
+        r"GPL-(?:2\.0|3\.0)(?:-only|-or-later)?|"
+        r"LGPL-(?:2\.0|2\.1|3\.0)(?:-only|-or-later)?)",
+        re.IGNORECASE,
+    )
+    for path in candidates:
+        match = spdx_re.search(path.read_text(encoding="utf-8", errors="replace")[:2048])
+        if match:
+            return match.group(1).upper().replace("-OR-LATER", "-or-later").replace("-ONLY", "-only"), path.name
+    primary_depth = min(len(path.relative_to(source).parts) for path in candidates)
+    primary_candidates = [
+        path for path in candidates if len(path.relative_to(source).parts) == primary_depth
+    ]
+
+    def primary_heading(title: str) -> Path | None:
+        for path in primary_candidates:
+            prefix = path.read_text(encoding="utf-8", errors="replace")[:512].upper()
+            if title in prefix:
+                return path
+        return None
+
+    # License bodies mention related GNU licenses. Classify from a root-level
+    # heading before searching complete texts so GPLv3's AGPL compatibility
+    # clause cannot turn a GPL/LGPL project into an AGPL project.
+    heading_path = primary_heading("GNU LESSER GENERAL PUBLIC LICENSE")
+    if heading_path is not None:
+        prefix = heading_path.read_text(encoding="utf-8", errors="replace")[:512].upper()
+        if "VERSION 3" in prefix:
+            return "LGPL-3.0-family", heading_path.name
+        if "VERSION 2.1" in prefix:
+            return "LGPL-2.1-family", heading_path.name
+        return "LGPL-family", heading_path.name
+    heading_path = primary_heading("GNU AFFERO GENERAL PUBLIC LICENSE")
+    if heading_path is not None:
+        return "AGPL-family", heading_path.name
+    heading_path = primary_heading("GNU GENERAL PUBLIC LICENSE")
+    if heading_path is not None:
+        prefix = heading_path.read_text(encoding="utf-8", errors="replace")[:512].upper()
+        if "VERSION 3" in prefix:
+            return "GPL-3.0-family", heading_path.name
+        if "VERSION 2" in prefix:
+            return "GPL-2.0-family", heading_path.name
+        return "GPL-family", heading_path.name
     normalized = re.sub(
         r"\s+",
         " ",
@@ -149,6 +200,8 @@ def detect_license(source: Path) -> tuple[str, str]:
         return "GPL-family", candidates[0].name
     if "ACADEMIC NON-COMMERCIAL SOFTWARE LICENSE AGREEMENT" in normalized:
         return "Academic-NonCommercial", candidates[0].name
+    if "BIOPYTHON LICENSE AGREEMENT" in normalized:
+        return "Biopython-License-Agreement", candidates[0].name
     if (
         "REDISTRIBUTION AND USE IN SOURCE AND BINARY FORMS" in normalized
         and "NEITHER THE NAME" in normalized
@@ -207,6 +260,13 @@ def base_image_for(source: Path, _language: str) -> str:
     image also installs C/C++/Fortran build tools, so source extensions can be
     rebuilt inside the task environment instead of relying on host binaries.
     """
+    task_definition = source.parent / "task.json"
+    if task_definition.is_file():
+        payload = json.loads(task_definition.read_text(encoding="utf-8"))
+        base_image = payload.get("environment", {}).get("runtime", {}).get("base_image")
+        if isinstance(base_image, str) and re.fullmatch(r"python:3\.\d+-slim", base_image):
+            return base_image
+
     requires_python = ""
     pyproject = source / "pyproject.toml"
     if pyproject.is_file():
@@ -241,6 +301,22 @@ def dependency_lines(source: Path, *, task_id: str, language: str) -> list[str]:
             "pyscf==2.7.0",
             "pytest==8.3.5",
         ]
+
+    # The task definition pins the environment used to produce and verify the
+    # reproduction. Prefer it to broad upstream project dependencies, which may
+    # omit optional scientific runtimes or resolve differently over time.
+    task_definition = source.parent / "task.json"
+    if task_definition.is_file():
+        payload = json.loads(task_definition.read_text(encoding="utf-8"))
+        runtime = payload.get("environment", {}).get("runtime", {})
+        declared = runtime.get("python_packages", [])
+        if isinstance(declared, list) and declared:
+            lines = [
+                str(value).strip()
+                for value in declared
+                if isinstance(value, str) and str(value).strip()
+            ]
+            return list(dict.fromkeys(lines))
 
     lines: list[str] = []
     requirements = source / "requirements.txt"
@@ -367,10 +443,29 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
 
     task_data = json.loads((public_source / "task.json").read_text(encoding="utf-8"))
     metadata = json.loads((public_source / "metadata.json").read_text(encoding="utf-8"))
-    title = str(metadata.get("title") or task_data.get("display_title") or source_name)
+    release_overrides = dict(
+        load_policies().get(task_id, {}).get("release_metadata", {})
+    )
+    title = str(
+        release_overrides.get("title")
+        or metadata.get("title")
+        or task_data.get("display_title")
+        or source_name
+    )
+    domain = str(release_overrides.get("domain") or metadata.get("domain") or "unknown")
     language = str(metadata.get("language") or task_data.get("language") or "unknown")
     base_commit = str(metadata.get("source_commit") or "")
     source_license, license_source = detect_license(public_source / "source")
+    declared_source_license = str(metadata.get("source_license") or "")
+    canonical_family_members = {
+        "LGPL-3.0-family": {"LGPL-3.0-only", "LGPL-3.0-or-later"},
+        "LGPL-2.1-family": {"LGPL-2.1-only", "LGPL-2.1-or-later"},
+        "GPL-3.0-family": {"GPL-3.0-only", "GPL-3.0-or-later"},
+        "GPL-2.0-family": {"GPL-2.0-only", "GPL-2.0-or-later"},
+    }
+    if declared_source_license in canonical_family_members.get(source_license, set()):
+        source_license = declared_source_license
+        license_source = str(metadata.get("license_source") or license_source)
 
     task_dir = TASKS_ROOT / source_name
     environment_dir = task_dir / "environment"
@@ -435,14 +530,39 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         ),
         encoding="utf-8",
     )
+    material_metadata = apply_task_policy(task_id, task_dir) or {}
+    audited_license = str(material_metadata.get("audited_source_license", ""))
+    if audited_license:
+        source_license = audited_license
+        license_source = "manifests/materials.jsonl and retained upstream notices"
     public_hash = tree_sha256(environment_dir / "public")
     gpl_family = is_gpl_family_license(source_license)
-    restricted_license = is_restricted_license(source_license)
+    material_license = str(
+        material_metadata.get("materials_license_summary")
+        or metadata.get("material_license")
+        or ""
+    )
+    material_license_source = str(
+        "environment/public/MATERIALS.json"
+        if material_metadata
+        else metadata.get("material_license_source") or ""
+    )
+    material_restricted = bool(
+        material_metadata.get("materials_gate") or metadata.get("material_restricted")
+    )
+    restricted_license = is_restricted_license(source_license) or material_restricted
     gate = license_gate(source_license)
+    if material_restricted and gate == "none":
+        normalized_material_license = material_license.upper().replace("-", "")
+        gate = (
+            "noncommercial"
+            if "NONCOMMERCIAL" in normalized_material_license
+            else "restricted-materials"
+        )
     release_metadata = {
         "task_id": task_id,
         "title": title,
-        "domain": metadata.get("domain", "unknown"),
+        "domain": domain,
         "language": language,
         "source_repository": metadata.get("source_repository", ""),
         "source_commit": base_commit,
@@ -451,6 +571,12 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "gpl_family": gpl_family,
         "restricted_license": restricted_license,
         "license_gate": gate,
+        "material_license": material_license,
+        "material_license_source": material_license_source,
+        "material_restricted": material_restricted,
+        "materials_gate": bool(material_metadata.get("materials_gate")),
+        "materials_manifest_sha256": material_metadata.get("materials_manifest_sha256", ""),
+        "restricted_reason": material_metadata.get("restricted_reason", ""),
         "public_payload_sha256": public_hash,
     }
     (task_dir / "metadata.json").write_text(
@@ -461,7 +587,7 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "schema_version": 1,
         "release_id": task_id,
         "title": title,
-        "domain": metadata.get("domain", "unknown"),
+        "domain": domain,
         "language": language,
         "repository_url": metadata.get("source_repository", ""),
         "base_commit": base_commit,
@@ -470,6 +596,12 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "gpl_family": gpl_family,
         "restricted_license": restricted_license,
         "license_gate": gate,
+        "material_license": material_license,
+        "material_license_source": material_license_source,
+        "material_restricted": material_restricted,
+        "materials_gate": bool(material_metadata.get("materials_gate")),
+        "materials_manifest_sha256": material_metadata.get("materials_manifest_sha256", ""),
+        "restricted_reason": material_metadata.get("restricted_reason", ""),
         "task_path": f"tasks/{source_name}",
         "environment_image": "",
         "verifier_image": "",

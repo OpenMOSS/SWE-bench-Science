@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/cclib/cclib",
   "source_commit": "593f0d67cf6a76f4a047f9a4856125c05947cff4",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "0b96d317b1b43ecc2a8d1727fd30caf20ac76ad01657eb178e8c18394806b734"
+  "material_license": "BSD-3-Clause; MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "daea5f2bac0fdf97fb8aef1d547f768a2d742697d52ef7256878639629bb1b72",
+  "restricted_reason": "",
+  "public_payload_sha256": "931cfcfcca1e193baba9d9a904ba1c2ea826fb47565ed18764390870c7f2b6b8"
 }

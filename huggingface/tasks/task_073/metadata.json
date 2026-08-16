@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/biotite-dev/biotite",
   "source_commit": "f8c3b8aa5473e078f91c86dcee7340eb9ed3eb97",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "4750773214e103b4927e1cfa74f838b86bd0b9fcf3e9f49a25844b17e06b6e24"
+  "material_license": "BSD-3-Clause; CC0-1.0",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "29984f1b6384b6aabb1dea6e5a38869a4a494e6f4c482a05838036b74c57e7f2",
+  "restricted_reason": "",
+  "public_payload_sha256": "a35b8e2a51e00a9c1758afd9349401a9da1a12e081311d0999fd8b57a8a3c466"
 }
