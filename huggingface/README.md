@@ -17,7 +17,7 @@ license: mit
 configs:
   - config_name: default
     data_files:
-      - split: train
+      - split: test
         path: data/tasks.csv
     features:
       - name: task_id
