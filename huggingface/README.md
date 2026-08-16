@@ -2,13 +2,15 @@
 pretty_name: SWE-bench Science
 language:
   - en
-task_categories:
-  - text-generation
 tags:
+  - code
   - software-engineering
-  - code-agents
   - scientific-computing
+  - coding-agents
   - benchmark
+  - long-horizon
+  - harbor
+  - pier
 size_categories:
   - n<1K
 license: mit
