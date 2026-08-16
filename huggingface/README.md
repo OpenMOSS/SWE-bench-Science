@@ -12,6 +12,11 @@ tags:
 size_categories:
   - n<1K
 license: mit
+configs:
+  - config_name: default
+    data_files:
+      - split: train
+        path: data/tasks.csv
 ---
 
 # SWE-bench Science
