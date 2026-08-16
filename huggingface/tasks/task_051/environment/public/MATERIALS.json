@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "051",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/SHTOOLS/SHTOOLS/tree/7f7d91474509acb597071eb789661b1f0cc304ca",
+      "license": "BSD-3-Clause",
+      "copyright": "SHTOOLS contributors; BSD notice retained in LICENSE",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/manual and environment/repo/docs",
+      "kind": "upstream_software_manual",
+      "source_url": "https://github.com/SHTOOLS/SHTOOLS/tree/7f7d91474509acb597071eb789661b1f0cc304ca",
+      "license": "BSD-3-Clause",
+      "copyright": "SHTOOLS contributors",
+      "modified": false,
+      "third_party_exceptions": "None identified.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_summary_and_citation",
+      "source_url": "https://doi.org/10.1029/2018GC007529",
+      "modified": true,
+      "third_party_exceptions": "The CC-BY-NC-ND-4.0 article is cited but not copied.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

@@ -14,7 +14,7 @@
   "material_license_source": "environment/public/MATERIALS.json",
   "material_restricted": true,
   "materials_gate": true,
-  "materials_manifest_sha256": "d6cbcb6b443f3d9338f2a53c090269034a13d4e548a62c5b70a554e03eaa8dd2",
+  "materials_manifest_sha256": "adffb57a85b49134fd1804378407356148a377925ff011d805d3a5e34b906c8c",
   "restricted_reason": "The DeePTB source snapshot is LGPL-3.0-family; explicit restricted-license opt-in is required. The cited article is CC BY-NC-ND and is not bundled.",
-  "public_payload_sha256": "8afccad985bad5c56a3c17c143fb7fdf41b6b5dada2c9cbd33d7d65ff8353699"
+  "public_payload_sha256": "2383d14efcf296069395c4704ae80ca3ac084da33ac9c9f87e1e08a4693c2a98"
 }

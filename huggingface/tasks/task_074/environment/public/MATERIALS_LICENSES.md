@@ -22,7 +22,9 @@ Reason: The DeePTB source snapshot is LGPL-3.0-family; explicit restricted-licen
 
 - Kind: `benchmark_authored_scientific_summary`
 - Distribution decision: `bundled`
+- License: ``
 - Source: <https://doi.org/10.1038/s41467-024-51006-4>
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: The Nature Communications article is cited only; no article body, figures, or derivative conversion is bundled.
 
@@ -30,6 +32,8 @@ Reason: The DeePTB source snapshot is LGPL-3.0-family; explicit restricted-licen
 
 - Kind: `benchmark_authored_fixture`
 - Distribution decision: `bundled`
+- License: ``
 - Source: <https://github.com/OpenMOSS/SWE-bench-Science>
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: Deterministic matrices authored for the benchmark.

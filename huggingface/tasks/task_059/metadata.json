@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/scikit-image/scikit-image",
   "source_commit": "e4e3ab682f0ff13460877624ecf068b9652ae071",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "901ed621baea7c793b6ec8f1278ce8a570ffd0d08cdef7aacda99e36258ae651"
+  "material_license": "BSD-3-Clause; CC0-1.0",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "cc394101fff7d1e6c6c980147684d516a11e61e2a446c0f621450d5b953bf70c",
+  "restricted_reason": "",
+  "public_payload_sha256": "488ef0518404cb6129de980bed6c386ce0fced73c65180c29d1fa1dfc624a851"
 }

@@ -22,6 +22,8 @@ Reason: The DeePMD-kit source snapshot is LGPL-3.0-family; explicit restricted-l
 
 - Kind: `benchmark_authored_scientific_summary`
 - Distribution decision: `bundled`
+- License: ``
 - Source: <https://doi.org/10.1063/5.0155600; https://doi.org/10.1016/j.cpc.2018.03.016; https://doi.org/10.1016/j.cpc.2020.107624; https://doi.org/10.1021/acs.jctc.2c00102>
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: Only benchmark-authored summary text and citations are bundled; no article text or figures are copied.

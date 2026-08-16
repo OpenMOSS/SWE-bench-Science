@@ -22,7 +22,9 @@
       "source_url": "https://doi.org/10.1038/s41467-024-51006-4",
       "modified": true,
       "third_party_exceptions": "The Nature Communications article is cited only; no article body, figures, or derivative conversion is bundled.",
-      "distribution_decision": "bundled"
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
     },
     {
       "path": "environment/public/fixtures/public_overlap_case.json",
@@ -30,7 +32,9 @@
       "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
       "modified": true,
       "third_party_exceptions": "Deterministic matrices authored for the benchmark.",
-      "distribution_decision": "bundled"
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
     }
   ]
 }

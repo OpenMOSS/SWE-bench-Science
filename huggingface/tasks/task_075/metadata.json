@@ -14,7 +14,7 @@
   "material_license_source": "environment/public/MATERIALS.json",
   "material_restricted": true,
   "materials_gate": true,
-  "materials_manifest_sha256": "e1281050e0584f13ae91c2160f3d8e981fc1af337d7999d7171b516fdbbb190d",
+  "materials_manifest_sha256": "9621945cc7f599ea75931db429c641bb6a8db2ab3020497db5a1f2a9187101f7",
   "restricted_reason": "The DeePMD-kit source snapshot is LGPL-3.0-family; explicit restricted-license opt-in is required for this task.",
-  "public_payload_sha256": "bd9f4224683b416ed2c40906b71ebc2b1c9d4741d824bf6212ea6ff07cf693c3"
+  "public_payload_sha256": "bafffe305071135e9e917ef331a734a2f6500acf5b2bf8ed26df67f92de15566"
 }

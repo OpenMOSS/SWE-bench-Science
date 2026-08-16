@@ -18,7 +18,9 @@ Public redistribution requires explicit permission; third-party exceptions are e
 
 - Kind: `benchmark_authored_standards_summary`
 - Distribution decision: `bundled`
+- License: ``
 - Source: <https://www.dicomstandard.org/current>
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: No DICOM standard text or patient data is copied.
 
@@ -26,6 +28,8 @@ Public redistribution requires explicit permission; third-party exceptions are e
 
 - Kind: `benchmark_authored_fixture`
 - Distribution decision: `bundled`
+- License: ``
 - Source: <https://github.com/OpenMOSS/SWE-bench-Science>
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: Synthetic anonymized DICOM objects with no clinical patient data.

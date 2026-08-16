@@ -22,7 +22,9 @@
       "source_url": "https://doi.org/10.1107/S1600576715004306",
       "modified": false,
       "third_party_exceptions": "Only citation and benchmark-authored explanation are included.",
-      "distribution_decision": "bundled"
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
     },
     {
       "path": "environment/public/fixtures/public_case.json",
@@ -30,7 +32,9 @@
       "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
       "modified": true,
       "third_party_exceptions": "Deterministic synthetic detector panel.",
-      "distribution_decision": "bundled"
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
     }
   ]
 }

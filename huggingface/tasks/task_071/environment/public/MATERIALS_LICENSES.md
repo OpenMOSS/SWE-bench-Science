@@ -18,7 +18,9 @@ Public redistribution requires explicit permission; third-party exceptions are e
 
 - Kind: `benchmark_authored_scientific_summary`
 - Distribution decision: `bundled`
+- License: ``
 - Source: <https://doi.org/10.1107/S1600576715004306>
+- Copyright: 
 - Modified or converted: `no`
 - Third-party exceptions: Only citation and benchmark-authored explanation are included.
 
@@ -26,6 +28,8 @@ Public redistribution requires explicit permission; third-party exceptions are e
 
 - Kind: `benchmark_authored_fixture`
 - Distribution decision: `bundled`
+- License: ``
 - Source: <https://github.com/OpenMOSS/SWE-bench-Science>
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: Deterministic synthetic detector panel.

@@ -22,7 +22,9 @@
       "source_url": "https://doi.org/10.1063/5.0155600; https://doi.org/10.1016/j.cpc.2018.03.016; https://doi.org/10.1016/j.cpc.2020.107624; https://doi.org/10.1021/acs.jctc.2c00102",
       "modified": true,
       "third_party_exceptions": "Only benchmark-authored summary text and citations are bundled; no article text or figures are copied.",
-      "distribution_decision": "bundled"
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
     }
   ]
 }

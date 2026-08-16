@@ -1,8 +1,8 @@
 # Generated Release Statistics
 
-Canonical rows: **119**; default unrestricted rows: **100**; restricted-license rows: **19**; GPL-family rows: **18**.
+Canonical rows: **119**; default unrestricted rows: **97**; restricted-license rows: **22**; GPL-family rows: **18**.
 
-Environment image references: **119/119**; verifier image references: **119/119**.
+Environment image references: **106/119**; verifier image references: **106/119**.
 
 ### Domain
 
@@ -82,7 +82,7 @@ Environment image references: **119/119**; verifier image references: **119/119*
 | `molecular-dynamics-machine-learning-potentials` | 1 |
 | `molecular-dynamics-periodic-boundary-analysis` | 1 |
 | `molecular-dynamics-trajectory-analysis` | 1 |
-| `molecular-simulation` | 1 |
+| `molecular-simulation-force-field-semantics` | 1 |
 | `monte-carlo-particle-transport` | 1 |
 | `neuroimaging` | 1 |
 | `neurophysiology-signal-processing` | 1 |
@@ -135,17 +135,22 @@ Environment image references: **119/119**; verifier image references: **119/119*
 
 | Value | Count |
 | --- | ---: |
-| `AGPL-family` | 4 |
+| `AGPL-family` | 2 |
 | `Academic-NonCommercial` | 1 |
 | `Apache-2.0` | 13 |
 | `BSD-2-Clause` | 2 |
 | `BSD-3-Clause` | 38 |
+| `Biopython-License-Agreement` | 1 |
 | `GPL-3.0` | 1 |
 | `GPL-3.0-or-later` | 1 |
-| `LGPL-2.1-family` | 2 |
+| `LGPL-2.1-family` | 1 |
+| `LGPL-2.1-family and MIT (upstream conflict)` | 1 |
 | `LGPL-3.0` | 1 |
 | `LGPL-3.0-family` | 6 |
-| `LGPL-3.0-or-later` | 2 |
-| `LGPL-family` | 1 |
-| `MIT` | 46 |
+| `LGPL-3.0-or-later` | 4 |
+| `MIT` | 36 |
+| `MIT AND Apache-2.0` | 7 |
+| `MIT AND BSD-3-Clause` | 1 |
+| `MIT AND LGPL-family AND BSD-3-Clause` | 1 |
+| `MIT/X11 (BSD-like; see upstream copyright manifest)` | 1 |
 | `NIST-PD-fallback` | 1 |

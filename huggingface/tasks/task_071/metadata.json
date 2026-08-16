@@ -14,7 +14,7 @@
   "material_license_source": "environment/public/MATERIALS.json",
   "material_restricted": false,
   "materials_gate": false,
-  "materials_manifest_sha256": "e5a71cd06c8ff5f7d398bb7f3bf88f311e894180c987ad62c1f3974ee527cbf7",
+  "materials_manifest_sha256": "659f258616ed5e6514aca604e947b5c2f59ee998ada2a42502c4166b23b93e05",
   "restricted_reason": "",
-  "public_payload_sha256": "e666a4200d14dd0d85f114e38ebfc611e4a4e698f2b9e10087864cbe867471c6"
+  "public_payload_sha256": "2905839a4d61cd13eb482bff4f3d42e776de6828792e8149091775af18e1900e"
 }

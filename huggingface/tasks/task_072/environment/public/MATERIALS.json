@@ -22,7 +22,9 @@
       "source_url": "https://www.dicomstandard.org/current",
       "modified": true,
       "third_party_exceptions": "No DICOM standard text or patient data is copied.",
-      "distribution_decision": "bundled"
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
     },
     {
       "path": "environment/public/fixtures/*.dcm",
@@ -30,7 +32,9 @@
       "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
       "modified": true,
       "third_party_exceptions": "Synthetic anonymized DICOM objects with no clinical patient data.",
-      "distribution_decision": "bundled"
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
     }
   ]
 }
