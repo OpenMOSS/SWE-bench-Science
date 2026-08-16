@@ -17,6 +17,53 @@ configs:
     data_files:
       - split: train
         path: data/tasks.csv
+    features:
+      - name: task_id
+        dtype: string
+      - name: title
+        dtype: string
+      - name: domain
+        dtype: string
+      - name: language
+        dtype: string
+      - name: repository_url
+        dtype: string
+      - name: base_commit
+        dtype: string
+      - name: source_license
+        dtype: string
+      - name: gpl_family
+        dtype: bool
+      - name: restricted_license
+        dtype: bool
+      - name: license_gate
+        dtype: string
+      - name: material_license
+        dtype: string
+      - name: material_license_source
+        dtype: string
+      - name: material_restricted
+        dtype: bool
+      - name: materials_gate
+        dtype: bool
+      - name: materials_manifest_sha256
+        dtype: string
+      - name: material_licenses
+        dtype: string
+      - name: materials_provenance
+        dtype: string
+      - name: restricted_reason
+        dtype: string
+      - name: environment_image
+        dtype: string
+      - name: verifier_image
+        dtype: string
+      - name: image_platform
+        dtype: string
+      - name: task_path
+        dtype: string
+      - name: status
+        dtype: string
 ---
 
 # SWE-bench Science
