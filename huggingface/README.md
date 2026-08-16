@@ -43,9 +43,9 @@ configs:
       - name: material_license_source
         dtype: string
       - name: material_restricted
-        dtype: bool
+        dtype: string
       - name: materials_gate
-        dtype: bool
+        dtype: string
       - name: materials_manifest_sha256
         dtype: string
       - name: material_licenses
