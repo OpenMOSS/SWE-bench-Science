@@ -1,6 +1,6 @@
 # Generated Release Statistics
 
-Canonical rows: **119**; default unrestricted rows: **97**; restricted-license rows: **22**; GPL-family rows: **18**.
+Canonical rows: **119**; default unrestricted rows: **96**; restricted-license rows: **23**; GPL-family rows: **18**.
 
 Environment image references: **119/119**; verifier image references: **119/119**.
 

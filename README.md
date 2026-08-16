@@ -56,7 +56,7 @@ The Hugging Face dataset is the source for the task bundle. Docker Hub stores th
 The materializer writes an explicit `selection.json`, so a run is reproducible and does not depend on runner sampling behavior.
 
 ~~~bash
-# Default selection: 97 unrestricted-license tasks.
+# Default selection: 96 unrestricted-license tasks.
 python3 tools/materialize.py \
   --output tasks-selected --force
 
@@ -66,7 +66,7 @@ python3 tools/materialize.py \
   --output tasks-selected-small --force
 ~~~
 
-Twenty-two tasks contain GPL/LGPL/AGPL-family code, academic non-commercial sources or materials, or restricted third-party data. They are excluded from the default selection and require an explicit opt-in:
+Twenty-three tasks contain GPL/LGPL/AGPL-family code, academic non-commercial sources or materials, or restricted third-party data. They are excluded from the default selection and require an explicit opt-in:
 
 ~~~bash
 python3 tools/materialize.py \
@@ -74,7 +74,7 @@ python3 tools/materialize.py \
   --output tasks-selected-all --force
 ~~~
 
-The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`. Tasks `019`, `026`, `101`, and `102` are restricted for other reasons. There is no `--allow-GPL` compatibility option.
+The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`. Tasks `019`, `026`, `035`, `043`, `101`, and `102` are restricted for other reasons. There is no `--allow-GPL` compatibility option.
 
 ## Run With Pier
 

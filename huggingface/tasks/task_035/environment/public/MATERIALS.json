@@ -3,8 +3,8 @@
   "task_id": "035",
   "reviewed_on": "2026-08-16",
   "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
-  "requires_restricted_gate": false,
-  "restricted_reason": "",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The NASA ODEPACK report is retained for reproducibility, but its public-domain or commercial redistribution status is not represented by an explicit standard license grant; commercial users must opt in after their own review.",
   "materials": [
     {
       "path": "environment/repo",

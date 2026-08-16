@@ -32,8 +32,8 @@ SWE-bench Science evaluates coding agents on software-engineering tasks drawn fr
 | Metric | Value |
 | --- | ---: |
 | Tasks | 119 |
-| Default selection | 97 unrestricted-license tasks |
-| Restricted selection | 22 tasks |
+| Default selection | 96 unrestricted-license tasks |
+| Restricted selection | 23 tasks |
 | GPL/LGPL/AGPL-family tasks | 18 |
 | Environment images | 119 Docker Hub images |
 | Verifier images | 119 Docker Hub images |
@@ -88,7 +88,7 @@ Every materialization writes `selection.json` with the exact task IDs used for t
 
 ## Restricted Licenses
 
-Twenty-two tasks are excluded from the default selection because they contain GPL/LGPL/AGPL-family code, academic non-commercial sources or materials, or restricted third-party data. Include them only after confirming that your use is permitted:
+Twenty-three tasks are excluded from the default selection because they contain GPL/LGPL/AGPL-family code, academic non-commercial sources or materials, or restricted third-party data. Include them only after confirming that your use is permitted:
 
 ~~~bash
 python3 tools/materialize.py \
@@ -96,7 +96,7 @@ python3 tools/materialize.py \
   --output tasks-selected-all --force
 ~~~
 
-The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`. Tasks `019`, `026`, `101`, and `102` are restricted for other reasons. There is no `--allow-GPL` option. The selection flag controls which task bundles are materialized; it does not replace the upstream license obligations.
+The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`. Tasks `019`, `026`, `035`, `043`, `101`, and `102` are restricted for other reasons. There is no `--allow-GPL` option. The selection flag controls which task bundles are materialized; it does not replace the upstream license obligations.
 
 ## Run An Evaluation
 

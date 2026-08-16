@@ -79,7 +79,7 @@ class ReleaseToolTests(unittest.TestCase):
                     {"bundled", "restricted", "excluded"},
                 )
 
-    def test_031_045_material_policies_are_complete_and_only_032_is_gated(self) -> None:
+    def test_031_045_material_policies_are_complete_and_gates_are_explicit(self) -> None:
         policies = load_policies()
         expected = {f"{task_id:03d}" for task_id in range(31, 46)}
         self.assertTrue(expected.issubset(policies))
@@ -89,7 +89,7 @@ class ReleaseToolTests(unittest.TestCase):
                 for task_id in expected
                 if bool(policies[task_id].get("requires_restricted_gate"))
             },
-            {"032"},
+            {"032", "035"},
         )
         required_fields = {
             "path", "source_url", "license", "copyright", "modified",

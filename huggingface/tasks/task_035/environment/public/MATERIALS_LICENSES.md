@@ -4,6 +4,10 @@ Audit date: `2026-08-16`
 
 Public redistribution requires explicit permission; third-party exceptions are evaluated separately.
 
+This task requires explicit restricted-license opt-in.
+
+Reason: The NASA ODEPACK report is retained for reproducibility, but its public-domain or commercial redistribution status is not represented by an explicit standard license grant; commercial users must opt in after their own review.
+
 ## `environment/repo`
 
 - Kind: `source_snapshot`
