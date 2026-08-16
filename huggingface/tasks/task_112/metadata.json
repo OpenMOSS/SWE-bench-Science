@@ -3,12 +3,12 @@
   "title": "Repair an inconsistent hybrid-section plastic capacity workflow",
   "domain": "high-performance-fibers-and-composites",
   "language": "python",
-  "source_repository": "",
-  "source_commit": "",
+  "source_repository": "https://github.com/robbievanleeuwen/section-properties",
+  "source_commit": "cee66acea267c69839f7970bb771abdb4f86c1a1",
   "source_license": "MIT",
   "license_source": "LICENSE",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "bb313b40e78959c6b6aa7c2e1d88bc13135cabb91be96ead6c7b02b595e09c91"
+  "public_payload_sha256": "0d7a8774d275b195ba48384b810348d05e655c1146545195c51934805209fc9a"
 }

@@ -10,14 +10,14 @@ keywords = ["scientific-computing", "software-engineering"]
 [metadata]
 task_id = "107"
 language = "python"
-base_commit_hash = ""
+base_commit_hash = "afe8935530a61ae5bd7a90400fa60c0d2c8c18a4"
 
 [agent]
 network_mode = "no-network"
 timeout_sec = 5400.0
 
 [environment]
-docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-python-task-107:v0.1.0@sha256:0d36982015454e5d48e5d6f24a8964813386dfc86bd7d2bb6b89c5183b18a289"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-python-task-107:v0.1.1@sha256:d9bed5d007500d41681c6eda3250cf3431fc7b20c875a6722791de9f89239ddc"
 os = "linux"
 allow_internet = false
 cpus = 2
@@ -31,7 +31,7 @@ environment_mode = "separate"
 timeout_sec = 1800.0
 
 [verifier.environment]
-docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-python-task-107:v0.1.0@sha256:dfc6b902fd30de1a96bf83fc929da8a7fd05d2bdbbc9ca9b0a4dce53107363f9"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-python-task-107:v0.1.1@sha256:1a5c67f1817c05b93066b554f6b83f498f73f1b610ee8ea13507c0b475e96bfd"
 os = "linux"
 allow_internet = false
 cpus = 2
