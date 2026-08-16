@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/xgcm/xgcm",
   "source_commit": "3831b46accbff35f06e4ed3831600d71d5d8da18",
   "source_license": "MIT",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",

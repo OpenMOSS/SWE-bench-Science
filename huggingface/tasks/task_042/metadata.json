@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/sunpy/sunpy",
   "source_commit": "c961a1507a83b9dab24ccce12ab92a53b30359d7",
   "source_license": "BSD-2-Clause",
-  "license_source": "source/LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",

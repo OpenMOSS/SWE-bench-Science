@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/landlab/landlab",
   "source_commit": "546bc11054cff5e12808c7122b3e8b38f1ef555f",
   "source_license": "MIT",
-  "license_source": "LICENSE.md",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
