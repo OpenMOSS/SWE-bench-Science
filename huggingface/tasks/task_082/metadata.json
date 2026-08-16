@@ -5,16 +5,16 @@
   "language": "python",
   "source_repository": "https://github.com/deepmodeling/dpgen",
   "source_commit": "02a442c6bd7da9b5b2c9f958d3a103f5d6cd2a27",
-  "source_license": "LGPL-3.0",
-  "license_source": "github-api:LICENSE@02a442c6bd7da9b5b2c9f958d3a103f5d6cd2a27",
+  "source_license": "LGPL-3.0-family",
+  "license_source": "LICENSE",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
-  "material_license": "",
-  "material_license_source": "",
+  "material_license": null,
+  "material_license_source": null,
   "material_restricted": false,
   "materials_gate": false,
-  "materials_manifest_sha256": "",
-  "restricted_reason": "",
-  "public_payload_sha256": "2385deedff3d0a8ef16754877f091f473675d1dabfd7a965bd63a5d15ad6e987"
+  "materials_manifest_sha256": null,
+  "restricted_reason": null,
+  "public_payload_sha256": "450071a5b7f7e1693dac697a1f19332287a3022c644dc1043ae394bfd96f31fa"
 }

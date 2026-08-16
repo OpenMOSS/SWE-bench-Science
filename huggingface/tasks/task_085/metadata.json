@@ -5,16 +5,20 @@
   "language": "fortran",
   "source_repository": "https://github.com/dftbplus/dftbplus",
   "source_commit": "d4da8c5027b643291f3a6295efd4340ce79d6a36",
-  "source_license": "AGPL-family",
-  "license_source": "COPYING",
+  "source_license": "LGPL-3.0-family",
+  "license_source": "LICENSE",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
-  "material_license": "",
-  "material_license_source": "",
+  "material_license": null,
+  "material_license_source": null,
   "material_restricted": false,
   "materials_gate": false,
-  "materials_manifest_sha256": "",
-  "restricted_reason": "",
-  "public_payload_sha256": "2db37177603a05c62b276b94c738f8592f40853359df72a3f25205c1d5bb5748"
+  "materials_manifest_sha256": null,
+  "restricted_reason": null,
+  "public_payload_sha256": "a946e0e51876186f7373b258d91aeffc972f3af15412bbbecc2c18872b576ff2",
+  "material_licenses": [
+    "CC-BY-SA-4.0"
+  ],
+  "materials_provenance": "fixtures/PROVENANCE.md"
 }

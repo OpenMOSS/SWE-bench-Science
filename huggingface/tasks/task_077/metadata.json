@@ -6,7 +6,7 @@
   "source_repository": "https://github.com/shapely/shapely",
   "source_commit": "d2872f6c4d7c99b16f8a71d99cd56d0a5fe54695",
   "source_license": "BSD-3-Clause",
-  "license_source": "github-api:LICENSE.txt@d2872f6c4d7c99b16f8a71d99cd56d0a5fe54695",
+  "license_source": "LICENSE.txt",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
