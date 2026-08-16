@@ -28,6 +28,7 @@ FIELDS = [
 ]
 THIN_TASK_FILES = (
     "task.toml",
+    "pre_artifacts.sh",
     "instruction.md",
     "metadata.json",
     "environment/Dockerfile",

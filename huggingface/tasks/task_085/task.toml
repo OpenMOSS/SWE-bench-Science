@@ -38,7 +38,3 @@ cpus = 2
 memory_mb = 8192
 storage_mb = 20480
 workdir = "/app/task_085"
-
-[[verifier.collect]]
-command = "cd /app/task_085 && git config --global --add safe.directory /app/task_085 && baseline=$(git rev-list --max-parents=0 --reverse HEAD | head -n 1) && git add -A && git diff --cached --binary \"$baseline\" > /logs/artifacts/model.patch"
-timeout_sec = 300.0

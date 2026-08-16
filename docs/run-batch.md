@@ -124,6 +124,20 @@ For an approximately 120-second agent-stage smoke, add
 `--agent-timeout-multiplier 0.0223`. This does not shorten the verifier timeout
 or any native build timeout.
 
+## Patch and Verifier Boundary
+
+Each materialized task contains a Pier `pre_artifacts.sh` hook. Pier runs this
+hook after the agent exits and before it collects artifacts. The hook computes
+`artifacts/model.patch` against the task image's original baseline root commit,
+so an agent-created commit is still included in the patch. A clean or timed-out
+agent produces an explicit empty patch rather than a missing artifact.
+
+For tasks with a separate verifier image, the verifier entrypoint applies that
+patch to its clean task workspace before running public and private tests. The
+verifier result therefore evaluates the agent workspace, not the untouched
+baseline. A missing `pre_artifacts.sh` is rejected by `run_batch.py`; rerun
+`materialize.py` with the current tools to regenerate the task selection.
+
 ## Option Reference
 
 | Option | Default | Description |

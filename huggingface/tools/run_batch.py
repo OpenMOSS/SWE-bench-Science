@@ -43,6 +43,19 @@ def task_dirs(root: Path) -> list[Path]:
     )
 
 
+def validate_artifact_hooks(task_dirs_: list[Path]) -> None:
+    missing = [
+        task_dir.name
+        for task_dir in task_dirs_
+        if not (task_dir / "pre_artifacts.sh").is_file()
+    ]
+    if missing:
+        raise ValueError(
+            "task bundles are missing pre_artifacts.sh; rematerialize them with "
+            "the current release tools: " + ", ".join(missing)
+        )
+
+
 def load_image_refs(task_dir: Path) -> list[str]:
     config = tomllib.loads((task_dir / "task.toml").read_text(encoding="utf-8"))
     refs = [
@@ -163,6 +176,7 @@ def main() -> int:
     dirs = task_dirs(root)
     if not dirs:
         raise ValueError(f"no task_NNN directories found under {root}")
+    validate_artifact_hooks(dirs)
     selection = selection_payload(root, dirs)
     image_refs: list[str] = []
     for task_dir in dirs:

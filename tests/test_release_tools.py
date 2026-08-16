@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -26,7 +27,12 @@ from scripts.materialize import (
 from scripts.material_policy import load_policies
 from scripts.provider_config import render_codex_config, resolve_codex_profile
 from scripts.publish_material_updates import requires_clean_rebuild
-from scripts.run_batch import pier_version, redacted_command, task_dirs
+from scripts.run_batch import (
+    pier_version,
+    redacted_command,
+    task_dirs,
+    validate_artifact_hooks,
+)
 from scripts.summarize_results import write_summary
 from scripts.validate_release import validate
 
@@ -293,6 +299,58 @@ class ReleaseToolTests(unittest.TestCase):
             snapshot = root / "huggingface" / "tasks" / "task_002"
             snapshot.mkdir(parents=True)
             self.assertEqual(task_source("tasks/task_002", root=root), snapshot)
+
+    def test_pre_artifacts_hook_captures_empty_and_modified_workspaces(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        hook = root / "templates" / "task" / "pre_artifacts.sh"
+        with tempfile.TemporaryDirectory() as directory:
+            workdir = Path(directory) / "task"
+            artifacts = Path(directory) / "artifacts"
+            workdir.mkdir()
+            subprocess.run(["git", "init", "-q"], cwd=workdir, check=True)
+            subprocess.run(
+                ["git", "config", "user.email", "test@example.invalid"],
+                cwd=workdir,
+                check=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.name", "Test"], cwd=workdir, check=True
+            )
+            source = workdir / "source.py"
+            source.write_text("baseline\n", encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=workdir, check=True)
+            subprocess.run(
+                ["git", "commit", "-q", "-m", "baseline"], cwd=workdir, check=True
+            )
+            env = {
+                **os.environ,
+                "SCI_BENCH_TASK_DIR": str(workdir),
+                "ENV_ARTIFACTS_PATH": str(artifacts),
+            }
+            subprocess.run(["sh", str(hook)], cwd=workdir, env=env, check=True)
+            patch_path = artifacts / "model.patch"
+            self.assertTrue(patch_path.is_file())
+            self.assertEqual(patch_path.read_bytes(), b"")
+
+            source.write_text("committed\n", encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=workdir, check=True)
+            subprocess.run(
+                ["git", "commit", "-q", "-m", "agent-commit"],
+                cwd=workdir,
+                check=True,
+            )
+            source.write_text("modified\n", encoding="utf-8")
+            subprocess.run(["sh", str(hook)], cwd=workdir, env=env, check=True)
+            patch = patch_path.read_text(encoding="utf-8")
+            self.assertIn("-baseline", patch)
+            self.assertIn("+modified", patch)
+
+    def test_run_batch_rejects_task_without_artifact_hook(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            task = Path(directory) / "task_002"
+            task.mkdir()
+            with self.assertRaisesRegex(ValueError, "rematerialize"):
+                validate_artifact_hooks([task])
 
     def test_dependency_extractor_ignores_python_stdlib_names(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

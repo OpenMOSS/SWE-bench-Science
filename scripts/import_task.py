@@ -481,13 +481,7 @@ def task_toml(*, task_id: str, title: str, language: str, base_commit: str) -> s
         '[verifier.environment]\n'
         'docker_image = "science-bench-task-verifier-pending:canary"\n'
         'os = "linux"\nallow_internet = false\ncpus = 2\nmemory_mb = 8192\nstorage_mb = 20480\n'
-        f'workdir = "/app/task_{task_id}"\n\n'
-        '[[verifier.collect]]\n'
-        f'command = "cd /app/task_{task_id} && git config --global --add safe.directory '
-        f'/app/task_{task_id} && baseline=$(git rev-list --max-parents=0 --reverse HEAD | '
-        'head -n 1) && git add -A && git diff --cached --binary \\"$baseline\\" > '
-        '/logs/artifacts/model.patch"\n'
-        'timeout_sec = 300.0\n'
+        f'workdir = "/app/task_{task_id}"\n'
     )
 
 
@@ -604,6 +598,10 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
             task_dir / "tests" / name,
             task_id=task_id,
         )
+    shutil.copy2(
+        TEMPLATES_ROOT / "task" / "pre_artifacts.sh",
+        task_dir / "pre_artifacts.sh",
+    )
 
     shutil.copy2(public_source / "instruction.md", task_dir / "instruction.md")
     (task_dir / "task.toml").write_text(

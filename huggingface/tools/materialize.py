@@ -136,6 +136,7 @@ def main() -> int:
         destination.mkdir(parents=True)
         for relative in (
             "task.toml",
+            "pre_artifacts.sh",
             "instruction.md",
             "metadata.json",
             "environment/Dockerfile",
