@@ -115,6 +115,56 @@ def tree_sha256(root: Path) -> str:
     return digest.hexdigest()
 
 
+def classify_license_text(text: str) -> str | None:
+    normalized = re.sub(r"\s+", " ", text.upper())
+    heading = normalized[:1000]
+    if "GNU AFFERO GENERAL PUBLIC LICENSE" in heading:
+        return "AGPL-family"
+    if "GNU LESSER GENERAL PUBLIC LICENSE" in normalized:
+        if "VERSION 3" in normalized:
+            return "LGPL-3.0-family"
+        if "VERSION 2.1" in normalized:
+            return "LGPL-2.1-family"
+        return "LGPL-family"
+    if "GNU GENERAL PUBLIC LICENSE" in normalized:
+        if "VERSION 3" in normalized:
+            return "GPL-3.0-family"
+        if "VERSION 2" in normalized:
+            return "GPL-2.0-family"
+        return "GPL-family"
+    if "ACADEMIC NON-COMMERCIAL SOFTWARE LICENSE AGREEMENT" in normalized:
+        return "Academic-NonCommercial"
+    if (
+        "REDISTRIBUTION AND USE IN SOURCE AND BINARY FORMS" in normalized
+        and "NEITHER THE NAME" in normalized
+    ):
+        return "BSD-3-Clause"
+    if (
+        "MIT LICENSE" in normalized
+        or "PERMISSION IS HEREBY GRANTED, FREE OF CHARGE" in normalized
+    ):
+        return "MIT"
+    if "BSD 3-CLAUSE" in normalized or "BSD-3-CLAUSE" in normalized:
+        return "BSD-3-Clause"
+    if "BSD 2-CLAUSE" in normalized or "BSD-2-CLAUSE" in normalized:
+        return "BSD-2-Clause"
+    if "APACHE LICENSE" in normalized and "VERSION 2.0" in normalized:
+        return "Apache-2.0"
+    return None
+
+
+def license_candidate_priority(path: Path, source: Path) -> tuple[int, int, str]:
+    relative = path.relative_to(source)
+    name = path.name.upper()
+    if name.startswith("LICENSE"):
+        kind = 0
+    elif "LESSER" in name:
+        kind = 1
+    else:
+        kind = 2
+    return len(relative.parts), kind, relative.as_posix()
+
+
 def detect_license(source: Path) -> tuple[str, str]:
     candidates = sorted(
         (
@@ -122,50 +172,17 @@ def detect_license(source: Path) -> tuple[str, str]:
             for path in source.rglob("*")
             if path.is_file() and path.name.upper().startswith(("LICENSE", "COPYING"))
         ),
-        key=lambda path: (len(path.relative_to(source).parts), path.as_posix()),
+        key=lambda path: license_candidate_priority(path, source),
     )
     if not candidates:
         return "UNKNOWN", "not-detected"
-    normalized = re.sub(
-        r"\s+",
-        " ",
-        "\n".join(
-            path.read_text(encoding="utf-8", errors="replace") for path in candidates
-        ).upper(),
-    )
-    if "GNU AFFERO GENERAL PUBLIC LICENSE" in normalized:
-        return "AGPL-family", candidates[0].name
-    if "GNU LESSER GENERAL PUBLIC LICENSE" in normalized:
-        if "VERSION 3" in normalized:
-            return "LGPL-3.0-family", candidates[0].name
-        if "VERSION 2.1" in normalized:
-            return "LGPL-2.1-family", candidates[0].name
-        return "LGPL-family", candidates[0].name
-    if "GNU GENERAL PUBLIC LICENSE" in normalized:
-        if "VERSION 3" in normalized:
-            return "GPL-3.0-family", candidates[0].name
-        if "VERSION 2" in normalized:
-            return "GPL-2.0-family", candidates[0].name
-        return "GPL-family", candidates[0].name
-    if "ACADEMIC NON-COMMERCIAL SOFTWARE LICENSE AGREEMENT" in normalized:
-        return "Academic-NonCommercial", candidates[0].name
-    if (
-        "REDISTRIBUTION AND USE IN SOURCE AND BINARY FORMS" in normalized
-        and "NEITHER THE NAME" in normalized
-    ):
-        return "BSD-3-Clause", candidates[0].name
-    if (
-        "MIT LICENSE" in normalized
-        or "PERMISSION IS HEREBY GRANTED, FREE OF CHARGE" in normalized
-    ):
-        return "MIT", candidates[0].name
-    if "BSD 3-CLAUSE" in normalized or "BSD-3-CLAUSE" in normalized:
-        return "BSD-3-Clause", candidates[0].name
-    if "BSD 2-CLAUSE" in normalized or "BSD-2-CLAUSE" in normalized:
-        return "BSD-2-Clause", candidates[0].name
-    if "APACHE LICENSE" in normalized and "VERSION 2.0" in normalized:
-        return "Apache-2.0", candidates[0].name
-    return "UNKNOWN", candidates[0].name
+    for candidate in candidates:
+        detected = classify_license_text(
+            candidate.read_text(encoding="utf-8", errors="replace")
+        )
+        if detected:
+            return detected, candidate.relative_to(source).as_posix()
+    return "UNKNOWN", candidates[0].relative_to(source).as_posix()
 
 
 def is_gpl_family_license(value: str) -> bool:
@@ -293,13 +310,58 @@ def write_requirements_lock(
     *,
     task_id: str,
     language: str,
+    declared_dependencies: list[str] | None = None,
 ) -> None:
+    dependencies = (
+        declared_dependencies
+        if declared_dependencies is not None
+        else dependency_lines(source, task_id=task_id, language=language)
+    )
+    if not dependencies:
+        dependencies = ["pytest==8.3.5"]
     destination.write_text(
         "# Generated from the public task dependency declaration.\n"
-        + "\n".join(dependency_lines(source, task_id=task_id, language=language))
+        + "\n".join(dependencies)
         + "\n",
         encoding="utf-8",
     )
+
+
+def runtime_config(task_data: dict[str, object]) -> tuple[str | None, list[str] | None, list[str]]:
+    environment = task_data.get("environment", {})
+    if not isinstance(environment, dict):
+        raise ValueError("task environment must be an object")
+    runtime = environment.get("runtime")
+    if runtime is None:
+        return None, None, []
+    if not isinstance(runtime, dict):
+        raise ValueError("task environment.runtime must be an object")
+
+    base_image_value = runtime.get("base_image")
+    base_image = str(base_image_value) if base_image_value else None
+    if base_image and not re.fullmatch(r"python:3\.(?:10|11|12)-slim", base_image):
+        raise ValueError(f"unsupported task runtime base image: {base_image}")
+
+    dependencies_value = runtime.get("python_packages", [])
+    if not isinstance(dependencies_value, list) or not all(
+        isinstance(value, str) and value.strip() for value in dependencies_value
+    ):
+        raise ValueError("task runtime python_packages must be a list of strings")
+    dependencies = [str(value).strip() for value in dependencies_value]
+
+    system_value = runtime.get("system_packages", [])
+    if not isinstance(system_value, list) or not all(
+        isinstance(value, str) and re.fullmatch(r"[a-z0-9][a-z0-9+.-]*", value)
+        for value in system_value
+    ):
+        raise ValueError("task runtime system_packages contains an invalid package name")
+    return base_image, dependencies, [str(value) for value in system_value]
+
+
+def render_system_package_lines(packages: list[str]) -> str:
+    if not packages:
+        return ""
+    return " \\\n        " + " \\\n        ".join(packages)
 
 
 def task_toml(*, task_id: str, title: str, language: str, base_commit: str) -> str:
@@ -371,6 +433,7 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
     language = str(metadata.get("language") or task_data.get("language") or "unknown")
     base_commit = str(metadata.get("source_commit") or "")
     source_license, license_source = detect_license(public_source / "source")
+    declared_base_image, declared_dependencies, system_packages = runtime_config(task_data)
 
     task_dir = TASKS_ROOT / source_name
     environment_dir = task_dir / "environment"
@@ -401,9 +464,12 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         environment_dir / "Dockerfile",
         task_id=task_id,
         replacements={
-            "ARG BASE_IMAGE=python:3.11-slim": f"ARG BASE_IMAGE={base_image_for(public_source / 'source', language)}",
+            "ARG BASE_IMAGE=python:3.11-slim": (
+                f"ARG BASE_IMAGE={declared_base_image or base_image_for(public_source / 'source', language)}"
+            ),
             "ARG INSTALL_FORTRAN=0": f"ARG INSTALL_FORTRAN={int(install_fortran_for(language))}",
             "ARG INSTALL_OCTAVE=0": f"ARG INSTALL_OCTAVE={int(install_octave_for(language))}",
+            "__SYSTEM_PACKAGE_LINES__": render_system_package_lines(system_packages),
         },
     )
     write_requirements_lock(
@@ -411,6 +477,7 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         environment_dir / "requirements.lock",
         task_id=task_id,
         language=language,
+        declared_dependencies=declared_dependencies,
     )
     for name in ("Dockerfile", "test.sh", "grader.py"):
         render_template(
@@ -439,6 +506,12 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
     gpl_family = is_gpl_family_license(source_license)
     restricted_license = is_restricted_license(source_license)
     gate = license_gate(source_license)
+    material_licenses = metadata.get("material_licenses", [])
+    materials_provenance = str(metadata.get("materials_provenance") or "")
+    if not isinstance(material_licenses, list) or not all(
+        isinstance(value, str) and value for value in material_licenses
+    ):
+        raise ValueError(f"task {task_id} material_licenses must be a list of strings")
     release_metadata = {
         "task_id": task_id,
         "title": title,
@@ -451,6 +524,8 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "gpl_family": gpl_family,
         "restricted_license": restricted_license,
         "license_gate": gate,
+        "material_licenses": material_licenses,
+        "materials_provenance": materials_provenance,
         "public_payload_sha256": public_hash,
     }
     (task_dir / "metadata.json").write_text(
@@ -470,6 +545,8 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "gpl_family": gpl_family,
         "restricted_license": restricted_license,
         "license_gate": gate,
+        "material_licenses": material_licenses,
+        "materials_provenance": materials_provenance,
         "task_path": f"tasks/{source_name}",
         "environment_image": "",
         "verifier_image": "",

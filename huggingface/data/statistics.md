@@ -135,7 +135,7 @@ Environment image references: **119/119**; verifier image references: **119/119*
 
 | Value | Count |
 | --- | ---: |
-| `AGPL-family` | 4 |
+| `AGPL-family` | 3 |
 | `Academic-NonCommercial` | 1 |
 | `Apache-2.0` | 13 |
 | `BSD-2-Clause` | 2 |
@@ -143,8 +143,7 @@ Environment image references: **119/119**; verifier image references: **119/119*
 | `GPL-3.0` | 1 |
 | `GPL-3.0-or-later` | 1 |
 | `LGPL-2.1-family` | 2 |
-| `LGPL-3.0` | 1 |
-| `LGPL-3.0-family` | 6 |
+| `LGPL-3.0-family` | 8 |
 | `LGPL-3.0-or-later` | 2 |
 | `LGPL-family` | 1 |
 | `MIT` | 46 |

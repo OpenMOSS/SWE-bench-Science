@@ -44,7 +44,7 @@ private = execute(
         "pytest",
         "-q",
         f"--junitxml={junit}",
-        "/tests/private_tests/test_task___TASK_ID__.py",
+        "/tests/private_tests",
     ],
     TASK_ROOT,
 )

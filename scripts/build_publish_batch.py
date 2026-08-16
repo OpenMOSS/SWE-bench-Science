@@ -8,6 +8,7 @@ import json
 import os
 import re
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 
@@ -204,7 +205,7 @@ def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int =
         try:
             print("+ direct Docker Hub route", flush=True)
             completed = subprocess.run(
-                ["docker", "push", reference],
+                ["docker", "image", "push", reference],
                 cwd=ROOT,
                 env=registry_network_env(),
                 check=True,
@@ -226,6 +227,77 @@ def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int =
                 raise
             time.sleep(5 * attempt)
     raise AssertionError("unreachable")
+
+
+def smoke_verifier(reference: str, task_id: str, *, timeout_seconds: int = 2400) -> None:
+    with tempfile.TemporaryDirectory(prefix=f"science-bench-smoke-{task_id}-") as directory:
+        command = [
+            "docker",
+            "run",
+            "--rm",
+            "--platform",
+            "linux/amd64",
+            "--network",
+            "none",
+            "--volume",
+            f"{directory}:/logs",
+            reference,
+        ]
+        print("+ " + " ".join(command), flush=True)
+        completed = subprocess.run(
+            command,
+            cwd=ROOT,
+            env=host_network_env(),
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=timeout_seconds,
+        )
+        lines = [line for line in (completed.stdout or "").splitlines() if line.strip()]
+        if not lines:
+            raise RuntimeError(f"verifier smoke produced no output for task {task_id}")
+        try:
+            summary = json.loads(lines[-1])
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(
+                f"verifier smoke did not end with JSON for task {task_id}: {lines[-1]}"
+            ) from exc
+        public_result = summary.get("public", {})
+        private_result = summary.get("private", {})
+        public_passed = int(public_result.get("passed", 0))
+        public_collected = int(public_result.get("collected", 0))
+        public_return_code = int(public_result.get("return_code", 2))
+        private_collected = int(private_result.get("collected", 0))
+        # A task baseline may intentionally return 1 before the agent repairs it.
+        # Return code 2 is reserved by the public runners for infrastructure or
+        # fixture failures and must never be accepted as a publishable smoke run.
+        if public_collected < 1 or public_return_code not in {0, 1} or private_collected < 1:
+            log_path = Path(directory) / "verifier" / "test-stdout.txt"
+            log_tail = (
+                log_path.read_text(encoding="utf-8", errors="replace")[-4000:]
+                if log_path.is_file()
+                else "verifier log was not written"
+            )
+            raise RuntimeError(
+                f"verifier smoke failed for task {task_id}: "
+                f"public_passed={public_passed}, public_collected={public_collected}, "
+                f"public_return_code={public_return_code}, private_collected={private_collected}\n"
+                f"{log_tail}"
+            )
+    print(
+        json.dumps(
+            {
+                "task_id": task_id,
+                "smoke_public_passed": public_passed,
+                "smoke_public_return_code": public_return_code,
+                "smoke_private_collected": private_collected,
+                "baseline_reward": summary.get("reward"),
+            },
+            sort_keys=True,
+        ),
+        flush=True,
+    )
 
 
 def update_manifest(task_id: str, *, env_ref: str, env_digest: str, verifier_ref: str, verifier_digest: str) -> None:
@@ -393,6 +465,7 @@ def main() -> int:
                     build_args=[f"BASE_IMAGE={env_ref}@{env_digest}"],
                     metadata_path=batch_root / f"task_{task_id}-verifier.json",
                 )
+                smoke_verifier(verifier_ref, task_id)
                 env_image = f"{env_ref}@{env_digest}"
                 verifier_image = f"{verifier_ref}@{verifier_digest}"
                 update_manifest(task_id, env_ref=env_ref, env_digest=env_digest, verifier_ref=verifier_ref, verifier_digest=verifier_digest)

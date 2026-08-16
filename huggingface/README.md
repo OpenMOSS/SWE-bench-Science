@@ -185,9 +185,11 @@ candidate fails.
 
 `selection.json` records the exact task ids. Each row in `data/tasks.csv` records
 the upstream repository, base commit, implementation language, source license,
-environment digest, and verifier digest. The project tools and metadata follow
-the release repository's MIT terms; task source and fixtures retain their
-upstream licenses, as documented in `NOTICE.md` in the GitHub release repository.
+material licenses and provenance, environment digest, and verifier digest. The
+project tools and metadata follow the release repository's MIT terms; task
+source and fixtures retain their upstream licenses. Dataset-level notices are
+in [`NOTICE.md`](NOTICE.md), and affected thin task bundles also include
+`fixtures/PROVENANCE.md`.
 
 The dataset is independent of GitHub at runtime. After this snapshot is
 downloaded, task materialization and evaluation use the local bundle plus Docker

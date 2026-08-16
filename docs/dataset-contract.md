@@ -41,6 +41,8 @@ materializer。用户先下载表格、selection 和 thin task bundle，再由�
 | `repository_url` | string | 是 | 上游源码仓库 |
 | `base_commit` | string | 是 | 固定 40 位 commit SHA |
 | `source_license` | string | 是 | SPDX 或经审阅的 family label |
+| `material_licenses` | JSON list | 是 | fixture、参数集等非源码材料的许可证；无则为 `[]` |
+| `materials_provenance` | string | 是 | 镜像内及 thin bundle 中的材料来源说明路径；无则为空字符串 |
 | `gpl_family` | bool | 是 | 是否属于 GPL/LGPL/AGPL-family |
 | `restricted_license` | bool | 是 | 是否需要 `--allow-restricted-licenses` |
 | `license_gate` | string | 是 | `none`、`gpl-family` 或 `noncommercial` |
@@ -70,6 +72,8 @@ environment_build_fingerprint
 verifier_build_fingerprint
 source_license
 license_source
+material_licenses
+materials_provenance
 gpl_family
 restricted_license
 license_gate

@@ -89,7 +89,9 @@ def validate(*, require_images: bool) -> dict[str, object]:
             raise ValueError(f"restricted-license classification mismatch for {task_id}")
         if str(row.get("license_gate", "none")) != expected_license_gate(row):
             raise ValueError(f"license_gate mismatch for {task_id}")
-        if not (ROOT / str(row["task_path"])).is_dir():
+        task_path = ROOT / str(row["task_path"])
+        thin_task_path = ROOT / "huggingface" / "tasks" / task_path.name
+        if not task_path.is_dir() and not thin_task_path.is_dir():
             raise ValueError(f"missing task bundle for {task_id}")
         if require_images and (not row.get("environment_image") or not row.get("verifier_image")):
             raise ValueError(f"missing image reference for {task_id}")

@@ -3,12 +3,12 @@
   "title": "Repair an inconsistent astronomical aperture workflow",
   "domain": "astronomical-image-analysis-and-wcs-aperture-photometry",
   "language": "python",
-  "source_repository": "",
-  "source_commit": "",
+  "source_repository": "https://github.com/astropy/photutils",
+  "source_commit": "eda83f4a57000d5f6763ee7afa9afacebbe0fd68",
   "source_license": "BSD-3-Clause",
   "license_source": "LICENSE.rst",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "842e8b9cc90cfc2fa565d985ad1d43d880025e8237e60838f0d164d37f50f906"
+  "public_payload_sha256": "e60c70e110ceae698185704aded868fcebb304d67ce96dc699c2a52d8640e254"
 }

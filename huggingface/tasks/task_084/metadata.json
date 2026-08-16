@@ -10,5 +10,9 @@
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
-  "public_payload_sha256": "0b14a30b4b7ceb203ee7c08d2196b2c8b6a4efa48f85b12627a87a49f5f8b83d"
+  "public_payload_sha256": "10df205f59e7cf7c7e6422df207e68ea5ba17619105bc2b77a5ace7cf1e5460c",
+  "material_licenses": [
+    "LGPL-3.0-or-later"
+  ],
+  "materials_provenance": "fixtures/PROVENANCE.md"
 }

@@ -4,11 +4,11 @@
   "domain": "single-cell-annotated-data-containers",
   "language": "python",
   "source_repository": "https://github.com/scverse/anndata",
-  "source_commit": "",
+  "source_commit": "9acb412357f025982b5817bda18bcb5d057a05ba",
   "source_license": "BSD-3-Clause",
   "license_source": "LICENSE",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "d0c8f80b09a6b76fe96ceb4bb7c2fbccf23feb16a911a23d5aa81234e9f6cf7c"
+  "public_payload_sha256": "c4b015e7778c7dc9d33fb8afa94f1336504698cbf1259b0a76a43b843b72928e"
 }

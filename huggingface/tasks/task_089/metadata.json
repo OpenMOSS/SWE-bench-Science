@@ -10,5 +10,9 @@
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "fe78fd81c8f3bde1750d471aec4416de4b93ff45a1490008fe50e529855c6782"
+  "public_payload_sha256": "1aa83928a461ec6d8531b1c81d25c21cf4a8497ec1aeb7e84a6da9d7b18dd9f5",
+  "material_licenses": [
+    "MIT"
+  ],
+  "materials_provenance": "fixtures/PROVENANCE.md"
 }

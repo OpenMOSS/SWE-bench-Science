@@ -7,6 +7,7 @@ import argparse
 import csv
 import json
 import shutil
+import tempfile
 from collections import Counter
 from pathlib import Path
 
@@ -14,7 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FIELDS = [
     "task_id", "title", "domain", "language", "repository_url", "base_commit",
-    "source_license", "gpl_family", "restricted_license", "license_gate",
+    "source_license", "material_licenses", "materials_provenance", "gpl_family",
+    "restricted_license", "license_gate",
     "environment_image", "verifier_image", "image_platform", "task_path", "status",
 ]
 THIN_TASK_FILES = (
@@ -25,6 +27,7 @@ THIN_TASK_FILES = (
     "tests/Dockerfile",
     "tests/test.sh",
 )
+OPTIONAL_THIN_TASK_FILES = ("fixtures/PROVENANCE.md",)
 
 
 def load_rows() -> list[dict[str, object]]:
@@ -59,6 +62,9 @@ def write_csv(rows: list[dict[str, object]], path: Path) -> None:
         for row in rows:
             values = {field: row.get(field, "") for field in FIELDS}
             values["task_id"] = row["release_id"]
+            values["material_licenses"] = json.dumps(
+                row.get("material_licenses", []), separators=(",", ":")
+            )
             writer.writerow(values)
 
 
@@ -105,7 +111,7 @@ def write_statistics(rows: list[dict[str, object]], path: Path) -> None:
 
 
 def metadata_from_row(row: dict[str, object]) -> dict[str, object]:
-    return {
+    metadata = {
         "task_id": str(row["release_id"]),
         "title": row.get("title", ""),
         "domain": row.get("domain", ""),
@@ -119,30 +125,54 @@ def metadata_from_row(row: dict[str, object]) -> dict[str, object]:
         "license_gate": row.get("license_gate", "none"),
         "public_payload_sha256": row.get("public_payload_sha256", ""),
     }
+    if row.get("material_licenses") or row.get("materials_provenance"):
+        metadata["material_licenses"] = row.get("material_licenses", [])
+        metadata["materials_provenance"] = row.get("materials_provenance", "")
+    return metadata
 
 
 def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
     task_root = output_root / "tasks"
-    if task_root.exists():
-        shutil.rmtree(task_root)
-    for row in rows:
-        source = ROOT / str(row["task_path"])
-        destination = task_root / source.name
-        for relative in THIN_TASK_FILES:
-            source_file = source / relative
-            if relative == "metadata.json":
+    build_root = ROOT / "build"
+    build_root.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="hf-tasks-", dir=build_root) as directory:
+        next_task_root = Path(directory) / "tasks"
+        for row in rows:
+            task_name = Path(str(row["task_path"])).name
+            imported_source = ROOT / str(row["task_path"])
+            committed_source = task_root / task_name
+            source = (
+                imported_source
+                if (imported_source / "task.toml").is_file()
+                else committed_source
+            )
+            destination = next_task_root / task_name
+            for relative in THIN_TASK_FILES:
+                source_file = source / relative
+                if relative == "metadata.json":
+                    destination_file = destination / relative
+                    destination_file.parent.mkdir(parents=True, exist_ok=True)
+                    destination_file.write_text(
+                        json.dumps(metadata_from_row(row), indent=2) + "\n",
+                        encoding="utf-8",
+                    )
+                    continue
+                if not source_file.is_file():
+                    raise FileNotFoundError(source_file)
                 destination_file = destination / relative
                 destination_file.parent.mkdir(parents=True, exist_ok=True)
-                destination_file.write_text(
-                    json.dumps(metadata_from_row(row), indent=2) + "\n",
-                    encoding="utf-8",
-                )
-                continue
-            if not source_file.is_file():
-                raise FileNotFoundError(source_file)
-            destination_file = destination / relative
-            destination_file.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(source_file, destination_file)
+                shutil.copy2(source_file, destination_file)
+            for relative in OPTIONAL_THIN_TASK_FILES:
+                source_file = source / relative
+                if not source_file.is_file() and source == imported_source:
+                    source_file = source / "environment" / "public" / relative
+                if source_file.is_file():
+                    destination_file = destination / relative
+                    destination_file.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source_file, destination_file)
+        if task_root.exists():
+            shutil.rmtree(task_root)
+        shutil.move(next_task_root, task_root)
 
     manifest_dir = output_root / "manifests"
     manifest_dir.mkdir(parents=True, exist_ok=True)
@@ -165,6 +195,7 @@ def write_snapshot(rows: list[dict[str, object]], output_root: Path) -> None:
         ROOT / "profiles" / "mini-swe-agent.env.example",
         profiles_dir / "mini-swe-agent.env.example",
     )
+    shutil.copy2(ROOT / "NOTICE.md", output_root / "NOTICE.md")
 
 
 def main() -> int:

@@ -3,12 +3,12 @@
   "title": "Restore multidimensional NMR acquisition grids",
   "domain": "nuclear-magnetic-resonance-spectroscopy",
   "language": "python",
-  "source_repository": "",
-  "source_commit": "",
+  "source_repository": "https://github.com/jjhelmus/nmrglue",
+  "source_commit": "a3494234497a4507537c8fc5a89081bdb09b1954",
   "source_license": "BSD-3-Clause",
   "license_source": "LICENSE.txt",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "dd119886283401127edc350f562371a2bad9d92d79cfe0488afeaa26a8dde9b4"
+  "public_payload_sha256": "ede5e6decc45aef565117030438e7bdd9b8c1b0a663c92381ed7da61bae6a227"
 }

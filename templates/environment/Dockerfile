@@ -23,7 +23,7 @@ RUN apt-get -o Acquire::Retries=10 update \
         ca-certificates \
         curl \
         git \
-        ripgrep \
+        ripgrep__SYSTEM_PACKAGE_LINES__ \
     && rm -rf /var/lib/apt/lists/*
 
 RUN if [ "${INSTALL_FORTRAN}" = "1" ]; then \

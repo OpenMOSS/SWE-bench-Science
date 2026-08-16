@@ -5,9 +5,19 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from scripts.build_publish_batch import smoke_verifier
 from scripts.generate_huggingface import gpl_ids, load_rows, restricted_ids, write_selection
-from scripts.import_task import base_image_for, dependency_lines, normalize_task_id
+from scripts.import_task import (
+    base_image_for,
+    classify_license_text,
+    dependency_lines,
+    detect_license,
+    normalize_task_id,
+    render_system_package_lines,
+    runtime_config,
+)
 from scripts.materialize import (
     expand_task_selectors,
     normalize_task_id as normalize_materialized_task_id,
@@ -200,9 +210,55 @@ class ReleaseToolTests(unittest.TestCase):
                 ["importlib-resources; python_version < '3.12'", "pytest==8.3.5"],
             )
 
+    def test_author_runtime_declaration_drives_release_dependencies(self) -> None:
+        task_data = {
+            "environment": {
+                "runtime": {
+                    "base_image": "python:3.12-slim",
+                    "python_packages": ["numpy==2.1.0", "pytest==8.3.5"],
+                    "system_packages": ["libopenblas-dev"],
+                }
+            }
+        }
+        self.assertEqual(
+            runtime_config(task_data),
+            (
+                "python:3.12-slim",
+                ["numpy==2.1.0", "pytest==8.3.5"],
+                ["libopenblas-dev"],
+            ),
+        )
+        self.assertIn("libopenblas-dev", render_system_package_lines(["libopenblas-dev"]))
+
+    def test_license_detector_prefers_the_root_project_license(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory)
+            (source / "LICENSE").write_text(
+                "GNU Lesser General Public License\nVersion 3\n",
+                encoding="utf-8",
+            )
+            nested = source / "external" / "component"
+            nested.mkdir(parents=True)
+            (nested / "COPYING").write_text(
+                "GNU Affero General Public License\nVersion 3\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(detect_license(source), ("LGPL-3.0-family", "LICENSE"))
+
+    def test_gpl_cross_reference_does_not_become_agpl(self) -> None:
+        text = (
+            "GNU GENERAL PUBLIC LICENSE\nVersion 3\n"
+            + "ordinary terms " * 100
+            + "GNU Affero General Public License"
+        )
+        self.assertEqual(classify_license_text(text), "GPL-3.0-family")
+
     def test_batch_runner_accepts_single_task_and_redacts_agent_env(self) -> None:
-        root = Path(__file__).resolve().parents[1] / "tasks" / "task_002"
-        self.assertEqual(task_dirs(root), [root])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "task_002"
+            root.mkdir()
+            (root / "task.toml").write_text("version = 1\n", encoding="utf-8")
+            self.assertEqual(task_dirs(root), [root])
         rendered = redacted_command(["pier", "run", "--agent-env", "TOKEN=secret"])
         self.assertNotIn("TOKEN=secret", rendered)
         self.assertIn("<redacted>", rendered)
@@ -212,6 +268,31 @@ class ReleaseToolTests(unittest.TestCase):
 
     def test_batch_runner_reads_pier_version_without_failing_missing_binary(self) -> None:
         self.assertIsNone(pier_version("/path/that/does/not/exist"))
+
+    def test_verifier_smoke_accepts_a_failing_baseline_with_collected_tests(self) -> None:
+        summary = {
+            "reward": 0,
+            "public": {"passed": 0, "collected": 1, "return_code": 1},
+            "private": {"collected": 3},
+        }
+        completed = subprocess.CompletedProcess(
+            args=["docker"], returncode=0, stdout=json.dumps(summary) + "\n"
+        )
+        with patch("scripts.build_publish_batch.subprocess.run", return_value=completed):
+            smoke_verifier("example.invalid/verifier:test", "089")
+
+    def test_verifier_smoke_rejects_a_public_runner_failure(self) -> None:
+        summary = {
+            "reward": 0,
+            "public": {"passed": 0, "collected": 1, "return_code": 2},
+            "private": {"collected": 3},
+        }
+        completed = subprocess.CompletedProcess(
+            args=["docker"], returncode=0, stdout=json.dumps(summary) + "\n"
+        )
+        with patch("scripts.build_publish_batch.subprocess.run", return_value=completed):
+            with self.assertRaisesRegex(RuntimeError, "public_return_code=2"):
+                smoke_verifier("example.invalid/verifier:test", "089")
 
     def test_codex_gateway_profile_selects_wire_without_embedding_key(self) -> None:
         profile = resolve_codex_profile(

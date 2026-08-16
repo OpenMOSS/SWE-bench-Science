@@ -211,8 +211,8 @@ the task requires it.
 
 The repository's own tools and documentation use the root MIT license. Task
 source and fixtures retain the upstream license recorded in
-`huggingface/data/tasks.csv` and `NOTICE.md`; restricted-license tasks are
-explicitly gated as described above.
+`huggingface/data/tasks.csv`, per-task `fixtures/PROVENANCE.md` files, and
+`NOTICE.md`; restricted-license tasks are explicitly gated as described above.
 
 More detail is available in [docs/architecture.md](docs/architecture.md),
 [docs/dataset-contract.md](docs/dataset-contract.md), and the
