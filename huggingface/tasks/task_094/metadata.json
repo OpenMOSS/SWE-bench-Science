@@ -4,11 +4,17 @@
   "domain": "condensed-matter-magnetism-and-magnetic-symmetry",
   "language": "python",
   "source_repository": "https://github.com/materialsproject/pymatgen",
-  "source_commit": "",
+  "source_commit": "ab97479e8da696b33f02cd140fdd16956600f94a",
   "source_license": "MIT",
-  "license_source": "LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "83caaa6fe0d259a727975a11f4606bee8784fe286c6fec89eb78769b09ba9b44"
+  "material_license": "MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "b34cbcca8f5de06cd097974501b6adc08bfb5d2c28a22b518b316be458f6c55d",
+  "restricted_reason": "",
+  "public_payload_sha256": "db57f694d4d5440c3cbeaff3357fad558652f33386edaadba730a0863126e12f"
 }

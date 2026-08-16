@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "036",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/Parcels-code/Parcels/tree/439ea290f9a75c3cbd66d79333fed475f92aeb00",
+      "license": "MIT",
+      "copyright": "OceanParcels contributors",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/parcels_v2_article.html and figures",
+      "kind": "article_copy",
+      "source_url": "https://doi.org/10.5194/gmd-12-3571-2019",
+      "license": "CC-BY-4.0",
+      "copyright": "Copyright the authors 2019",
+      "modified": true,
+      "third_party_exceptions": "The bundled article and nine figures carry the article CC BY statement.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

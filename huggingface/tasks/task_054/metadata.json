@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/matchms/matchms",
   "source_commit": "9f27ba89d8c485e6a2fa2db4756e3fe3aec05151",
   "source_license": "Apache-2.0",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "c1a33e4bda2aaf121eb0df8edbfb0c902ceaf32766cdc4a96ff9ef2aba6390a1"
+  "material_license": "Apache-2.0; CC-BY-4.0",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "03eef73a9942301ea5e43245d7ac6060640bf7c09359f3f596e8b37db07b7db4",
+  "restricted_reason": "",
+  "public_payload_sha256": "c2c21f52aa16aa43ca1823531c017161384825d8699e69b254c52e3070d0548a"
 }

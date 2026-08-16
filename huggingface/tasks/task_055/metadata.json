@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/astropy/specutils",
   "source_commit": "0613ba1ba86fd7ae79e9d89c8ffd24004a891aee",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "900f504762e2ea9497cc7f4600e112e0a84757ba37e1c3403073fceb8c2ab4ad"
+  "material_license": "BSD-3-Clause",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "02a2aef12aff642444e70cd640a2ae2121c2f5ad99ddab2e94932b60655be4a8",
+  "restricted_reason": "",
+  "public_payload_sha256": "3aeb7e8888d22a149778213fb70380ce80f4d21bd86e4584f7769895976e19ef"
 }

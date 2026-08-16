@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "038",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/spglib/spglib",
+      "license": "BSD-3-Clause",
+      "copyright": "Spglib contributors",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/spglib_2024_cc_by.pdf",
+      "kind": "repository_article_copy",
+      "source_url": "https://mdr.nims.go.jp/pid/c45f8c83-c091-407e-a7e4-758dd34f559b",
+      "license": "CC-BY-4.0",
+      "copyright": "Atsushi Togo, Kohei Shinohara, and Isao Tanaka",
+      "modified": false,
+      "third_party_exceptions": "Repository record and Crossref metadata identify CC BY 4.0.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/specimen_01.cif and specimen_02.cif",
+      "kind": "adapted_crystallographic_fixtures",
+      "source_url": "https://www.crystallography.net/cod/1509692.html",
+      "license": "CC0-1.0",
+      "copyright": "Crystallography Open Database depositors; benchmark representation adaptation",
+      "modified": true,
+      "third_party_exceptions": "COD record is dedicated to the public domain under CC0.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/spglib_paper_1808.01590.* and derived figures",
+      "kind": "arxiv_article_copies_and_conversions",
+      "source_url": "https://arxiv.org/abs/1808.01590",
+      "license": "LicenseRef-arXiv-Nonexclusive-Distribution",
+      "copyright": "Article authors",
+      "modified": true,
+      "third_party_exceptions": "The arXiv submission did not grant third-party redistribution under a Creative Commons license.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

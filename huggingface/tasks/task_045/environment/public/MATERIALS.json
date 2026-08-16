@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "045",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/xgcm/xgcm/tree/3831b46accbff35f06e4ed3831600d71d5d8da18",
+      "license": "MIT",
+      "copyright": "Ryan Abernathey and xgcm contributors",
+      "modified": true,
+      "third_party_exceptions": "Notebook outputs were cleared and unlicensed PyComodo images were removed; source cells and package code are retained.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/repo/paper.md",
+      "kind": "withdrawn_unpublished_repository_manuscript",
+      "source_url": "https://github.com/openjournals/joss-reviews/issues/2631",
+      "license": "MIT",
+      "copyright": "Ryan Abernathey, Julius Busecke, Anderson Banihirwe, Ci Zhang, Timothy Smith, Deepak Cherian, Aurélien Ponte, and xgcm contributors",
+      "modified": true,
+      "third_party_exceptions": "The manuscript was withdrawn and has no JOSS DOI or JOSS CC BY publication status; it is distributed only under the repository MIT license.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/repo/docs/transform.ipynb and grid_metrics.ipynb outputs",
+      "kind": "notebook_outputs",
+      "source_url": "https://github.com/xgcm/xgcm/tree/3831b46accbff35f06e4ed3831600d71d5d8da18/docs",
+      "license": "CC-BY-NC-SA-4.0-and-generated-output",
+      "copyright": "CNRM-CERFACS and notebook authors",
+      "modified": true,
+      "third_party_exceptions": "Outputs containing CNRM CMIP6 material and generated renderings were removed while input cells remain.",
+      "distribution_decision": "excluded"
+    },
+    {
+      "path": "environment/repo/docs/images/grid2d_hv.png and grid2d_hv.svg",
+      "kind": "third_party_diagram",
+      "source_url": "https://prod-gitlab.inria.fr/pycomodo/pycomodo",
+      "license": "LicenseRef-No-Redistribution-Grant-Found",
+      "copyright": "PyComodo authors",
+      "modified": false,
+      "third_party_exceptions": "No independent redistribution license was established.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

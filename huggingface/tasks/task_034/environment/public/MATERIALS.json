@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "task_id": "034",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/patrick-kidger/diffrax/tree/56d78e1acbdc9c1493caef17a34777931430f3bf",
+      "license": "Apache-2.0",
+      "copyright": "Diffrax contributors",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/high_order_splitting_methods.pdf and converted article assets",
+      "kind": "article_and_conversions",
+      "source_url": "https://arxiv.org/abs/2210.17543v6",
+      "license": "CC-BY-4.0",
+      "copyright": "James M. Foster, Goncalo dos Reis, and Calum Strange",
+      "modified": true,
+      "third_party_exceptions": "No excluded third-party item identified in the bundled version.",
+      "distribution_decision": "bundled",
+      "notes": "Markdown and image files are format conversions; the PDF is authoritative."
+    },
+    {
+      "path": "environment/public/paper_assets/high-order-splitting-code",
+      "kind": "article_companion_code",
+      "source_url": "https://github.com/andycasey/high-order-splitting",
+      "license": "MIT",
+      "copyright": "Companion-code authors; license statement retained in README.md",
+      "modified": false,
+      "third_party_exceptions": "Article presentation material in the repository is CC BY 4.0.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

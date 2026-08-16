@@ -1,0 +1,23 @@
+; Benchmark-authored synthetic topology. MIT licensed with SWE-bench Science.
+[ defaults ]
+1 3 yes 1.0 1.0
+
+[ atomtypes ]
+SX 6 12.000 0.0 A 0.30 0.40
+SY 8 16.000 0.0 A 0.40 0.90
+
+[ nonbond_params ]
+SX SY 1 0.35 0.60
+
+[ moleculetype ]
+PAIR 0
+
+[ atoms ]
+1 SX 1 SYN X 1 0.0 12.000
+2 SY 1 SYN Y 1 0.0 16.000
+
+[ system ]
+Synthetic combination-rule equivalence case
+
+[ molecules ]
+PAIR 1

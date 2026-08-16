@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "task_id": "032",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The OpenMM source snapshot includes LGPL-covered CUDA and OpenCL platform components and therefore requires explicit restricted-license opt-in.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/openmm/openmm/tree/d2f76949b3ccac1139f0a0a0d1459aa47e2f0a98",
+      "license": "MIT AND LGPL-family AND BSD-3-Clause",
+      "copyright": "2008-2025 Stanford University, the OpenMM authors, and named third-party contributors; notices retained in docs-source/licenses/Licenses.txt",
+      "modified": false,
+      "third_party_exceptions": "CUDA/OpenCL platforms are LGPL-covered; additional third-party notices remain bundled.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/public/fixtures/combination_rule_1.* and combination_rule_3.*",
+      "kind": "benchmark_authored_synthetic_scientific_fixtures",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS and SWE-bench Science contributors",
+      "modified": false,
+      "third_party_exceptions": "Arbitrary benchmark-selected parameters; no third-party force-field parameter set is included.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/openmm_article.html",
+      "kind": "publisher_page_capture",
+      "source_url": "https://doi.org/10.1371/journal.pcbi.1005659",
+      "license": "LicenseRef-Publisher-Page-Chrome-Unverified",
+      "copyright": "Article authors, PLOS, and page-component rightsholders",
+      "modified": true,
+      "third_party_exceptions": "The scientific article is CC0, but the captured full webpage also contains publisher code and page chrome not established as CC0.",
+      "distribution_decision": "excluded"
+    },
+    {
+      "path": "environment/public/paper_assets/charmm36m_article.html",
+      "kind": "article_copy",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5199616/",
+      "license": "LicenseRef-No-Redistribution-Grant-Found",
+      "copyright": "CHARMM36m article authors and publisher",
+      "modified": true,
+      "third_party_exceptions": "NIH author manuscript status is not a redistribution license.",
+      "distribution_decision": "excluded"
+    },
+    {
+      "path": "environment/public/paper_assets/gromacs_parameter_files.html and gromacs_topology_file_formats.html",
+      "kind": "documentation_copies",
+      "source_url": "https://manual.gromacs.org/current/reference-manual/topologies/",
+      "license": "LicenseRef-No-Redistribution-Grant-Found",
+      "copyright": "GROMACS documentation contributors",
+      "modified": true,
+      "third_party_exceptions": "Saved pages did not carry a grant permitting this redistribution.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

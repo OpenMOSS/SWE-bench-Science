@@ -3,12 +3,18 @@
   "title": "Repair a valid OpenMC fixed-source workflow",
   "domain": "monte-carlo-particle-transport",
   "language": "python-cpp",
-  "source_repository": "",
-  "source_commit": "",
+  "source_repository": "https://github.com/openmc-dev/openmc",
+  "source_commit": "97e04c464a279500bc740a1151fef5c629796e89",
   "source_license": "MIT",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "b630748484220716e8abd0185080b07930f00d71b51c1cef8e052642220fc750"
+  "material_license": "MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "63f808683274310c304ccc8bb920db3ee776a277b8d33cbe4d8346b79d9c3750",
+  "restricted_reason": "",
+  "public_payload_sha256": "6275e3cdda6cf031521c78d6bf577c57d16f546f9bbd4565f39a3f576ef238d0"
 }

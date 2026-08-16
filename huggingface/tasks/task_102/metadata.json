@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/marrink-lab/polyply_1.0",
   "source_commit": "160e9707d844ad1b108e1d8184152050d16088a0",
   "source_license": "Apache-2.0",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
-  "restricted_license": false,
-  "license_gate": "none",
-  "public_payload_sha256": "2152837000fbb33fc8d41e69096794de10a4c9bfe7e3ca4f6237362e5d33a560"
+  "restricted_license": true,
+  "license_gate": "restricted-materials",
+  "material_license": "Apache-2.0; CC-BY-4.0; LicenseRef-2016H66-Redistribution-Unverified",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": true,
+  "materials_gate": true,
+  "materials_manifest_sha256": "ee3eca49b12a932bc4e0f2a4643371cf5f35bb018cb8362267d39b6533195e2f",
+  "restricted_reason": "The retained 2016H66 force-field records have no complete per-file redistribution grant; explicit restricted-material opt-in is required.",
+  "public_payload_sha256": "c0ed91c3b8f1c639ea4f0e48ecec0349e4975f242af2c3ebdf8510e86fb9dda6"
 }

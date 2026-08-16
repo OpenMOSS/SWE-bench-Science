@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "102",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The retained 2016H66 force-field records have no complete per-file redistribution grant; explicit restricted-material opt-in is required.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/marrink-lab/polyply_1.0/tree/160e9707d844ad1b108e1d8184152050d16088a0",
+      "license": "Apache-2.0",
+      "copyright": "Polyply contributors; LICENSE retained",
+      "modified": true,
+      "third_party_exceptions": "The broad force-field library is pruned to the task-required 2016H66 records.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/repo/polyply/data/2016H66",
+      "kind": "force_field_parameter_data",
+      "source_url": "https://github.com/marrink-lab/polyply_1.0/tree/160e9707d844ad1b108e1d8184152050d16088a0/polyply/data/2016H66",
+      "license": "LicenseRef-2016H66-Redistribution-Unverified",
+      "copyright": "2016H66 model authors",
+      "modified": false,
+      "third_party_exceptions": "Citations are retained; no broad Apache relicensing is asserted.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "associated paper",
+      "kind": "citation_only",
+      "source_url": "https://doi.org/10.1038/s41467-021-27627-4",
+      "license": "CC-BY-4.0",
+      "copyright": "Polyply article authors",
+      "modified": false,
+      "third_party_exceptions": "No article, figure, or supplement is bundled.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

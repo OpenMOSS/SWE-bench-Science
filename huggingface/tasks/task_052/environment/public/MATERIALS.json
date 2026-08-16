@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "052",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/usnistgov/fipy/tree/11e5c6ae26207a60e223d46473ac364b352ac982",
+      "license": "NIST-PD-fallback",
+      "copyright": "FiPy developers and NIST; NIST notice retained in LICENSE.rst",
+      "modified": false,
+      "third_party_exceptions": "Third-party dependency notices remain with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/finite_volume_method.rst and polycrystal_phase_field_example.py",
+      "kind": "nist_documentation_and_example",
+      "source_url": "https://github.com/usnistgov/fipy/tree/11e5c6ae26207a60e223d46473ac364b352ac982",
+      "license": "LicenseRef-NIST-US-Public-Domain-and-Worldwide-Reprint-Permission",
+      "copyright": "National Institute of Standards and Technology and FiPy contributors",
+      "modified": false,
+      "third_party_exceptions": "Copied byte-for-byte; courtesy and non-endorsement notice retained in paper.md.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_context_and_nist_notice",
+      "source_url": "https://doi.org/10.1109/MCSE.2009.52",
+      "modified": true,
+      "third_party_exceptions": "The IEEE article is cited but not copied.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

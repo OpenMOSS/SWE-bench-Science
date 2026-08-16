@@ -1,0 +1,209 @@
+[
+  {
+    "schema_version": 1,
+    "task_id": "091",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": ["environment/repo/src/pymatgen/symmetry/symm_ops.yaml", "environment/repo/src/pymatgen/symmetry/symm_data_magnetic.sqlite"],
+    "materials": [
+      {"path": "environment/repo", "kind": "source_snapshot", "source_url": "https://github.com/materialsproject/pymatgen-core/tree/c8cfee71f3ce5d92c5b5f6ca3d363f8f3a9f4495", "license": "MIT", "copyright": "pymatgen-core contributors; root LICENSE retained", "modified": true, "third_party_exceptions": "The GPL-derived symmetry YAML and ISO-MAG database are excluded; the retained cube test tree has its own Materialyze.AI MIT license.", "distribution_decision": "bundled"},
+      {"path": "environment/repo/test-files/electronic_structure/boltztrap/fermi/boltztrap_BZ.cube", "kind": "upstream_test_fixture", "source_url": "https://github.com/materialsproject/pymatgen-core/tree/c8cfee71f3ce5d92c5b5f6ca3d363f8f3a9f4495/test-files", "license": "MIT", "copyright": "Materialyze.AI", "modified": false, "third_party_exceptions": "The separate test-files LICENSE is retained.", "distribution_decision": "bundled"},
+      {"path": "environment/public/fixtures", "kind": "benchmark_fixture", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "Deterministic public input.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "092",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": ["environment/repo/chemprop/web"],
+    "materials": [
+      {"path": "environment/repo", "kind": "source_snapshot", "source_url": "https://github.com/chemprop/chemprop/tree/1f367d55d1bac14dd6b9e0cd5746574fcfab9a59", "license": "MIT", "copyright": "Chemprop contributors; LICENSE.txt retained", "modified": true, "third_party_exceptions": "The unrelated JSME/web bundle and its unresolved transitive notices are excluded.", "distribution_decision": "bundled"},
+      {"path": "environment/public/fixtures", "kind": "benchmark_fixture", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "Synthetic reaction observations.", "distribution_decision": "bundled"},
+      {"path": "associated paper", "kind": "citation_only", "source_url": "https://doi.org/10.1021/acs.jcim.9b00237; https://doi.org/10.1021/acs.jcim.1c00975", "license": "CC-BY-NC-ND-4.0 and CC-BY-4.0", "copyright": "Article authors and publishers", "modified": false, "third_party_exceptions": "No article, figure, or supplement is bundled.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "093",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": [],
+    "materials": [
+      {"path": "environment/repo", "kind": "reduced_source_snapshot", "source_url": "https://github.com/Project-MONAI/MONAI/tree/5a644e4edcc37e5c963e52fda6fab4c85b3ff02e", "license": "Apache-2.0", "copyright": "MONAI contributors; added LICENSE and source notice", "modified": true, "third_party_exceptions": "Only the ten files needed by the task remain.", "distribution_decision": "bundled"},
+      {"path": "associated paper", "kind": "documentation_citation", "source_url": "https://github.com/Project-MONAI/MONAI/issues/6985", "license": "MIT", "copyright": "OpenMOSS task documentation", "modified": true, "third_party_exceptions": "No article or supplementary material is copied.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "094",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": [],
+    "materials": [
+      {"path": "environment/repo", "kind": "reduced_source_snapshot", "source_url": "https://github.com/materialsproject/pymatgen/tree/ab97479e8da696b33f02cd140fdd16956600f94a", "license": "MIT", "copyright": "pymatgen contributors; LICENSE.rst retained", "modified": true, "third_party_exceptions": "The ISO-MAG database is replaced by the independently generated synthetic catalogue described in BENCHMARK_CATALOGUE_NOTICE.md.", "distribution_decision": "bundled"},
+      {"path": "environment/repo/pymatgen/symmetry/symm_data_magnetic.sqlite", "kind": "benchmark_authored_synthetic_catalogue", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "Not copied from ISO-MAG or an IUCr table; generated by the retained script.", "distribution_decision": "bundled"},
+      {"path": "environment/public/fixtures", "kind": "benchmark_fixture", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "Synthetic lookup records.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "095",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": [],
+    "materials": [
+      {"path": "environment/repo/openpnm_reduced", "kind": "source_snapshot", "source_url": "https://github.com/PMEAL/OpenPNM/tree/d8efaa211ea6721cc4a718890f11fb60b8b43326", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "Independent stand-in; not a relicensed OpenPNM source copy.", "distribution_decision": "bundled"},
+      {"path": "environment/public/fixtures", "kind": "benchmark_fixture", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "Deterministic synthetic transport cases.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "096",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": true,
+    "restricted_reason": "The retained CLIMADA-derived source is GPL-3.0; explicit restricted-license opt-in is required.",
+    "remove": [],
+    "materials": [
+      {"path": "environment/repo", "kind": "reduced_source_snapshot", "source_url": "https://github.com/CLIMADA-project/climada_python/tree/104dfdb64ed00fce6c49a5d67be371f4fca016dd", "license": "GPL-3.0", "copyright": "CLIMADA contributors; complete LICENSE and source notice retained", "modified": true, "third_party_exceptions": "GPL terms apply to the retained derived files.", "distribution_decision": "restricted"},
+      {"path": "associated paper", "kind": "citation_only", "source_url": "https://doi.org/10.5194/gmd-12-3085-2019", "license": "CC-BY-4.0", "copyright": "CLIMADA article authors", "modified": false, "third_party_exceptions": "No article, table, figure, or supplement is bundled.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "097",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": true,
+    "restricted_reason": "The retained DeePMD-derived source is LGPL-3.0-or-later; explicit restricted-license opt-in is required.",
+    "remove": [],
+    "materials": [
+      {"path": "environment/repo", "kind": "reduced_source_snapshot", "source_url": "https://github.com/deepmodeling/deepmd-kit/tree/6c3b985cbc6e2dec51976a20ae51214186c693b5", "license": "LGPL-3.0-or-later", "copyright": "DeePMD-kit contributors; complete LICENSE and SPDX headers retained", "modified": true, "third_party_exceptions": "LGPL terms apply to the retained derived files.", "distribution_decision": "restricted"},
+      {"path": "associated paper", "kind": "citation_only", "source_url": "https://doi.org/10.1063/5.0155600", "license": "CC-BY-4.0", "copyright": "DeePMD-kit article authors", "modified": false, "third_party_exceptions": "No article, figure, or supplement is bundled.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "098",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": true,
+    "restricted_reason": "The retained Satpy-derived source is GPL-3.0-or-later; explicit restricted-license opt-in is required.",
+    "remove": [],
+    "materials": [
+      {"path": "environment/repo", "kind": "reduced_source_snapshot", "source_url": "https://github.com/pytroll/satpy/tree/0ef189634030bda38bd069de30b60f8769995050", "license": "GPL-3.0-or-later", "copyright": "Satpy contributors; complete LICENSE and source notice retained", "modified": true, "third_party_exceptions": "Task-local adapters are separated from GPL-derived core files.", "distribution_decision": "restricted"},
+      {"path": "environment/public/fixtures/public_abi_subset.nc", "kind": "synthetic_fixture", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "No external ABI product is included.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "099",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": ["environment/repo/docs"],
+    "materials": [
+      {"path": "environment/repo", "kind": "reduced_source_snapshot", "source_url": "https://github.com/Stanford-NavLab/gnss_lib_py/tree/9a4e467ba06e636ffa4de6ceee302cefee8b2a34", "license": "MIT", "copyright": "gnss_lib_py contributors; embedded MIT/BSD notices retained", "modified": true, "third_party_exceptions": "Documentation logos and artwork are excluded.", "distribution_decision": "bundled"},
+      {"path": "environment/public/fixtures", "kind": "synthetic_fixture", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "No receiver log or external navigation dataset.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "100",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": true,
+    "restricted_reason": "The upstream AuToGraFS snapshot has unresolved LGPL-2.1 versus MIT declarations; only the retained code and independently generated synthetic data are distributed under explicit restricted opt-in.",
+    "remove": ["environment/repo/src/autografs/data/pormake.xyz", "environment/repo/src/autografs/data/PORMAKE_LICENSE.md", "environment/repo/src/autografs/data/iza_codes.py", "environment/repo/src/autografs/data/iza_aliases.json", "environment/repo/src/autografs/data/eqeq.py"],
+    "materials": [
+      {"path": "environment/repo/src/autografs", "kind": "reduced_source_snapshot", "source_url": "https://github.com/DCoupry/autografs/tree/c2f22341f2b1eb2f619b76534cf4abe2e5e6b3a3", "license": "LGPL-2.1-family and MIT (upstream conflict)", "copyright": "AuToGraFS contributors; conflicting upstream license files retained", "modified": true, "third_party_exceptions": "The task is restricted until the upstream conflict is resolved.", "distribution_decision": "restricted"},
+      {"path": "environment/repo/src/autografs/data/topologies.json.gz and defaults.xyz", "kind": "benchmark_authored_synthetic_library", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "No RCSR, IZA, PORMAKE, ToBaCCo, CoRE MOF, or article-derived data.", "distribution_decision": "bundled"},
+      {"path": "environment/repo/src/autografs/data/uff4mof.py", "kind": "benchmark_authored_geometric_constants", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "Independent approximate values; not the UFF4MOF table.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "101",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": true,
+    "restricted_reason": "The required Chen2020 parameter CSVs are derived from a CC-BY-NC-ND article; explicit restricted-material opt-in is required.",
+    "retain_subdirectories": {"environment/repo/packages/pybamm/src/pybamm/input/parameters": ["lithium_ion"]},
+    "retain_files": {"environment/repo/packages/pybamm/src/pybamm/input/parameters/lithium_ion": ["__init__.py", "Chen2020.py", "Xu2019.py"], "environment/repo/packages/pybamm/src/pybamm/input/parameters/lithium_ion/data": ["graphite_LGM50_ocp_Chen2020.csv", "nmc_LGM50_ocp_Chen2020.csv"]},
+    "materials": [
+      {"path": "environment/repo", "kind": "source_snapshot", "source_url": "https://github.com/pybamm-team/PyBaMM/tree/1e9fbcea25b78a0a633face62b077dae1f92bf62", "license": "BSD-3-Clause", "copyright": "PyBaMM contributors; LICENSE.txt retained", "modified": true, "third_party_exceptions": "Unrelated parameter sets are removed.", "distribution_decision": "restricted"},
+      {"path": "environment/repo/packages/pybamm/src/pybamm/input/parameters/lithium_ion/data/*Chen2020.csv", "kind": "paper_derived_parameter_data", "source_url": "https://doi.org/10.1149/1945-7111/ab9050", "license": "CC-BY-NC-ND-4.0", "copyright": "Chen et al.; ECS", "modified": true, "third_party_exceptions": "Non-commercial, no-derivatives restrictions are recorded in PARAMETER_DATA_NOTICE.md.", "distribution_decision": "restricted"},
+      {"path": "associated paper", "kind": "citation_only", "source_url": "https://doi.org/10.5334/jors.309", "license": "CC-BY-4.0", "copyright": "PyBaMM article authors", "modified": false, "third_party_exceptions": "No article or supplement is bundled.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "102",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": true,
+    "restricted_reason": "The retained 2016H66 force-field records have no complete per-file redistribution grant; explicit restricted-material opt-in is required.",
+    "retain_subdirectories": {"environment/repo/polyply/data": ["2016H66"], "environment/repo/polyply/tests": ["test_data"], "environment/repo/polyply/tests/test_data": ["topology_test"]},
+    "retain_files": {"environment/repo/polyply/tests/test_data/topology_test": ["system.top", "test.itp", "ffnonbonded.itp", "test.bld"]},
+    "materials": [
+      {"path": "environment/repo", "kind": "source_snapshot", "source_url": "https://github.com/marrink-lab/polyply_1.0/tree/160e9707d844ad1b108e1d8184152050d16088a0", "license": "Apache-2.0", "copyright": "Polyply contributors; LICENSE retained", "modified": true, "third_party_exceptions": "The broad force-field library is pruned to the task-required 2016H66 records.", "distribution_decision": "restricted"},
+      {"path": "environment/repo/polyply/data/2016H66", "kind": "force_field_parameter_data", "source_url": "https://github.com/marrink-lab/polyply_1.0/tree/160e9707d844ad1b108e1d8184152050d16088a0/polyply/data/2016H66", "license": "LicenseRef-2016H66-Redistribution-Unverified", "copyright": "2016H66 model authors", "modified": false, "third_party_exceptions": "Citations are retained; no broad Apache relicensing is asserted.", "distribution_decision": "restricted"},
+      {"path": "associated paper", "kind": "citation_only", "source_url": "https://doi.org/10.1038/s41467-021-27627-4", "license": "CC-BY-4.0", "copyright": "Polyply article authors", "modified": false, "third_party_exceptions": "No article, figure, or supplement is bundled.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "103",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": ["environment/repo/dev", "environment/repo/docs", "environment/repo/h5Nastran", "environment/repo/models", "environment/repo/licenses", "environment/repo/pyNastran/bdf/cards/elements/optimization_utils.py"],
+    "retain_subdirectories": {"environment/repo": ["pyNastran"], "environment/repo/pyNastran": ["bdf", "femutils", "utils"]},
+    "remove_globs": ["environment/repo/pyNastran/**/test", "environment/repo/pyNastran/**/tests", "environment/repo/pyNastran/**/dev", "environment/repo/**/*.f06", "environment/repo/**/*.op2", "environment/repo/**/*.bdf", "environment/repo/**/*.pch", "environment/repo/**/*.png", "environment/repo/**/*.gif", "environment/repo/**/*.ico", "environment/repo/**/*.pptx", "environment/repo/**/*.xlsx", "environment/repo/**/*.ipynb", "environment/repo/**/*.dat", "environment/repo/**/*.inc"],
+    "materials": [
+      {"path": "environment/repo/pyNastran", "kind": "reduced_source_snapshot", "source_url": "https://github.com/SteveDoyle2/pyNastran/tree/bdff2bb616847a058960c56328b68e36ab3764e3", "license": "BSD-3-Clause", "copyright": "pyNastran contributors; LICENSE.md retained", "modified": true, "third_party_exceptions": "Models, solver outputs, confidential F06 files, and unrelated assets are excluded.", "distribution_decision": "bundled"},
+      {"path": "associated paper", "kind": "citation_only", "source_url": "https://ntrs.nasa.gov/citations/19950009349", "license": "US-Government-Public-Use", "copyright": "NASA and Alan T. Nettles", "modified": false, "third_party_exceptions": "Only a citation and benchmark-authored laminate fixture remain.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "104",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "remove": ["environment/repo/pybamm/input/drive_cycles", "environment/repo/pybamm/input/discharge_data", "environment/repo/pybamm/input/parameters", "environment/repo/pybamm/input/comsol_results"],
+    "materials": [
+      {"path": "environment/repo", "kind": "reduced_source_snapshot", "source_url": "https://github.com/pybamm-team/PyBaMM/tree/4cf09f36bb4afb42c661e8765e14b4527581eff7", "license": "BSD-3-Clause", "copyright": "PyBaMM contributors; LICENSE.txt retained", "modified": true, "third_party_exceptions": "Paper-derived curves, drive cycles, COMSOL results, and parameter libraries are excluded.", "distribution_decision": "bundled"},
+      {"path": "environment/public/paper_assets", "kind": "benchmark_authored_notes", "source_url": "https://github.com/OpenMOSS/SWE-bench-Science", "license": "MIT", "copyright": "OpenMOSS SWE-bench Science contributors", "modified": true, "third_party_exceptions": "No article PDF, figure, or supplementary data is bundled.", "distribution_decision": "bundled"}
+    ]
+  },
+  {
+    "schema_version": 1,
+    "task_id": "105",
+    "reviewed_on": "2026-08-16",
+    "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+    "requires_restricted_gate": false,
+    "restricted_reason": "",
+    "retain_subdirectories": {"environment/repo": ["Code", "third_party"], "environment/repo/Code": ["Catalogs", "DataStructs", "Geometry", "GraphMol", "Query", "RDGeneral"], "environment/repo/Code/DataStructs": [], "environment/repo/Code/Geometry": [], "environment/repo/Code/RDGeneral": ["hash"], "environment/repo/Code/GraphMol": ["GenericGroups", "Substruct", "SmilesParse", "CIPLabeler", "FileParsers", "MolStandardize"]},
+    "remove_globs": ["environment/repo/Code/**/testData", "environment/repo/Code/**/test_data", "environment/repo/Code/**/testExecs", "environment/repo/Code/**/Test", "environment/repo/Code/**/Wrap", "environment/repo/**/*.sdf", "environment/repo/**/*.mol", "environment/repo/**/*.mrv", "environment/repo/**/*.cxsmi", "environment/repo/**/*.xyz", "environment/repo/**/*.cdxml", "environment/repo/**/*.rxn", "environment/repo/**/*.smi", "environment/repo/**/*.mol2", "environment/repo/**/*.pdb", "environment/repo/**/*.png", "environment/repo/**/*.gif", "environment/repo/**/*.ico", "environment/repo/**/*.ipynb", "environment/repo/**/*.pkl", "environment/repo/**/*.fpb", "environment/repo/**/*.rdf", "environment/repo/**/*.mae", "environment/repo/**/*.maegz", "environment/repo/**/*.cdx", "environment/repo/**/*.tdt", "environment/repo/**/*.trc", "environment/repo/**/*.trx", "environment/repo/**/*.in"],
+    "materials": [
+      {"path": "environment/repo/Code", "kind": "reduced_source_snapshot", "source_url": "https://github.com/rdkit/rdkit/tree/313bed48f942a3663e2dc496f4e930dacbbcf8aa", "license": "BSD-3-Clause", "copyright": "RDKit contributors; license.txt retained", "modified": true, "third_party_exceptions": "The required Boost license is retained; unrelated test assets, xyz2mol, and CrystalFF tables are excluded.", "distribution_decision": "bundled"},
+      {"path": "environment/repo/third_party/boost", "kind": "third_party_headers", "source_url": "https://www.boost.org/users/license.html", "license": "BSL-1.0", "copyright": "Boost Software License 1.0 authors", "modified": false, "third_party_exceptions": "LICENSE_1_0.txt is retained.", "distribution_decision": "bundled"},
+      {"path": "associated paper", "kind": "citation_only", "source_url": "https://www.rdkit.org/; https://www.rdkit.org/docs/", "license": "No article redistribution grant asserted", "copyright": "RDKit authors and project", "modified": false, "third_party_exceptions": "The invalid DOI previously listed for this task is removed; no paper is bundled.", "distribution_decision": "bundled"}
+    ]
+  }
+]

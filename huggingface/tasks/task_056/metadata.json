@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/poliastro/poliastro",
   "source_commit": "0583b33091b07229abe2027bccdc596ba3c5033b0",
   "source_license": "MIT",
-  "license_source": "COPYING",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "0c40a39f1a705c60ae6088941ee2549c10a86b5886dbe1b9b6689b0557d68830"
+  "material_license": "CC-BY-3.0; CC-BY-SA-4.0; MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "3c0c7fc8f3d39ce2e51f40e009ed1bb6f5f130fc9f71636eb1ad461e08b8ffaa",
+  "restricted_reason": "",
+  "public_payload_sha256": "144a6f4df79aec52c1dc4291556e53ad8baf197b46e248659d6e98dcd6cf04f2"
 }

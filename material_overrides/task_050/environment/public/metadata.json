@@ -1,0 +1,32 @@
+{
+  "task_id": "050",
+  "title": "Repair an inconsistent tensor-network state calculation",
+  "domain": "quantum-information-many-body-tensor-networks",
+  "language": "python",
+  "difficulty": "hard",
+  "source_repository": "https://github.com/jcmgray/quimb",
+  "source_commit": "79594e405ac72da908cdd7a1058911afc256c483",
+  "associated_paper": {
+    "title": "quimb: A python package for quantum information and many-body calculations",
+    "doi": "10.21105/joss.00819",
+    "journal": "Journal of Open Source Software",
+    "year": 2018
+  },
+  "agent_entry_files": [
+    ".gitattributes",
+    ".gitignore",
+    "metadata.json",
+    "task.json",
+    "instruction.md",
+    "problem_desc.txt",
+    "paper.md",
+    "paper_assets",
+    "reproduction.md",
+    "reproduce.py",
+    "fixtures",
+    "source"
+  ],
+  "public_test_entry": "reproduce.py",
+  "status": "runnable_reproduction",
+  "public_test_kind": "command"
+}

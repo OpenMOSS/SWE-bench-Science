@@ -30,6 +30,6 @@ Public redistribution requires explicit permission; third-party exceptions are e
 - Distribution decision: `bundled`
 - License: ``
 - Source: <https://github.com/OpenMOSS/SWE-bench-Science>
-- Copyright:
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: Tree-sequence fixtures and explanatory manual are benchmark-authored.

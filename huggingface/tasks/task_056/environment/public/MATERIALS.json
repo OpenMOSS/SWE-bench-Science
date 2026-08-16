@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "056",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/poliastro/poliastro/tree/0583b33091b07229abe2027bccdc596ba3c5033b0",
+      "license": "MIT",
+      "copyright": "poliastro contributors; MIT notice retained in COPYING",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md and reusable paper_assets",
+      "kind": "scipy_proceedings_article_conversion",
+      "source_url": "https://doi.org/10.25080/majora-212e5952-015",
+      "license": "CC-BY-3.0",
+      "copyright": "Copyright 2022 Juan Luis Cano Rodríguez and Jorge Martínez Garrido",
+      "modified": true,
+      "third_party_exceptions": "The separately licensed Encke diagram and excluded Vallado figure are handled below.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/enckes_method.pdf",
+      "kind": "wikimedia_figure_conversion",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Enckes_method-vector.svg",
+      "license": "CC-BY-SA-4.0",
+      "copyright": "GregorDS",
+      "modified": true,
+      "third_party_exceptions": "Converted to PDF by the SciPy proceedings authors; complete attribution retained.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/leo-perturbations.png",
+      "kind": "commercial_textbook_figure",
+      "source_url": "https://books.google.com/books?id=PjA9Yl2Z3kQC",
+      "license": "LicenseRef-No-Redistribution-Grant-Found",
+      "copyright": "David A. Vallado and publisher",
+      "modified": false,
+      "third_party_exceptions": "The proceedings license does not relicense this third-party textbook figure.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

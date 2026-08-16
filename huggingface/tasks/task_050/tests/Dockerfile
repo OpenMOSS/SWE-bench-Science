@@ -1,2 +1,2 @@
-ARG VERIFIER_IMAGE=docker.io/kevinxulearning/swe-bench-science-verifier-python-task-050:v0.1.0@sha256:74fe72ef3a7fe8749cbc7de11f80303278c83e89adfc60dfa00338059b3b0561
+ARG VERIFIER_IMAGE=docker.io/kevinxulearning/swe-bench-science-verifier-python-task-050:v0.1.1@sha256:329b4cefbac68b9fff040c801b61c9edc46971f6378547731630f50d353d6a48
 FROM ${VERIFIER_IMAGE}

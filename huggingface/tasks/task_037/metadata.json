@@ -5,10 +5,16 @@
   "language": "python",
   "source_repository": "https://github.com/nipy/nibabel",
   "source_commit": "5d10c5b8bb09576e24e9d316da1019fb909d7d32",
-  "source_license": "BSD-3-Clause",
-  "license_source": "COPYING",
+  "source_license": "MIT AND BSD-3-Clause",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "fb9bb76d90c34bd297b4e977cb1d92ba7dee1a873395301d008ff466d43481a8"
+  "material_license": "MIT; MIT AND BSD-3-Clause",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "acb0c4de1a255bde515f780d34c7a0585d488b13032ef4bed6e78fab84f60f0b",
+  "restricted_reason": "",
+  "public_payload_sha256": "525e11dbf5bfc048c2efde3fd15fe6993ba36cf2dd8a1a1d3afb9c320baab674"
 }

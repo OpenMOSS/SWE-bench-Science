@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/pytroll/satpy",
   "source_commit": "0ef189634030bda38bd069de30b60f8769995050",
   "source_license": "GPL-3.0-or-later",
-  "license_source": "source/satpy/utils.py",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
-  "public_payload_sha256": "551331a7c8d9ec732af39574c53fd2f2139520ba8eb5a322aed7d412101fe61d"
+  "material_license": "GPL-3.0-or-later; MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": true,
+  "materials_gate": true,
+  "materials_manifest_sha256": "b8e9050b896670f76ac2bababc5fdab1cfbe9c007330b93c8d3e8a03a93384c4",
+  "restricted_reason": "The retained Satpy-derived source is GPL-3.0-or-later; explicit restricted-license opt-in is required.",
+  "public_payload_sha256": "452b6321fe1f4b2be7f0db5dc4a4db0128b6a61e89008469c125413a907beb94"
 }

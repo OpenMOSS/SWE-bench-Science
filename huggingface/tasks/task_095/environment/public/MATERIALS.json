@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "095",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo/openpnm_reduced",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/PMEAL/OpenPNM/tree/d8efaa211ea6721cc4a718890f11fb60b8b43326",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "Independent stand-in; not a relicensed OpenPNM source copy.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures",
+      "kind": "benchmark_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "Deterministic synthetic transport cases.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

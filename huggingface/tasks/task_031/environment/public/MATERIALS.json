@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "031",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/mne-tools/mne-python/tree/3b3f3afb0e46a6ac6b97e6ecfbc2414497ea9a3a",
+      "license": "BSD-3-Clause",
+      "copyright": "MNE-Python contributors; notice retained in LICENSE.txt",
+      "modified": false,
+      "third_party_exceptions": "Covered by notices retained in the source snapshot.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "article_excerpt_and_task_authored_context",
+      "source_url": "https://doi.org/10.3389/fnins.2013.00267",
+      "license": "CC-BY-3.0",
+      "copyright": "Copyright 2013 Gramfort, Luessi, Larson, Engemann, Strohmeier, Brodbeck, Goj, Jas, Brooks, Parkkonen and Hämäläinen",
+      "modified": true,
+      "third_party_exceptions": "No third-party figure is copied.",
+      "distribution_decision": "bundled",
+      "notes": "Includes an attributed abstract excerpt plus benchmark-authored scientific context."
+    }
+  ]
+}

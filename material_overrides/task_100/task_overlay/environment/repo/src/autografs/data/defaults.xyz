@@ -1,0 +1,14 @@
+3
+name=Benchmark_linker_linear pbc="F F F"
+X 0.0 0.0 -1.5
+C 0.0 0.0 0.0
+X 0.0 0.0 1.5
+7
+name=Benchmark_node_octahedral pbc="F F F"
+Zn 0.0 0.0 0.0
+X 1.5 0.0 0.0
+X -1.5 0.0 0.0
+X 0.0 1.5 0.0
+X 0.0 -1.5 0.0
+X 0.0 0.0 1.5
+X 0.0 0.0 -1.5

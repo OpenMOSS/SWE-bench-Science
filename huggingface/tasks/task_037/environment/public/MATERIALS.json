@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "037",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/nipy/nibabel/tree/5d10c5b8bb09576e24e9d316da1019fb909d7d32",
+      "license": "MIT AND BSD-3-Clause",
+      "copyright": "NiBabel contributors and named third-party contributors; COPYING retained",
+      "modified": false,
+      "third_party_exceptions": "Third-party code and data notices remain in COPYING.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/archived_multiframe_mr.dcm",
+      "kind": "author_adapted_scientific_fixture",
+      "source_url": "https://github.com/nipy/nibabel/blob/5d10c5b8bb09576e24e9d316da1019fb909d7d32/nibabel/nicom/tests/data/4d_multiframe_test.dcm",
+      "license": "MIT",
+      "copyright": "NiBabel contributors; benchmark adaptation",
+      "modified": true,
+      "third_party_exceptions": "Patient identifiers and original pixels were removed; deterministic phantom pixels and anonymized geometry were substituted.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/nibabel_dicom.html",
+      "kind": "documentation_copy",
+      "source_url": "https://nipy.org/nibabel/dicom/dicom.html",
+      "license": "MIT",
+      "copyright": "NiBabel contributors",
+      "modified": true,
+      "third_party_exceptions": "None identified.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/dicom_*.html and dicom_supplement_49_enhanced_mr.pdf",
+      "kind": "standards_copies",
+      "source_url": "https://www.dicomstandard.org/current; https://dicom.nema.org/medical/dicom/final/sup49_ft.pdf",
+      "license": "LicenseRef-NEMA-No-Redistribution",
+      "copyright": "National Electrical Manufacturers Association",
+      "modified": true,
+      "third_party_exceptions": "Supplement 49 expressly prohibits circulation, quotation, or reproduction without NEMA approval.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

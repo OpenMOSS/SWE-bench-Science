@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "103",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo/pyNastran",
+      "kind": "reduced_source_snapshot",
+      "source_url": "https://github.com/SteveDoyle2/pyNastran/tree/bdff2bb616847a058960c56328b68e36ab3764e3",
+      "license": "BSD-3-Clause",
+      "copyright": "pyNastran contributors; LICENSE.md retained",
+      "modified": true,
+      "third_party_exceptions": "Models, solver outputs, confidential F06 files, and unrelated assets are excluded.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "associated paper",
+      "kind": "citation_only",
+      "source_url": "https://ntrs.nasa.gov/citations/19950009349",
+      "license": "US-Government-Public-Use",
+      "copyright": "NASA and Alan T. Nettles",
+      "modified": false,
+      "third_party_exceptions": "Only a citation and benchmark-authored laminate fixture remain.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

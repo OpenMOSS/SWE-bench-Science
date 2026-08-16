@@ -1,0 +1,33 @@
+{
+  "task_id": "058",
+  "title": "Repair a valid OpenMC fixed-source workflow",
+  "domain": "monte-carlo-particle-transport",
+  "language": "python-cpp",
+  "difficulty": "easy",
+  "source_repository": "https://github.com/openmc-dev/openmc",
+  "source_commit": "97e04c464a279500bc740a1151fef5c629796e89",
+  "source_license": "MIT",
+  "associated_paper": {
+    "title": "OpenMC: A State-of-the-Art Monte Carlo Code for Research and Development",
+    "doi": "10.1016/j.anucene.2014.07.048",
+    "url": "https://doi.org/10.1016/j.anucene.2014.07.048",
+    "year": 2015
+  },
+  "agent_entry_files": [
+    ".gitignore",
+    "metadata.json",
+    "task.json",
+    "instruction.md",
+    "problem_desc.txt",
+    "paper.md",
+    "paper_assets",
+    "reproduction.md",
+    "reproduce.py",
+    "fixtures",
+    "workflow",
+    "source"
+  ],
+  "status": "runnable_reproduction",
+  "public_test_entry": "reproduce.py",
+  "public_test_kind": "command"
+}

@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/patrick-kidger/diffrax",
   "source_commit": "56d78e1acbdc9c1493caef17a34777931430f3bf",
   "source_license": "Apache-2.0",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "889b0227a9c51d2b5bc30a32e135fcd05155e4d6cf5be68637bd012d34e8a7b5"
+  "material_license": "Apache-2.0; CC-BY-4.0; MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "f165a9cd5a3804fded776a27a284ba9e6458bd6f0fc281b5de5541181a7f30db",
+  "restricted_reason": "",
+  "public_payload_sha256": "13493379beb9f833e2a1ce4739d2ca74b89c005aa12e802601a6c58f1203b6c6"
 }

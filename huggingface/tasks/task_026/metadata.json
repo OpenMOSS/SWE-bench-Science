@@ -8,7 +8,13 @@
   "source_license": "BSD-3-Clause",
   "license_source": "LICENSE",
   "gpl_family": false,
-  "restricted_license": false,
-  "license_gate": "none",
-  "public_payload_sha256": "c348e11ed68dcfeb5261e14bff46bd8dde6ee4658836b1824c7207d1a581e57d"
+  "restricted_license": true,
+  "license_gate": "noncommercial",
+  "material_license": "Academic-NonCommercial",
+  "material_license_source": "https://www2.mmm.ucar.edu/wrf/users/docs/technote/v4_technote.pdf",
+  "material_restricted": true,
+  "materials_gate": false,
+  "materials_manifest_sha256": "",
+  "restricted_reason": "",
+  "public_payload_sha256": "f09599c091fa7bce58541cc2b81f32cddfb22bd9d16ca45f87fea1877e871aa3"
 }

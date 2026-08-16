@@ -5,10 +5,16 @@
   "language": "matlab-octave",
   "source_repository": "https://github.com/IlyaKuprov/Spinach",
   "source_commit": "",
-  "source_license": "MIT",
+  "source_license": "BSD-3-Clause",
   "license_source": "LICENSE.md",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "af27bc600100b47a8f5e5bf4102267581618fe4720fbad521134ab3e0923f9d2"
+  "material_license": "",
+  "material_license_source": "",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "",
+  "restricted_reason": "",
+  "public_payload_sha256": "81ca3a70632c6b3b040290f2b8255faa9204ae0367a058f797528876ac29130f"
 }

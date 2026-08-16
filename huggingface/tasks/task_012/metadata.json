@@ -5,10 +5,16 @@
   "language": "python",
   "source_repository": "https://github.com/PlasmaControl/DESC",
   "source_commit": "ab1c5a33031a2e64581f5e663ef8e2f6203a5220",
-  "source_license": "MIT",
-  "license_source": "github-api:LICENSE@ab1c5a33031a2e64581f5e663ef8e2f6203a5220",
+  "source_license": "MIT AND Apache-2.0",
+  "license_source": "environment/repo/THIRD_PARTY_NOTICES.md",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "1b3d9c866f207e617fec2d02f7f907fb8825a73dddaf58c8e3ea8428efd36e36"
+  "material_license": "",
+  "material_license_source": "",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "",
+  "restricted_reason": "",
+  "public_payload_sha256": "ee45d11d7410ea0da196aa4ba17506185962393a8f93d2961a284fa97664cad4"
 }

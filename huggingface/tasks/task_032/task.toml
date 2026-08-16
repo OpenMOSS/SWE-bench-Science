@@ -3,7 +3,7 @@ artifacts = ["/logs/artifacts/model.patch"]
 
 [task]
 name = "openmoss/swe-bench-science-032"
-description = "Repair an inconsistent peptide energy after topology import"
+description = "Restore equivalent GROMACS nonbonded representations"
 authors = []
 keywords = ["scientific-computing", "software-engineering"]
 
@@ -17,7 +17,7 @@ network_mode = "no-network"
 timeout_sec = 5400.0
 
 [environment]
-docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-python-task-032:v0.1.0@sha256:1f1e710ff121fc590e1a1bcc0d6e35b6b20488b67b4ff2ea9e088c5ed5b3c617"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-python-task-032:v0.1.1@sha256:f7bbb41b0cb019c6785faf01ee02b71efef87ade2d96f78673157090b2b70c11"
 os = "linux"
 allow_internet = false
 cpus = 2
@@ -31,7 +31,7 @@ environment_mode = "separate"
 timeout_sec = 1800.0
 
 [verifier.environment]
-docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-python-task-032:v0.1.0@sha256:b33b42c56351b94f8e871921d9c51b3edba1f2317186ec51db8d0e7a49c1a0c4"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-python-task-032:v0.1.1@sha256:c75faed022ffcf7321fcfc415227da35e38287acd1304c3cdf6fa487f6b8c2dd"
 os = "linux"
 allow_internet = false
 cpus = 2

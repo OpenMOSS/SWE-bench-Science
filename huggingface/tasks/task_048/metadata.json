@@ -3,12 +3,18 @@
   "title": "Repair an inconsistent alloy equilibrium assessment",
   "domain": "computational-thermodynamics-calphad",
   "language": "python",
-  "source_repository": "",
-  "source_commit": "",
+  "source_repository": "https://github.com/pycalphad/pycalphad",
+  "source_commit": "50389503f126ea6f9e40947c215bd857bcfbd9de",
   "source_license": "MIT",
-  "license_source": "LICENSE.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "5a22842c3c77c8730dca22e3e922c35f6b0018b981a092d0ef6752cd92855917"
+  "material_license": "CC-BY-4.0; MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "9093b7c978d3f58fdfc199cb70741135938c393e8266a9cbe454f1b72a017d30",
+  "restricted_reason": "",
+  "public_payload_sha256": "976927397d08cf492ca124439053b1da678e6c7a261c4074ad6f7622069d194c"
 }

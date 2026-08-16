@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "041",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/sunpy/sunpy/tree/470d13491dd2c2a9440b3c657af33373ca8d47c1",
+      "license": "BSD-2-Clause",
+      "copyright": "SunPy developers and named third-party contributors",
+      "modified": false,
+      "third_party_exceptions": "Third-party notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/sunpy_project_paper.pdf and sunpy_project_paper_text.txt",
+      "kind": "article_and_text_conversion",
+      "source_url": "https://doi.org/10.3847/1538-4357/ab4f7a",
+      "license": "CC-BY-3.0",
+      "copyright": "The SunPy Community et al.",
+      "modified": true,
+      "third_party_exceptions": "No separately excluded material identified in the supplied paper.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/franz_harper_2017",
+      "kind": "author_webpage_mirror",
+      "source_url": "https://doi.org/10.1016/S0032-0633(01)00119-2",
+      "license": "LicenseRef-No-Redistribution-Grant-Found",
+      "copyright": "M. Fränz, D. Harper, publisher, and figure rightsholders",
+      "modified": true,
+      "third_party_exceptions": "The 495-file mirror has no explicit redistribution license.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

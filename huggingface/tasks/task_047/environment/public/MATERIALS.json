@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "047",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/scikit-rf/scikit-rf/tree/a6dae181dbcf76fc738fc7fbc03d7de0a6c22634",
+      "license": "BSD-3-Clause",
+      "copyright": "scikit-rf contributors; BSD notice retained in LICENSE.txt",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/marks_williams_1992_waveguide_circuit_theory",
+      "kind": "nist_article_pdf_markdown_and_images",
+      "source_url": "https://doi.org/10.6028/jres.097.024",
+      "license": "LicenseRef-NIST-US-Public-Domain-and-Worldwide-Reprint-Permission",
+      "copyright": "Roger B. Marks and Dylan F. Williams; National Institute of Standards and Technology",
+      "modified": true,
+      "third_party_exceptions": "NIST attribution, courtesy statement, conversion date, and non-endorsement notice retained.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

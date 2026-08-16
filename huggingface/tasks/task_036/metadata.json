@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/Parcels-code/Parcels",
   "source_commit": "439ea290f9a75c3cbd66d79333fed475f92aeb00",
   "source_license": "MIT",
-  "license_source": "LICENSE.md",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "29dadb61548cf625beadcef5620a0e20a03d97d48b09ac7ad259548e4e2aaf1f"
+  "material_license": "CC-BY-4.0; MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "4755047fd73d5c730562078d025169f820967fe96b30cd369100c9c74ead3bf8",
+  "restricted_reason": "",
+  "public_payload_sha256": "269b06c6266cd7ec7845139ea025286343c4f9fbe7b3116be37a204cdacad1c4"
 }

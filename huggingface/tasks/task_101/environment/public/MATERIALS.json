@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "101",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The required Chen2020 parameter CSVs are derived from a CC-BY-NC-ND article; explicit restricted-material opt-in is required.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/pybamm-team/PyBaMM/tree/1e9fbcea25b78a0a633face62b077dae1f92bf62",
+      "license": "BSD-3-Clause",
+      "copyright": "PyBaMM contributors; LICENSE.txt retained",
+      "modified": true,
+      "third_party_exceptions": "Unrelated parameter sets are removed.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/repo/packages/pybamm/src/pybamm/input/parameters/lithium_ion/data/*Chen2020.csv",
+      "kind": "paper_derived_parameter_data",
+      "source_url": "https://doi.org/10.1149/1945-7111/ab9050",
+      "license": "CC-BY-NC-ND-4.0",
+      "copyright": "Chen et al.; ECS",
+      "modified": true,
+      "third_party_exceptions": "Non-commercial, no-derivatives restrictions are recorded in PARAMETER_DATA_NOTICE.md.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "associated paper",
+      "kind": "citation_only",
+      "source_url": "https://doi.org/10.5334/jors.309",
+      "license": "CC-BY-4.0",
+      "copyright": "PyBaMM article authors",
+      "modified": false,
+      "third_party_exceptions": "No article or supplement is bundled.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

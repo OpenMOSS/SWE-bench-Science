@@ -1,0 +1,33 @@
+{
+  "task_id": "045",
+  "title": "Repair inconsistent finite-volume operations on a connected multi-face grid",
+  "domain": "computational-oceanography-finite-volume-grids",
+  "language": "python",
+  "difficulty": "easy",
+  "source_repository": "https://github.com/xgcm/xgcm",
+  "source_commit": "3831b46accbff35f06e4ed3831600d71d5d8da18",
+  "associated_manuscript": {
+    "title": "Xgcm: A Python Package for Analyzing Data from General Circulation Models",
+    "status": "withdrawn JOSS submission; not a published JOSS article",
+    "review_url": "https://github.com/openjournals/joss-reviews/issues/2631",
+    "withdrawn_on": "2020-10-06",
+    "license": "MIT (xgcm repository)"
+  },
+  "agent_entry_files": [
+    ".gitignore",
+    "metadata.json",
+    "task.json",
+    "instruction.md",
+    "problem_desc.txt",
+    "paper.md",
+    "paper_assets",
+    "reproduction.md",
+    "reproduce.py",
+    "fixtures",
+    "workflow",
+    "source"
+  ],
+  "status": "runnable_reproduction",
+  "public_test_entry": "reproduce.py",
+  "public_test_kind": "command"
+}

@@ -3,12 +3,18 @@
   "title": "Repair a public symbolic workflow",
   "domain": "computer-algebra",
   "language": "python",
-  "source_repository": "",
-  "source_commit": "",
+  "source_repository": "https://github.com/sympy/sympy",
+  "source_commit": "afe8935530a61ae5bd7a90400fa60c0d2c8c18a4",
   "source_license": "BSD-3-Clause",
   "license_source": "LICENSE",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "9938aee4065bf2710315908c516fc18766d810d19943994ca58551f7b178794a"
+  "material_license": "",
+  "material_license_source": "",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "",
+  "restricted_reason": "",
+  "public_payload_sha256": "7289cadcad260050c6f6b06bef9338b78fd2fcf9820b537ebcd8cbe7508e76e2"
 }

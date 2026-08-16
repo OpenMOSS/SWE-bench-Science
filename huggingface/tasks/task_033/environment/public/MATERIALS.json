@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "033",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/pyscf/pyscf/tree/802cd37e9dc6abb52f30d84bb422b6ee15493fc9",
+      "license": "Apache-2.0",
+      "copyright": "PySCF developers; license retained in UPSTREAM_LICENSE.txt",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/upstream_*_example.py",
+      "kind": "software_examples",
+      "source_url": "https://github.com/pyscf/pyscf/tree/802cd37e9dc6abb52f30d84bb422b6ee15493fc9/examples",
+      "license": "Apache-2.0",
+      "copyright": "PySCF developers",
+      "modified": false,
+      "third_party_exceptions": "None identified.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/*_article.html",
+      "kind": "ar5iv_article_conversions",
+      "source_url": "https://arxiv.org/abs/1701.08223; https://arxiv.org/abs/2002.12531; https://arxiv.org/abs/1707.07114",
+      "license": "LicenseRef-arXiv-Nonexclusive-Distribution",
+      "copyright": "Article authors and third-party figure rightsholders",
+      "modified": true,
+      "third_party_exceptions": "AIP/ACS figures are not covered by an author redistribution grant.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

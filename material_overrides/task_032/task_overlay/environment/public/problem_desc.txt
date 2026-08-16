@@ -1,0 +1,5 @@
+Repair the historical OpenMM GROMACS importer so mathematically equivalent
+nonbonded parameter representations produce the same physical system. The
+supplied inputs are small, synthetic, and complete. The repair must generalize
+to other supported combination rules, labels, parameter values, declaration
+orders, and explicit pair terms without changing the inputs.

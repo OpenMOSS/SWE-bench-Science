@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "042",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/sunpy/sunpy/tree/c961a1507a83b9dab24ccce12ab92a53b30359d7",
+      "license": "BSD-2-Clause",
+      "copyright": "SunPy developers and named third-party contributors",
+      "modified": false,
+      "third_party_exceptions": "Third-party notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/sunpy_project_paper.pdf and sunpy_project_paper_text.txt",
+      "kind": "article_and_text_conversion",
+      "source_url": "https://doi.org/10.3847/1538-4357/ab4f7a",
+      "license": "CC-BY-3.0",
+      "copyright": "The SunPy Community et al.",
+      "modified": true,
+      "third_party_exceptions": "The text file is a local conversion.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/sunpy_*_guide.rst",
+      "kind": "documentation_copies",
+      "source_url": "https://docs.sunpy.org/en/stable/",
+      "license": "BSD-2-Clause",
+      "copyright": "SunPy developers",
+      "modified": false,
+      "third_party_exceptions": "None identified.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/astropy_*_v7.1.0.rst",
+      "kind": "documentation_copies",
+      "source_url": "https://github.com/astropy/astropy/tree/v7.1.0/docs",
+      "license": "BSD-3-Clause",
+      "copyright": "Astropy developers",
+      "modified": false,
+      "third_party_exceptions": "Astropy license notice is recorded here and in MATERIALS.json.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

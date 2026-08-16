@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "046",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/StingraySoftware/stingray/tree/79b8f9bb9d122bd0176bb37f48f0fd4926eb9afb",
+      "license": "MIT",
+      "copyright": "Stingray developers; MIT notice retained in LICENSE",
+      "modified": false,
+      "third_party_exceptions": "The JOSS article retained in the repository is separately CC-BY-4.0.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_method_summary",
+      "source_url": "https://doi.org/10.1086/310430; https://doi.org/10.1093/mnras/stz2409",
+      "modified": true,
+      "third_party_exceptions": "The cited Vaughan-Nowak and Ingram articles are not copied.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    },
+    {
+      "path": "environment/public/paper_assets/stingray2_joss_2024/joss.07389.pdf and environment/repo/joss",
+      "kind": "article_copy_and_submission",
+      "source_url": "https://doi.org/10.21105/joss.07389",
+      "license": "CC-BY-4.0",
+      "copyright": "Copyright 2024 the paper authors",
+      "modified": false,
+      "third_party_exceptions": "None identified.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/vaughan_nowak_1997 and environment/public/paper_assets/ingram_2019",
+      "kind": "article_packages",
+      "source_url": "https://arxiv.org/abs/astro-ph/9610257; https://arxiv.org/abs/1909.01385",
+      "license": "LicenseRef-arXiv-Nonexclusive-Distribution",
+      "copyright": "Article authors and publishers",
+      "modified": true,
+      "third_party_exceptions": "arXiv distribution terms do not grant this benchmark redistribution rights.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

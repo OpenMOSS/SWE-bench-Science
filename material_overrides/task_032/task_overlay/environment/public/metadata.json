@@ -1,0 +1,32 @@
+{
+  "task_id": "032",
+  "title": "Restore equivalent GROMACS nonbonded representations",
+  "domain": "molecular-simulation-force-field-semantics",
+  "language": "python",
+  "difficulty": "hard",
+  "source_repository": "https://github.com/openmm/openmm",
+  "source_commit": "d2f76949b3ccac1139f0a0a0d1459aa47e2f0a98",
+  "associated_paper": {
+    "title": "OpenMM 7: Rapid development of high performance algorithms for molecular dynamics",
+    "doi": "10.1371/journal.pcbi.1005659",
+    "journal": "PLOS Computational Biology",
+    "year": 2017
+  },
+  "agent_entry_files": [
+    ".gitignore",
+    "metadata.json",
+    "task.json",
+    "instruction.md",
+    "problem_desc.txt",
+    "paper.md",
+    "paper_assets",
+    "reproduction.md",
+    "reproduce.py",
+    "fixtures",
+    "workflow",
+    "source"
+  ],
+  "status": "runnable_reproduction",
+  "public_test_entry": "reproduce.py",
+  "public_test_kind": "command"
+}

@@ -10,5 +10,11 @@
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
+  "material_license": "",
+  "material_license_source": "",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "",
+  "restricted_reason": "",
   "public_payload_sha256": "0b14a30b4b7ceb203ee7c08d2196b2c8b6a4efa48f85b12627a87a49f5f8b83d"
 }

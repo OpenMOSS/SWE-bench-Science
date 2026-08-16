@@ -1,0 +1,45 @@
+{
+  "task_id": "054",
+  "title": "Repair an inconsistent tandem-mass spectral similarity workflow",
+  "domain": "mass-spectrometry-spectral-similarity",
+  "language": "python",
+  "difficulty": "hard",
+  "source_repository": "https://github.com/matchms/matchms",
+  "source_commit": "9f27ba89d8c485e6a2fa2db4756e3fe3aec05151",
+  "associated_paper": {
+    "title": "matchms - processing and similarity evaluation of mass spectrometry data",
+    "doi": "10.21105/joss.02411",
+    "journal": "Journal of Open Source Software",
+    "year": 2020
+  },
+  "method_references": [
+    {
+      "title": "Spectral entropy outperforms MS/MS dot product similarity for small-molecule compound identification",
+      "doi": "10.1038/s41592-021-01331-z",
+      "journal": "Nature Methods",
+      "year": 2021
+    },
+    {
+      "title": "Flash entropy search to query all mass spectral libraries in real time",
+      "doi": "10.1038/s41592-023-02012-9",
+      "journal": "Nature Methods",
+      "year": 2023
+    }
+  ],
+  "agent_entry_files": [
+    ".gitignore",
+    "metadata.json",
+    "task.json",
+    "instruction.md",
+    "problem_desc.txt",
+    "paper.md",
+    "paper_assets",
+    "fixtures",
+    "reproduction.md",
+    "reproduce.py",
+    "source"
+  ],
+  "public_test_entry": "reproduce.py",
+  "public_test_kind": "command",
+  "status": "runnable_reproduction"
+}

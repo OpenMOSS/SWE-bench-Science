@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "092",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/chemprop/chemprop/tree/1f367d55d1bac14dd6b9e0cd5746574fcfab9a59",
+      "license": "MIT",
+      "copyright": "Chemprop contributors; LICENSE.txt retained",
+      "modified": true,
+      "third_party_exceptions": "The unrelated JSME/web bundle and its unresolved transitive notices are excluded.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures",
+      "kind": "benchmark_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "Synthetic reaction observations.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "associated paper",
+      "kind": "citation_only",
+      "source_url": "https://doi.org/10.1021/acs.jcim.9b00237; https://doi.org/10.1021/acs.jcim.1c00975",
+      "license": "CC-BY-NC-ND-4.0 and CC-BY-4.0",
+      "copyright": "Article authors and publishers",
+      "modified": false,
+      "third_party_exceptions": "No article, figure, or supplement is bundled.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

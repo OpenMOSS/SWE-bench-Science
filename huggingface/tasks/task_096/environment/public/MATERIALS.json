@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "096",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The retained CLIMADA-derived source is GPL-3.0; explicit restricted-license opt-in is required.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "reduced_source_snapshot",
+      "source_url": "https://github.com/CLIMADA-project/climada_python/tree/104dfdb64ed00fce6c49a5d67be371f4fca016dd",
+      "license": "GPL-3.0",
+      "copyright": "CLIMADA contributors; complete LICENSE and source notice retained",
+      "modified": true,
+      "third_party_exceptions": "GPL terms apply to the retained derived files.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "associated paper",
+      "kind": "citation_only",
+      "source_url": "https://doi.org/10.5194/gmd-12-3085-2019",
+      "license": "CC-BY-4.0",
+      "copyright": "CLIMADA article authors",
+      "modified": false,
+      "third_party_exceptions": "No article, table, figure, or supplement is bundled.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

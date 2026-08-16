@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "104",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "reduced_source_snapshot",
+      "source_url": "https://github.com/pybamm-team/PyBaMM/tree/4cf09f36bb4afb42c661e8765e14b4527581eff7",
+      "license": "BSD-3-Clause",
+      "copyright": "PyBaMM contributors; LICENSE.txt retained",
+      "modified": true,
+      "third_party_exceptions": "Paper-derived curves, drive cycles, COMSOL results, and parameter libraries are excluded.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets",
+      "kind": "benchmark_authored_notes",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "No article PDF, figure, or supplementary data is bundled.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

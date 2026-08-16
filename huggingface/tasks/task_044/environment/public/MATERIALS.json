@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "044",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/pybamm-team/PyBaMM/tree/a42d7a92dd9a2c63240c8ccb6f240e5c3c42de46",
+      "license": "BSD-3-Clause",
+      "copyright": "The PyBaMM team",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_scientific_summary",
+      "source_url": "https://doi.org/10.5334/jors.309; https://doi.org/10.1149/1945-7111/ab9050",
+      "license": "MIT",
+      "copyright": "OpenMOSS and SWE-bench Science contributors",
+      "modified": false,
+      "third_party_exceptions": "Only citations and benchmark-authored summaries are included; the CC BY-NC-ND Chen article is not copied or adapted.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

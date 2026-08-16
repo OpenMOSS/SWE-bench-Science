@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1",
+  "task_id": "task_032",
+  "display_title": "Restore equivalent GROMACS nonbonded representations",
+  "language": "python",
+  "instruction": "instruction.md",
+  "artifacts": ["artifacts/model.patch"],
+  "visible_files": [
+    ".gitignore",
+    "metadata.json",
+    "task.json",
+    "instruction.md",
+    "problem_desc.txt",
+    "paper.md",
+    "paper_assets",
+    "reproduction.md",
+    "reproduce.py",
+    "fixtures",
+    "workflow",
+    "source"
+  ],
+  "agent": {"timeout_sec": 7200},
+  "environment": {
+    "os": "linux",
+    "cpus": 2,
+    "memory_mb": 8192,
+    "storage_mb": 20480,
+    "allow_internet": false,
+    "runtime": {
+      "kind": "python",
+      "base_image": "python:3.11-slim",
+      "python_packages": ["numpy==1.26.4", "openmm==8.5.2", "pytest==8.3.2"],
+      "system_packages": [],
+      "environment_variables": {}
+    }
+  },
+  "verifier": {"environment_mode": "separate", "timeout_sec": 1800}
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "098",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The retained Satpy-derived source is GPL-3.0-or-later; explicit restricted-license opt-in is required.",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "reduced_source_snapshot",
+      "source_url": "https://github.com/pytroll/satpy/tree/0ef189634030bda38bd069de30b60f8769995050",
+      "license": "GPL-3.0-or-later",
+      "copyright": "Satpy contributors; complete LICENSE and source notice retained",
+      "modified": true,
+      "third_party_exceptions": "Task-local adapters are separated from GPL-derived core files.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/public/fixtures/public_abi_subset.nc",
+      "kind": "synthetic_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "No external ABI product is included.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

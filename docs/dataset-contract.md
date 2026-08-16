@@ -14,16 +14,17 @@
 huggingface/data/tasks.csv    119 rows, one row per release task
 ```
 
-`default`（100 题）和 `all`（119 题）是下载 selection，不复制成多份数据表。
+`default`（97 题）和 `all`（119 题）是下载 selection，不复制成多份数据表。
 生成两个固定清单：
 
 ```text
-selections/default-100.json
+selections/default-97.json
 selections/all-119.json
 ```
 
 运行工具默认读取前者；`--allow-restricted-licenses` 才允许包含
-GPL/LGPL/AGPL-family 题和 academic non-commercial 题 `019`。
+GPL/LGPL/AGPL-family 题、源码为 academic non-commercial 的 `019`，以及附属材料
+为 academic non-commercial 的 `026`。
 
 由于 Pier 当前不能直接下载 HF registry dataset，HF snapshot 携带一个最小
 materializer。用户先下载表格、selection 和 thin task bundle，再由它生成本地
@@ -43,7 +44,12 @@ materializer。用户先下载表格、selection 和 thin task bundle，再由�
 | `source_license` | string | 是 | SPDX 或经审阅的 family label |
 | `gpl_family` | bool | 是 | 是否属于 GPL/LGPL/AGPL-family |
 | `restricted_license` | bool | 是 | 是否需要 `--allow-restricted-licenses` |
-| `license_gate` | string | 是 | `none`、`gpl-family` 或 `noncommercial` |
+| `license_gate` | string | 是 | `none`、`gpl-family`、`noncommercial` 或 `restricted-materials` |
+| `material_license` | string | 是 | 已打包材料的许可摘要，与源码许可分开 |
+| `material_license_source` | string | 是 | 任务内材料清单路径 |
+| `material_restricted` | bool | 是 | 材料是否单独要求显式 opt-in |
+| `materials_manifest_sha256` | string | 否 | 规范化 `MATERIALS.json` 的 SHA-256 |
+| `restricted_reason` | string | 否 | 进入受限选择的可审计原因 |
 | `environment_image` | string | 是 | Docker Hub 引用，固定 digest |
 | `verifier_image` | string | 是 | Docker Hub 引用，固定 digest |
 | `task_path` | string | 是 | HF snapshot 中的本地 Pier task 目录 |
@@ -73,6 +79,11 @@ license_source
 gpl_family
 restricted_license
 license_gate
+material_license
+material_license_source
+material_restricted
+materials_manifest_sha256
+restricted_reason
 agent_timeout_sec
 verifier_timeout_sec
 cpus
@@ -82,6 +93,17 @@ storage_mb
 
 镜像 tag 便于人读，digest 才是运行锁。发布状态下两者都必须存在且能通过
 registry manifest inspect 解析到 `linux/amd64`。
+
+`source_license` 只描述源码快照，不能推定论文、网页镜像、第三方图片、notebook
+输出或 fixture 的权利。对这些材料使用逐任务 `materials[]` 清单，至少记录
+`path`、`source_url`、`license`、`copyright`、`modified`、
+`third_party_exceptions` 和 `distribution_decision`。允许的决定为 `bundled`、
+`restricted` 和 `excluded`；`excluded` 材料不得存在于发布镜像。
+
+只补充 notice 的任务可以在既有镜像上追加审计层。任何为消除材料而执行删除、
+替换、裁剪或清空的任务必须从清理后的 context 重新构建 environment 和
+verifier；不得使用派生镜像中的 `rm`/whiteout 作为删除手段，因为旧层仍可从
+镜像中提取。
 
 ## 4. Evaluation results 表
 
@@ -116,7 +138,7 @@ card 必须由 119 行 canonical data 生成以下表格，不能手填猜测数
 - amd64 覆盖率；
 - verifier canary 通过/基础设施失败数。
 
-已冻结的全局数字为：119 total、100 default、19 restricted-license、18
+当前发布的全局数字为：119 total、97 default、22 restricted-license、18
 GPL-family。其余统计由发布脚本从 canonical rows 自动生成。当前 release 不含
 `UNKNOWN` source license；后续导入若无法确认许可证，必须保留显式缺失值并在
 发布前审阅，不能填零或猜测。
@@ -146,13 +168,15 @@ HF snapshot、release Git 和两类 Docker image 都要扫描：
 
 ## 8. Restricted license selection
 
-19 个 restricted-license release id：
+22 个 restricted-license release id：
 
 ```text
-003 019 020 021 023 032 057 066 074 075 082 083 084 085 096 097 098 100 118
+003 019 020 021 023 026 032 057 066 074 075 082 083 084 085 096 097 098 100 101 102 118
 ```
 
-其中 `019` 为 academic non-commercial license；其余 18 个为 GPL/LGPL/AGPL-family。
-`default-100.json` 必须排除这些题，`all-119.json` 必须恰好包含 119 个唯一 id。
+其中 `019` 为 academic non-commercial source license，`026` 含 academic
+non-commercial auxiliary material，`101` 和 `102` 含受限第三方材料；其余 18
+个为 GPL/LGPL/AGPL-family。`default-97.json` 必须排除这些题，`all-119.json`
+必须恰好包含 119 个唯一 id。
 `--allow-restricted-licenses` 只切换 selection；不修改任务内容，不绕过许可证
 notice/source 义务，也不改变 Pier 行为。

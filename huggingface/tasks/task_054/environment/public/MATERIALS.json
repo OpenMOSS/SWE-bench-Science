@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "054",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/matchms/matchms/tree/9f27ba89d8c485e6a2fa2db4756e3fe3aec05151",
+      "license": "Apache-2.0",
+      "copyright": "matchms contributors; Apache-2.0 notice retained in LICENSE",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md lines 1-157 and environment/public/paper_assets",
+      "kind": "joss_article_submission_and_figures",
+      "source_url": "https://doi.org/10.21105/joss.02411",
+      "license": "CC-BY-4.0",
+      "copyright": "Copyright 2020 the paper authors",
+      "modified": true,
+      "third_party_exceptions": "Attribution block added; the separately headed entropy overview is benchmark-authored.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md entropy-method overview",
+      "kind": "benchmark_authored_summary_and_citations",
+      "source_url": "https://doi.org/10.1038/s41592-021-01331-z; https://doi.org/10.1038/s41592-023-02012-9",
+      "modified": true,
+      "third_party_exceptions": "Nature Methods articles are cited but not copied.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

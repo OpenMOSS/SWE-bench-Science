@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "100",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": true,
+  "restricted_reason": "The upstream AuToGraFS snapshot has unresolved LGPL-2.1 versus MIT declarations; only the retained code and independently generated synthetic data are distributed under explicit restricted opt-in.",
+  "materials": [
+    {
+      "path": "environment/repo/src/autografs",
+      "kind": "reduced_source_snapshot",
+      "source_url": "https://github.com/DCoupry/autografs/tree/c2f22341f2b1eb2f619b76534cf4abe2e5e6b3a3",
+      "license": "LGPL-2.1-family and MIT (upstream conflict)",
+      "copyright": "AuToGraFS contributors; conflicting upstream license files retained",
+      "modified": true,
+      "third_party_exceptions": "The task is restricted until the upstream conflict is resolved.",
+      "distribution_decision": "restricted"
+    },
+    {
+      "path": "environment/repo/src/autografs/data/topologies.json.gz and defaults.xyz",
+      "kind": "benchmark_authored_synthetic_library",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "No RCSR, IZA, PORMAKE, ToBaCCo, CoRE MOF, or article-derived data.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/repo/src/autografs/data/uff4mof.py",
+      "kind": "benchmark_authored_geometric_constants",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "Independent approximate values; not the UFF4MOF table.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

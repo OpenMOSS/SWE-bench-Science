@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "043",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/PMEAL/porespy/tree/f2360a52bc77ec917aa07ce0cf6128dc7687ea64",
+      "license": "MIT",
+      "copyright": "The PMEAL Group and PoreSpy contributors",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/porespy_joss_article.pdf and environment/public/paper.md",
+      "kind": "article_and_text_transcription",
+      "source_url": "https://doi.org/10.21105/joss.01296",
+      "license": "CC-BY-4.0",
+      "copyright": "Jeff T. Gostick, Zohaib A. Khan, Thomas G. Tranter, Matthew D. R. Kok, Mehrez Agnaou, Mohammadamin Sadeghi, and Rhodri Jervis",
+      "modified": true,
+      "third_party_exceptions": "The Markdown file is a local searchable transcription; the PDF is authoritative.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures/sample_volume.npz",
+      "kind": "cropped_scientific_fixture",
+      "source_url": "https://github.com/PMEAL/porespy/blob/f2360a52bc77ec917aa07ce0cf6128dc7687ea64/test/fixtures/bentheimer.npz",
+      "license": "MIT",
+      "copyright": "PoreSpy contributors; benchmark crop",
+      "modified": true,
+      "third_party_exceptions": "A fixed crop of the upstream Bentheimer fixture; voxel labels are unchanged.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

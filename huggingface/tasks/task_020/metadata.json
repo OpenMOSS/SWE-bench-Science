@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/deepmodeling/deepmd-kit",
   "source_commit": "44f44acb2b9a56f55609ec7f0594d9b6fa01cb92",
   "source_license": "LGPL-3.0-or-later",
-  "license_source": "source/LICENSE",
+  "license_source": "environment/repo/LICENSE and SPDX headers",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
-  "public_payload_sha256": "1eb7c271d3ba3c73397b1816eb9611b768d65b17e5f5fa1d083fecbc6472ea2e"
+  "material_license": "LGPL-3.0-or-later",
+  "material_license_source": "environment/repo/LICENSE",
+  "material_restricted": true,
+  "materials_gate": true,
+  "materials_manifest_sha256": "",
+  "restricted_reason": "The task source is an LGPL-3.0-or-later DeePMD-kit excerpt; explicit restricted-license opt-in is required.",
+  "public_payload_sha256": "5adc95172533092b7337414f234e4502f3c394ea5dc46e318d8066afb4824212"
 }

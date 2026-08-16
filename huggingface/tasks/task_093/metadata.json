@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/Project-MONAI/MONAI",
   "source_commit": "5a644e4edcc37e5c963e52fda6fab4c85b3ff02e",
   "source_license": "Apache-2.0",
-  "license_source": "github-api:LICENSE@5a644e4edcc37e5c963e52fda6fab4c85b3ff02e",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "0756b99aa4bc899129a72159146d991cddcd1544c136b1d3e76eb47f583c1cf3"
+  "material_license": "Apache-2.0; MIT",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "b316df2cbcb2bdd50c79216740fcd57b5be0a5aa84ebf5243109d2b3a39e374d",
+  "restricted_reason": "",
+  "public_payload_sha256": "fb3d3b3aa1f7da2fc46dd0bf88307fa7ed7ba99e349a4a995f2ffa91d11b340f"
 }

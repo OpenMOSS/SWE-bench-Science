@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "050",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/jcmgray/quimb/tree/79594e405ac72da908cdd7a1058911afc256c483",
+      "license": "Apache-2.0",
+      "copyright": "quimb contributors; Apache-2.0 notice retained in LICENSE",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/repo/paper.md, environment/repo/paper.bib, and environment/public/paper_assets/fig-TN-graph.png",
+      "kind": "joss_article_submission",
+      "source_url": "https://doi.org/10.21105/joss.00819",
+      "license": "CC-BY-4.0",
+      "copyright": "Copyright 2018 Johnnie Gray",
+      "modified": false,
+      "third_party_exceptions": "Attribution and source commit are recorded in environment/public/paper.md.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

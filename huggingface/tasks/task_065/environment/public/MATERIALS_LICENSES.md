@@ -20,7 +20,7 @@ Public redistribution requires explicit permission; third-party exceptions are e
 - Distribution decision: `bundled`
 - License: ``
 - Source: <https://doi.org/10.1071/AS07022>
-- Copyright:
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: The publisher article is cited but not copied.
 
@@ -30,6 +30,6 @@ Public redistribution requires explicit permission; third-party exceptions are e
 - Distribution decision: `bundled`
 - License: ``
 - Source: <https://github.com/OpenMOSS/SWE-bench-Science>
-- Copyright:
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: Synthetic workload specification is generated for this benchmark.

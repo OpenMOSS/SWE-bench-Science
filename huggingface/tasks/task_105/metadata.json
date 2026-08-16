@@ -3,12 +3,18 @@
   "title": "Restore a stereo-preserving tautomer workflow",
   "domain": "drug-discovery-cheminformatics",
   "language": "python-cpp",
-  "source_repository": "",
-  "source_commit": "",
+  "source_repository": "https://github.com/rdkit/rdkit",
+  "source_commit": "313bed48f942a3663e2dc496f4e930dacbbcf8aa",
   "source_license": "BSD-3-Clause",
-  "license_source": "license.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "d496a6d39aae48fa19d84c6a4abeb31ffdcb47c89055e7f92e5cd9cf6309608c"
+  "material_license": "BSD-3-Clause; BSL-1.0; No article redistribution grant asserted",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "9805568c294fa9dfcb24b4787be10abb1f5590bdd1e8bacf737636b808625c41",
+  "restricted_reason": "",
+  "public_payload_sha256": "c29070a194706b7874d225690e69ce2f6428e8c2397f352186c5817304df1424"
 }

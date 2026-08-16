@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/SteveDoyle2/pyNastran",
   "source_commit": "bdff2bb616847a058960c56328b68e36ab3764e3",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.md",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "637633ba5229cbf0bf969d215196618fbee0a970d14266a1c9942dbef3eabc86"
+  "material_license": "BSD-3-Clause; US-Government-Public-Use",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "e6d9d41ed7a153e4c817aede1aa102cf9e553da0c79f9d6cff217afaf596de52",
+  "restricted_reason": "",
+  "public_payload_sha256": "3abc1d145b5ab09ad2e2f9c5f39066e07c7719305b15ddeff5e742c6e4095d59"
 }

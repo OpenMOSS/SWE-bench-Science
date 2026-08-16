@@ -5,10 +5,16 @@
   "language": "matlab-octave",
   "source_repository": "https://github.com/schorschinho/osprey",
   "source_commit": "24e89ec3ac278cc642ce06cbbe30321155435e0b",
-  "source_license": "MIT",
+  "source_license": "BSD-3-Clause",
   "license_source": "LICENSE.md",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "f18821a41645c7f3e74d9406a0194df1526c47fa3f2538177fe027e5685252e3"
+  "material_license": "",
+  "material_license_source": "",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "",
+  "restricted_reason": "",
+  "public_payload_sha256": "731a27777d535a6a648aba4d5009e647cc2e88a30206e29a424ba9403c07b21b"
 }

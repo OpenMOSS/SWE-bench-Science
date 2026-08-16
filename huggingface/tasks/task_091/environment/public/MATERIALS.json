@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "091",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/materialsproject/pymatgen-core/tree/c8cfee71f3ce5d92c5b5f6ca3d363f8f3a9f4495",
+      "license": "MIT",
+      "copyright": "pymatgen-core contributors; root LICENSE retained",
+      "modified": true,
+      "third_party_exceptions": "The GPL-derived symmetry YAML and ISO-MAG database are excluded; the retained cube test tree has its own Materialyze.AI MIT license.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/repo/test-files/electronic_structure/boltztrap/fermi/boltztrap_BZ.cube",
+      "kind": "upstream_test_fixture",
+      "source_url": "https://github.com/materialsproject/pymatgen-core/tree/c8cfee71f3ce5d92c5b5f6ca3d363f8f3a9f4495/test-files",
+      "license": "MIT",
+      "copyright": "Materialyze.AI",
+      "modified": false,
+      "third_party_exceptions": "The separate test-files LICENSE is retained.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/fixtures",
+      "kind": "benchmark_fixture",
+      "source_url": "https://github.com/OpenMOSS/SWE-bench-Science",
+      "license": "MIT",
+      "copyright": "OpenMOSS SWE-bench Science contributors",
+      "modified": true,
+      "third_party_exceptions": "Deterministic public input.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

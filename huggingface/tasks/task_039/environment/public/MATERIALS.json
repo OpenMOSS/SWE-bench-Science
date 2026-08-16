@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "039",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/landlab/landlab/tree/546bc11054cff5e12808c7122b3e8b38f1ef555f",
+      "license": "MIT",
+      "copyright": "Landlab contributors",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/network_sediment_transporter_joss.pdf",
+      "kind": "article_copy",
+      "source_url": "https://doi.org/10.21105/joss.02341",
+      "license": "CC-BY-4.0",
+      "copyright": "Allison M. Pfeiffer, Katherine R. Barnhart, Jon A. Czuba, and Eric W. H. Hutton",
+      "modified": false,
+      "third_party_exceptions": "No excluded third-party material identified.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/landlab_v2.pdf",
+      "kind": "article_copy",
+      "source_url": "https://doi.org/10.5194/esurf-8-379-2020",
+      "license": "CC-BY-4.0-WITH-EXCLUDED-FIGURE",
+      "copyright": "Article authors and separate Figure 1(d) rightsholder",
+      "modified": false,
+      "third_party_exceptions": "Figure 1(d) is expressly excluded from the article CC BY license and was used with RightsLink permission that cannot be sublicensed.",
+      "distribution_decision": "excluded"
+    }
+  ]
+}

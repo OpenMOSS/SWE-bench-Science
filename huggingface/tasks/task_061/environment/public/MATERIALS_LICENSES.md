@@ -40,6 +40,6 @@ Public redistribution requires explicit permission; third-party exceptions are e
 - Distribution decision: `bundled`
 - License: ``
 - Source: <https://github.com/OpenMOSS/SWE-bench-Science>
-- Copyright:
+- Copyright: 
 - Modified or converted: `yes`
 - Third-party exceptions: FITS inputs are deterministic benchmark-authored material.

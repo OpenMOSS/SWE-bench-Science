@@ -6,9 +6,15 @@
   "source_repository": "https://github.com/spglib/spglib",
   "source_commit": "",
   "source_license": "BSD-3-Clause",
-  "license_source": "COPYING",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
-  "public_payload_sha256": "74958da0acd4cffeaf90164cd4b44220fdd35e8c87441cd262c467a7c377f585"
+  "material_license": "BSD-3-Clause; CC-BY-4.0; CC0-1.0",
+  "material_license_source": "environment/public/MATERIALS.json",
+  "material_restricted": false,
+  "materials_gate": false,
+  "materials_manifest_sha256": "cde0e5d6b19a6be1907d83aceadce31d5eabdb8386ce8b7fbfaabc08f8b0ebf2",
+  "restricted_reason": "",
+  "public_payload_sha256": "d770bd89cde0d7ebe7ef628d9f4c5f28fe4267abef25159f14379e03a786ce28"
 }

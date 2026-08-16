@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "058",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/openmc-dev/openmc/tree/97e04c464a279500bc740a1151fef5c629796e89",
+      "license": "MIT",
+      "copyright": "OpenMC contributors; MIT notice retained in LICENSE",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_summary_and_citation",
+      "source_url": "https://doi.org/10.1016/j.anucene.2014.07.048",
+      "modified": true,
+      "third_party_exceptions": "The cited Elsevier article is not copied.",
+      "distribution_decision": "bundled",
+      "license": "",
+      "copyright": ""
+    }
+  ]
+}

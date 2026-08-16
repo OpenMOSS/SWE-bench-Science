@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "task_id": "035",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/scipy/scipy/tree/c4e7f1146556f4b038bfbfc0912ac3843e844c55",
+      "license": "BSD-3-Clause",
+      "copyright": "SciPy developers",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/odepack_method_report.pdf and odepack_method_report.txt",
+      "kind": "government_report_and_text_conversion",
+      "source_url": "https://ntrs.nasa.gov/citations/19940030799",
+      "license": "LicenseRef-US-Government-Publication",
+      "copyright": "NASA report RP-1327 / UCRL-ID-113855",
+      "modified": true,
+      "third_party_exceptions": "No separately credited third-party content identified.",
+      "distribution_decision": "bundled",
+      "notes": "The text file is a local extraction from the archived report."
+    },
+    {
+      "path": "environment/public/paper_assets/solve_ivp_manual.html and lsoda_manual.html",
+      "kind": "documentation_copies",
+      "source_url": "https://docs.scipy.org/doc/scipy-1.10.1/",
+      "license": "BSD-3-Clause",
+      "copyright": "SciPy developers",
+      "modified": true,
+      "third_party_exceptions": "None identified.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper_assets/upstream_robertson_example.py and upstream_robertson_driver.py",
+      "kind": "software_examples",
+      "source_url": "https://github.com/pysb/pysb/tree/14e2ed73d45dc6158033291866138e70111bec1d/pysb/examples",
+      "license": "BSD-2-Clause",
+      "copyright": "Copyright 2008 PySB Developers",
+      "modified": false,
+      "third_party_exceptions": "None identified.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}

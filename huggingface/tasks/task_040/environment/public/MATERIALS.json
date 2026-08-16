@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "040",
+  "reviewed_on": "2026-08-16",
+  "review_standard": "Public redistribution requires explicit permission; third-party exceptions are evaluated separately.",
+  "requires_restricted_gate": false,
+  "restricted_reason": "",
+  "materials": [
+    {
+      "path": "environment/repo",
+      "kind": "source_snapshot",
+      "source_url": "https://github.com/simpeg/simpeg/tree/3cc6605c54b0f6062c1a139ece2ecf69cddc829",
+      "license": "MIT",
+      "copyright": "SimPEG contributors",
+      "modified": false,
+      "third_party_exceptions": "Notices retained with source.",
+      "distribution_decision": "bundled"
+    },
+    {
+      "path": "environment/public/paper.md",
+      "kind": "benchmark_authored_scientific_summary",
+      "source_url": "https://doi.org/10.1016/j.cageo.2015.09.015; https://doi.org/10.1016/j.cageo.2017.06.018",
+      "license": "MIT",
+      "copyright": "OpenMOSS and SWE-bench Science contributors",
+      "modified": false,
+      "third_party_exceptions": "Only citations and benchmark-authored explanation are included; publisher articles are not copied.",
+      "distribution_decision": "bundled"
+    }
+  ]
+}
