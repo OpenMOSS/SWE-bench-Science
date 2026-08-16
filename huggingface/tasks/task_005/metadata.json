@@ -3,7 +3,7 @@
   "title": "Repair edited MRS subspectrum polarity handling",
   "domain": "magnetic-resonance-spectroscopy-processing",
   "language": "matlab-octave",
-  "source_repository": "",
+  "source_repository": "https://github.com/schorschinho/osprey",
   "source_commit": "",
   "source_license": "MIT",
   "license_source": "LICENSE.md",
