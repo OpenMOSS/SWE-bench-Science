@@ -1,128 +1,190 @@
+<div align="center">
+
+<a href="https://swescience.github.io/"><img src="https://swescience.github.io/og.png" alt="SWE-bench Science" width="860"></a>
+
 # SWE-bench Science
 
-SWE-bench Science is a benchmark for evaluating coding agents on software-engineering tasks from scientific-computing repositories. The release contains 119 tasks spanning Python, C/C++, Fortran, MATLAB/Octave, and mixed-language projects.
+**Repository-level evaluation for coding agents working on scientific software.**
 
-The benchmark is distributed through two complementary repositories:
+Scientific software is full of contracts that ordinary code benchmarks rarely expose:
+units, coordinate systems, numerical invariants, file-format semantics, physical
+assumptions, and domain-specific workflows. SWE-bench Science measures whether an agent
+can change a real repository while preserving those contracts.
 
-| Component | Contents |
+<p>
+  <a href="https://swescience.github.io/">Website</a> ·
+  <a href="https://github.com/OpenMOSS/SWE-bench-Science">GitHub</a> ·
+  <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science">Dataset</a> ·
+  <a href="https://hub.docker.com/u/kevinxulearning">Docker Images</a> ·
+  <a href="https://github.com/datacurve-ai/pier">Pier Runner</a> ·
+  <a href="https://github.com/harbor-framework/harbor">Harbor Format</a>
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/tasks-119-1967d2?style=flat-square" alt="119 tasks">
+  <img src="https://img.shields.io/badge/default%20selection-96-0f766e?style=flat-square" alt="96 unrestricted tasks">
+  <img src="https://img.shields.io/badge/platform-linux%2Famd64-7c3aed?style=flat-square" alt="linux amd64">
+  <img src="https://img.shields.io/badge/license-MIT-111827?style=flat-square" alt="MIT license">
+</p>
+
+</div>
+
+## Start Here
+
+| I want to... | Go to |
 | --- | --- |
-| [Hugging Face dataset](https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science) | Task metadata, instructions, selections, thin Harbor/Pier bundles, and evaluation tools |
-| [Docker Hub](https://hub.docker.com/u/kevinxulearning) | Immutable `linux/amd64` environment and verifier images |
+| Explore the benchmark and leaderboard | [swescience.github.io](https://swescience.github.io/) |
+| Browse task metadata and the Dataset Viewer | [SWE-bench Science on Hugging Face](https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science) |
+| Download the immutable task images | [kevinxulearning on Docker Hub](https://hub.docker.com/u/kevinxulearning) |
+| Run an evaluation | [Quick Start](#quick-start) |
+| Configure a gateway, model, or harness | [Batch runner reference](docs/run-batch.md) |
+| Understand the release architecture | [Architecture](docs/architecture.md) |
+| Inspect the data contract | [Dataset contract](docs/dataset-contract.md) |
 
-The GitHub repository is the release and tooling repository. Evaluation uses the downloaded Hugging Face bundle and Docker Hub image digests; it does not fetch task definitions from GitHub at runtime.
+## Why This Benchmark
 
-## How A Task Is Evaluated
+SWE-bench Science is designed for agents that must do more than produce plausible
+source code. Each task is anchored to a real scientific-computing repository and a
+fixed baseline. Evaluation checks the resulting change in a clean environment with
+programmatic verification.
 
-Each task uses two task-specific images:
+- **Scientific contracts:** tasks cover numerical behavior, scientific data models,
+  file formats, geometry, simulation, imaging, spectroscopy, and more.
+- **Repository-level work:** agents navigate existing code, dependencies, tests, and
+  build systems rather than solving isolated functions.
+- **Reproducible execution:** task selections are explicit, image references are pinned
+  by digest, and every run records its configuration.
+- **Harness flexibility:** Codex, Claude Code, mini-swe-agent, and other Pier-supported
+  harnesses are selected at runtime; they are not copied into every task image.
+- **Strict evaluation boundary:** the public release contains no reference-answer patch,
+  private verifier tests, credentials, or agent trajectories.
 
-- The **environment image** contains the baseline repository, public fixtures, dependencies, and compilers.
-- The **verifier image** is separate and contains held-out tests and the grader.
+## Release At A Glance
 
-Pier installs and runs the selected agent harness at evaluation time. Codex, Claude Code, mini-swe-agent, and other supported harnesses are evaluation choices; they are not duplicated into every task image.
+| | |
+| --- | --- |
+| Tasks | 119 release tasks, numbered `001` through `119` |
+| Default selection | 96 tasks without a restricted-license gate |
+| Restricted selection | 23 tasks available through explicit opt-in |
+| Science-knowledge ablation | 91 tasks marked by `science_knowledge_ablation` in `data/tasks.csv` |
+| Runtime images | One environment image and one verifier image per task |
+| Image registry | Docker Hub, immutable `linux/amd64` references |
+| Evaluation runner | [Pier](https://github.com/datacurve-ai/pier), Harbor-compatible |
 
-The verifier collects the agent's committed changes as `model.patch`, applies them to a clean baseline, and runs the private tests. Native projects are rebuilt inside the task environment when required by the task.
+The Dataset Viewer exposes `data/tasks.csv` as the `default/test` split. The CSV is the
+canonical table; Hugging Face generates its internal preview representation
+automatically.
 
-## Requirements
+## Architecture
 
-- Python 3.11 or newer
-- Docker Desktop or Docker Engine with `linux/amd64` support
-- `uv` or another Python environment manager
-- Access to the Hugging Face dataset and Docker Hub images
-- Credentials for the selected model/provider when running a real agent
+```mermaid
+flowchart LR
+    A["Hugging Face dataset"] --> B["Materialize an explicit selection"]
+    B --> C["Task bundle<br/>local task.toml"]
+    C --> D["Docker Hub<br/>environment image"]
+    C --> E["Pier installs<br/>selected harness"]
+    D --> F["Agent trial"]
+    E --> F
+    F --> G["model.patch"]
+    G --> H["Docker Hub<br/>verifier image"]
+    H --> I["Clean rebuild<br/>and programmatic tests"]
+    I --> J["summary.json<br/>summary.csv"]
+```
 
-Apple Silicon hosts are supported through Docker Desktop's `linux/amd64` emulation.
+Every task has two published image roles:
+
+| Role | Contains | Published |
+| --- | --- | --- |
+| Environment | Baseline source, public fixtures, dependencies, compilers, and tools | Docker Hub, pinned by digest |
+| Verifier | Clean evaluation environment, held-out tests, and grader | Docker Hub, pinned by digest |
+
+Pier creates the ephemeral agent-enabled environment for a trial. The harness is a
+runtime choice, not a third per-task image family. For compiled projects, the verifier
+applies the candidate patch to a clean baseline and rebuilds the project before scoring.
 
 ## Quick Start
 
-Download the release and install Pier:
+The runtime release is distributed through Hugging Face and Docker Hub. A GitHub clone
+is useful for documentation and source inspection, but evaluation runs from the
+downloaded dataset bundle.
+
+You need Python 3.11+, Docker Desktop or Docker Engine with `linux/amd64` support,
+and `uv` (or another Python environment manager). Apple Silicon hosts are supported
+through Docker Desktop's amd64 emulation.
+
+### 1. Install the runner
 
 ~~~bash
-git clone https://github.com/OpenMOSS/SWE-bench-Science.git
-cd SWE-bench-Science
-
 python3 -m pip install "huggingface_hub[cli]"
-hf auth login
-hf download OpenMOSS-Team/SWE-bench-Science \
-  --repo-type dataset --local-dir .
-
 uv tool install "datacurve-pier==0.3.0"
 docker login
 ~~~
 
-The Hugging Face dataset is the source for the task bundle. Docker Hub stores the runtime images referenced by the immutable digests in each `task.toml`.
+### 2. Download the release
 
-## Select Tasks
+~~~bash
+mkdir swe-bench-science
+cd swe-bench-science
 
-The materializer writes an explicit `selection.json`, so a run is reproducible and does not depend on runner sampling behavior.
+hf auth login
+hf download OpenMOSS-Team/SWE-bench-Science \
+  --repo-type dataset \
+  --local-dir .
+~~~
 
-The canonical table also contains the boolean `science_knowledge_ablation` field.
-It marks the 91-task science-knowledge ablation split: `002-082`, `084`, `086`,
-`090`, `097-101`, `111`, and `114`.
+### 3. Materialize tasks
 
 ~~~bash
 # Default selection: 96 unrestricted-license tasks.
 python3 tools/materialize.py \
-  --output tasks-selected --force
+  --output tasks-selected \
+  --force
 
-# One task, a comma-separated list, or inclusive ranges.
+# Or select one task, comma-separated IDs, and inclusive ranges.
 python3 tools/materialize.py \
   --task-id 002,005-007 \
-  --output tasks-selected-small --force
+  --output tasks-selected-small \
+  --force
 ~~~
 
-To materialize the complete ablation split, include the restricted-license opt-in:
+The materializer writes `selection.json` with the exact task IDs used for the run.
+
+### 4. Run an infrastructure smoke
+
+This checks task images, Pier wiring, verifier collection, and result paths without a
+model call:
 
 ~~~bash
-python3 tools/materialize.py \
-  --task-id 002-082,084,086,090,097-101,111,114 \
-  --allow-restricted-licenses \
-  --output tasks-science-knowledge-ablation --force
+python3 tools/run_batch.py \
+  --path tasks-selected-small \
+  --agent nop \
+  --n-concurrent 1 \
+  --n-attempts 1 \
+  --jobs-dir jobs \
+  --job-name smoke
 ~~~
 
-Twenty-three tasks contain GPL/LGPL/AGPL-family code, academic non-commercial sources or materials, or restricted third-party data. They are excluded from the default selection and require an explicit opt-in:
+### 5. Run an agent
 
 ~~~bash
-python3 tools/materialize.py \
-  --allow-restricted-licenses \
-  --output tasks-selected-all --force
+python3 tools/run_batch.py \
+  --path tasks-selected-small \
+  --agent codex \
+  --env-file ~/.config/swe-bench-science/codex.env \
+  --n-concurrent 2 \
+  --n-attempts 1 \
+  --jobs-dir jobs \
+  --job-name codex-small
 ~~~
 
-The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`. Tasks `019`, `026`, `035`, `043`, `101`, and `102` are restricted for other reasons. There is no `--allow-GPL` compatibility option.
-
-## Run With Pier
-
-Run an infrastructure smoke without a model:
-
-~~~bash
-pier run -p tasks-selected-small \
-  --agent nop --env docker \
-  --n-concurrent 1 --n-attempts 1 \
-  --no-force-build --no-delete --yes
-~~~
-
-Run a real agent by selecting a harness and model/provider:
-
-~~~bash
-# Claude Code
-pier run -p tasks-selected-small \
-  --agent claude-code --env docker \
-  --env-file ~/.config/swe-bench-science/claude.env \
-  --model anthropic/claude-opus-4-7 --n-concurrent 1
-
-# mini-swe-agent
-pier run -p tasks-selected-small \
-  --agent mini-swe-agent --env docker \
-  --env-file ~/.config/swe-bench-science/mini-swe-agent.env \
-  --model openai/gpt-5 --n-concurrent 1
-~~~
-
-`--agent` selects the harness and `--model` selects the model/provider route. The credential file is read at runtime and is never copied into a task image or result artifact.
-
-For a short agent-stage smoke, add `--agent-timeout-multiplier 0.0223`, which is approximately 120 seconds for the default task timeout. Verifier and scientific-build timeouts remain independent.
+For Claude Code or mini-swe-agent, change `--agent` and provide the corresponding
+profile and `--model`. For an approximately 120-second agent-stage smoke, add
+`--agent-timeout-multiplier 0.0223`; verifier and native-build timeouts remain
+independent.
 
 ## Provider Profiles
 
-Create provider profiles outside the checkout:
+Keep credentials outside the checkout and image build contexts:
 
 ~~~bash
 mkdir -p ~/.config/swe-bench-science
@@ -132,48 +194,105 @@ cp profiles/mini-swe-agent.env.example ~/.config/swe-bench-science/mini-swe-agen
 chmod 600 ~/.config/swe-bench-science/*.env
 ~~~
 
-Codex profiles use `MODEL`, `OPENAI_API_KEY`, `CODEX_BASE_URL`, `CODEX_WIRE_API`, `CODEX_VERSION`, and `CODEX_REASONING_EFFORT`. Set `CODEX_WIRE_API=responses` for the OpenAI Responses API or `chat` for Chat Completions. Claude Code uses `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_BASE_URL`, and optional `ANTHROPIC_CUSTOM_HEADERS`. mini-swe-agent uses the provider variables expected by its model adapter.
+For Codex and OpenAI-compatible gateways, the profile supports:
 
-For Codex gateway profiles, use the convenience runner so the profile is translated into the Codex `config_toml` format:
-
-~~~bash
-python3 tools/run_batch.py \
-  --path tasks-selected-small \
-  --agent codex \
-  --env-file ~/.config/swe-bench-science/codex.env \
-  --n-concurrent 2 --n-attempts 1 \
-  --jobs-dir jobs --job-name codex-small
+~~~dotenv
+MODEL=gpt-5
+OPENAI_API_KEY=replace-with-your-key
+CODEX_BASE_URL=https://gateway.example.edu/v1
+CODEX_WIRE_API=responses
+CODEX_VERSION=latest
+CODEX_REASONING_EFFORT=high
 ~~~
 
-## Results
+`CODEX_BASE_URL` selects the model gateway. `CODEX_WIRE_API` accepts `responses` or
+`chat`. Network proxies are separate and use standard `HTTP_PROXY`, `HTTPS_PROXY`,
+and `NO_PROXY` variables. See the [batch runner reference](docs/run-batch.md) for
+Claude Code, mini-swe-agent, custom headers, extra agent variables, retries, dry runs,
+and the full option table.
 
-Pier writes one aggregate result and one trial directory per task and attempt:
+## Restricted Licenses
+
+The default materialization excludes tasks that require an explicit license decision.
+To include the 23 restricted rows:
+
+~~~bash
+python3 tools/materialize.py \
+  --allow-restricted-licenses \
+  --output tasks-selected-all \
+  --force
+~~~
+
+The GPL/LGPL/AGPL-family rows are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082,
+083, 084, 085, 096, 097, 098, 100, 118`. Other restricted rows are `019`, `026`,
+`035`, `101`, and `102`. The gate is named `--allow-restricted-licenses`; there
+is no `--allow-GPL` compatibility option.
+
+The 91-task science-knowledge ablation selection is:
+
+~~~bash
+python3 tools/materialize.py \
+  --task-id 002-082,084,086,090,097-101,111,114 \
+  --allow-restricted-licenses \
+  --output tasks-science-knowledge-ablation \
+  --force
+~~~
+
+## Results And Reproducibility
+
+The wrapper records selected task IDs, a selection hash, image references, platform,
+Pier version, agent/model settings, and a redacted command in `batch-run.json`.
+
+Evaluation output is written under the chosen jobs directory:
 
 ~~~text
 jobs/<job-name>/result.json
+jobs/<job-name>/summary.json
+jobs/<job-name>/summary.csv
 jobs/<job-name>/<task>__<trial>/verifier/reward.json
 jobs/<job-name>/<task>__<trial>/verifier/ctrf.json
 jobs/<job-name>/<task>__<trial>/verifier/test-stdout.txt
 ~~~
 
-`tools/run_batch.py` additionally writes `jobs/summary.json` and `jobs/summary.csv`. For a direct Pier run, generate the same summaries with:
+Use `pier view jobs` for trajectories. When diagnosing a result, inspect
+`result.json`, `reward.json`, and `test-stdout.txt` together. The summary CSV is the
+convenient per-task result table for downstream analysis.
 
-~~~bash
-python3 tools/summarize_results.py --jobs-dir jobs
-~~~
+## Data, Licensing, And Attribution
 
-Use `pier view jobs` to inspect trajectories. When diagnosing a failure, inspect `result.json`, `reward.json`, and `test-stdout.txt` together.
+The benchmark release does not include reference-answer patches, credentials, agent
+trajectories, or private verifier tests. The project tooling and release metadata use
+the repository's [MIT license](LICENSE). Task source, papers, figures, fixtures, and
+other third-party materials retain their upstream licenses; audited notices are
+included where applicable in [NOTICE.md](NOTICE.md) and the task bundles.
 
-## Data And Licensing
+The GitHub repository, Hugging Face dataset, and Docker Hub images are complementary:
 
-The Hugging Face dataset contains task metadata and thin task bundles. It does not contain reference-answer patches, credentials, agent trajectories, or private verifier tests. The canonical table is [`huggingface/data/tasks.csv`](huggingface/data/tasks.csv). Hugging Face Dataset Viewer reads this CSV and generates its preview automatically; no checked-in Parquet copy is required.
+- **GitHub** provides the public release documentation, architecture, tooling, and
+  audit records.
+- **Hugging Face** provides the task table, selections, thin task bundles, and runtime
+  tools used to materialize an evaluation.
+- **Docker Hub** provides the immutable per-task environment and verifier images.
 
-The project tools and documentation are released under the root MIT license. Task source, papers, figures, fixtures, and other third-party materials retain their upstream licenses. Audited material notices are included in the task bundles where applicable and summarized in [`NOTICE.md`](NOTICE.md).
+After download, evaluation uses the local task bundle and Docker Hub digests recorded
+in `task.toml`; it does not fetch task definitions from GitHub at runtime.
 
 ## Documentation
 
-- [Dataset contract](docs/dataset-contract.md)
-- [Architecture](docs/architecture.md)
-- [Release checklist](docs/release-checklist.md)
-- [Batch runner reference](docs/run-batch.md)
+- [Project website and leaderboard](https://swescience.github.io/)
+- [Architecture and runtime model](docs/architecture.md)
+- [Batch runner and provider reference](docs/run-batch.md)
+- [Dataset and field contract](docs/dataset-contract.md)
+- [Release verification checklist](docs/release-checklist.md)
 - [Hugging Face dataset card](huggingface/README.md)
+- [Material attribution notices](NOTICE.md)
+
+## Contributing And Support
+
+Bug reports, reproducibility issues, and task-quality reports are welcome through
+[GitHub Issues](https://github.com/OpenMOSS/SWE-bench-Science/issues). Please include
+the task ID, commit or dataset revision, harness/model configuration, platform, and
+the relevant redacted summary or verifier output.
+
+For benchmark context, published scores, and the current leaderboard, visit
+[swescience.github.io](https://swescience.github.io/).
