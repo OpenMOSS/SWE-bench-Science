@@ -35,7 +35,7 @@ can change a real repository while preserving those contracts.
 | --- | --- |
 | Explore the benchmark and leaderboard | [swescience.github.io](https://swescience.github.io/) |
 | Browse task metadata and the Dataset Viewer | [SWE-bench Science on Hugging Face](https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science) |
-| Download the immutable task images | [kevinxulearning on Docker Hub](https://hub.docker.com/u/kevinxulearning) |
+| Download the immutable task images | [Docker Hub image registry](https://hub.docker.com/u/kevinxulearning) |
 | Run an evaluation | [Quick Start](#quick-start) |
 | Configure a gateway, model, or harness | [Batch runner reference](docs/run-batch.md) |
 | Understand the release architecture | [Architecture](docs/architecture.md) |
