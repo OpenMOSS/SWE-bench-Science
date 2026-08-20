@@ -72,7 +72,7 @@ configs:
 
 # SWE-bench Science
 
-SWE-bench Science evaluates coding agents on software-engineering tasks drawn from scientific-computing repositories. The release contains 119 tasks with isolated environments and separate programmatic verifiers.
+SWE-bench Science evaluates coding agents on software-engineering tasks drawn from scientific-computing repositories. The release contains 119 tasks across 20 scientific domains, with isolated environments and separate programmatic verifiers.
 
 - **GitHub release repository:** [OpenMOSS/SWE-bench-Science](https://github.com/OpenMOSS/SWE-bench-Science)
 - **Runtime images:** [Docker Hub](https://hub.docker.com/u/kevinxulearning), pinned by immutable `linux/amd64` digests
@@ -83,6 +83,7 @@ SWE-bench Science evaluates coding agents on software-engineering tasks drawn fr
 | Metric | Value |
 | --- | ---: |
 | Tasks | 119 |
+| Scientific domains | 20 |
 | Default selection | 96 unrestricted-license tasks |
 | Restricted selection | 23 tasks |
 | GPL/LGPL/AGPL-family tasks | 18 |
@@ -162,7 +163,7 @@ python3 tools/materialize.py \
   --output tasks-selected-all --force
 ~~~
 
-The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`. Tasks `019`, `026`, `035`, `043`, `101`, and `102` are restricted for other reasons. There is no `--allow-GPL` option. The selection flag controls which task bundles are materialized; it does not replace the upstream license obligations.
+The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 118`. Tasks `019`, `026`, `035`, `101`, and `102` are restricted for other reasons. There is no `--allow-GPL` option. The selection flag controls which task bundles are materialized; it does not replace the upstream license obligations.
 
 ## Run An Evaluation
 

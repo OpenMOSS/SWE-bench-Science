@@ -23,6 +23,7 @@ can change a real repository while preserving those contracts.
 <p>
   <img src="https://img.shields.io/badge/tasks-119-1967d2?style=flat-square" alt="119 tasks">
   <img src="https://img.shields.io/badge/default%20selection-96-0f766e?style=flat-square" alt="96 unrestricted tasks">
+  <img src="https://img.shields.io/badge/scientific%20domains-20-0891b2?style=flat-square" alt="20 scientific domains">
   <img src="https://img.shields.io/badge/platform-linux%2Famd64-7c3aed?style=flat-square" alt="linux amd64">
   <img src="https://img.shields.io/badge/license-MIT-111827?style=flat-square" alt="MIT license">
 </p>
@@ -72,6 +73,7 @@ programmatic verification.
 | | |
 | --- | --- |
 | Tasks | 119 release tasks, numbered `001` through `119` |
+| Scientific domains | 20 benchmark-level scientific domains |
 | Default selection | 96 tasks without a restricted-license gate |
 | Restricted selection | 23 tasks available through explicit opt-in |
 | Science-knowledge ablation | 91 tasks marked by `science_knowledge_ablation` in `data/tasks.csv` |
