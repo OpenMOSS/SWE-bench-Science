@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://swescience.github.io/"><img src="https://swescience.github.io/og.png" alt="SWE-bench Science" width="860"></a>
+<a href="https://swescience.github.io/"><img src="assets/og-20-domains.png" alt="SWE-bench Science: 119 tasks across 20 scientific domains" width="860"></a>
 
 # SWE-bench Science
 
