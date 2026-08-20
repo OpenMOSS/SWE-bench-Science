@@ -32,11 +32,11 @@ can change a real repository while preserving those contracts.
 
 <p align="center">
   <a href="https://swescience.github.io/">
-    <img src="assets/leaderboard-pass-at-1.jpg" alt="Pass at 1 comparison of coding agents on SWE-bench Science" width="860">
+    <img src="assets/leaderboard-pass-at-1.png" alt="Pass at 1 comparison of coding agents on SWE-bench Science" width="860">
   </a>
 </p>
 
-<p align="center"><sub><strong>Figure 1.</strong> Pass@1 comparison of coding agents on SWE-bench Science.</sub></p>
+<p align="center"><sub>Pass@1 comparison of coding agents on SWE-bench Science.</sub></p>
 
 ## Start Here
 
