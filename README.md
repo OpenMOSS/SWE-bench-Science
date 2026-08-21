@@ -16,20 +16,20 @@ assumptions, and domain-specific workflows. SWE-bench Science measures whether a
 can change a real repository while preserving those contracts.
 
 <p>
-  <a href="https://swescience.github.io/"><img src="https://img.shields.io/badge/Website-Leaderboard-0f766e?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="Website and leaderboard"></a>
-  <a href="https://github.com/OpenMOSS/SWE-bench-Science"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub repository"></a>
-  <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science"><img src="https://img.shields.io/badge/Hugging_Face-Dataset-ffd21e?style=for-the-badge&amp;logo=huggingface&amp;logoColor=black" alt="Hugging Face dataset"></a>
-  <a href="https://hub.docker.com/u/kevinxulearning"><img src="https://img.shields.io/badge/Docker-Images-2496ed?style=for-the-badge&amp;logo=docker&amp;logoColor=white" alt="Docker images"></a>
-  <a href="https://github.com/datacurve-ai/pier"><img src="https://img.shields.io/badge/Pier-Runner-6f42c1?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Pier runner"></a>
-  <a href="https://github.com/harbor-framework/harbor"><img src="https://img.shields.io/badge/Harbor-Format-2563eb?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Harbor format"></a>
+  <a href="https://swescience.github.io/"><img src="https://img.shields.io/badge/Leaderboard-0f766e?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="Website and leaderboard"></a>
+  <a href="https://github.com/OpenMOSS/SWE-bench-Science"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub repository"></a>
+  <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science"><img src="https://img.shields.io/badge/Dataset-ffd21e?style=for-the-badge&amp;logo=huggingface&amp;logoColor=black" alt="Hugging Face dataset"></a>
+  <a href="https://hub.docker.com/u/kevinxulearning"><img src="https://img.shields.io/badge/Docker_Images-2496ed?style=for-the-badge&amp;logo=docker&amp;logoColor=white" alt="Docker images"></a>
+  <a href="https://github.com/datacurve-ai/pier"><img src="https://img.shields.io/badge/Pier_Runner-7c3aed?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Pier runner"></a>
+  <a href="https://github.com/harbor-framework/harbor"><img src="https://img.shields.io/badge/Harbor_Format-2563eb?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Harbor format"></a>
 </p>
 
 <p>
-  <img src="https://img.shields.io/badge/tasks-119-1967d2?style=flat-square" alt="119 tasks">
-  <img src="https://img.shields.io/badge/default%20selection-96-0f766e?style=flat-square" alt="96 unrestricted tasks">
-  <img src="https://img.shields.io/badge/scientific%20domains-20-0891b2?style=flat-square" alt="20 scientific domains">
-  <img src="https://img.shields.io/badge/platform-linux%2Famd64-7c3aed?style=flat-square" alt="linux amd64">
-  <img src="https://img.shields.io/badge/license-MIT-111827?style=flat-square" alt="MIT license">
+  <img src="https://img.shields.io/badge/119_tasks-2563eb?style=flat-square" alt="119 tasks">
+  <img src="https://img.shields.io/badge/96_default_tasks-059669?style=flat-square" alt="96 unrestricted tasks">
+  <img src="https://img.shields.io/badge/20_scientific_domains-0891b2?style=flat-square" alt="20 scientific domains">
+  <img src="https://img.shields.io/badge/linux%2Famd64-7c3aed?style=flat-square&amp;logo=linux&amp;logoColor=white" alt="linux amd64">
+  <img src="https://img.shields.io/badge/MIT_license-16a34a?style=flat-square&amp;logo=opensourceinitiative&amp;logoColor=white" alt="MIT license">
 </p>
 
 </div>
