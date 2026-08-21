@@ -4,7 +4,11 @@
 
 # SWE-bench Science
 
-**Repository-level evaluation for coding agents working on scientific software.**
+<p>
+  <strong>Paper:</strong> <a href="https://arxiv.org/abs/2608.19799">arXiv:2608.19799</a><br>
+  <strong>Data:</strong> <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science">OpenMOSS-Team/SWE-bench-Science</a><br>
+  <strong>Leaderboard:</strong> <a href="https://swescience.github.io/">swescience.github.io</a>
+</p>
 
 Scientific software is full of contracts that ordinary code benchmarks rarely expose:
 units, coordinate systems, numerical invariants, file-format semantics, physical
