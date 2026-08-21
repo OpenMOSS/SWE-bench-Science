@@ -5,9 +5,9 @@
 # SWE-bench Science
 
 <p>
-  <strong>Paper:</strong> <a href="https://arxiv.org/abs/2608.19799">arXiv:2608.19799</a><br>
-  <strong>Data:</strong> <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science">OpenMOSS-Team/SWE-bench-Science</a><br>
-  <strong>Leaderboard:</strong> <a href="https://swescience.github.io/">swescience.github.io</a>
+  <strong>Paper:</strong> <a href="https://arxiv.org/abs/2608.19799">https://arxiv.org/abs/2608.19799</a><br>
+  <strong>Data:</strong> <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science">https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science</a><br>
+  <strong>Leaderboard:</strong> <a href="https://swescience.github.io/">https://swescience.github.io/</a>
 </p>
 
 Scientific software is full of contracts that ordinary code benchmarks rarely expose:
