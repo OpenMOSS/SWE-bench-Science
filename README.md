@@ -16,12 +16,12 @@ assumptions, and domain-specific workflows. SWE-bench Science measures whether a
 can change a real repository while preserving those contracts.
 
 <p>
-  <a href="https://swescience.github.io/">Website</a> ·
-  <a href="https://github.com/OpenMOSS/SWE-bench-Science">GitHub</a> ·
-  <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science">Dataset</a> ·
-  <a href="https://hub.docker.com/u/kevinxulearning">Docker Images</a> ·
-  <a href="https://github.com/datacurve-ai/pier">Pier Runner</a> ·
-  <a href="https://github.com/harbor-framework/harbor">Harbor Format</a>
+  <a href="https://swescience.github.io/"><img src="https://img.shields.io/badge/Website-Leaderboard-0f766e?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="Website and leaderboard"></a>
+  <a href="https://github.com/OpenMOSS/SWE-bench-Science"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub repository"></a>
+  <a href="https://huggingface.co/datasets/OpenMOSS-Team/SWE-bench-Science"><img src="https://img.shields.io/badge/Hugging_Face-Dataset-ffd21e?style=for-the-badge&amp;logo=huggingface&amp;logoColor=black" alt="Hugging Face dataset"></a>
+  <a href="https://hub.docker.com/u/kevinxulearning"><img src="https://img.shields.io/badge/Docker-Images-2496ed?style=for-the-badge&amp;logo=docker&amp;logoColor=white" alt="Docker images"></a>
+  <a href="https://github.com/datacurve-ai/pier"><img src="https://img.shields.io/badge/Pier-Runner-6f42c1?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Pier runner"></a>
+  <a href="https://github.com/harbor-framework/harbor"><img src="https://img.shields.io/badge/Harbor-Format-2563eb?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Harbor format"></a>
 </p>
 
 <p>
