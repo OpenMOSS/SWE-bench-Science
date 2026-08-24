@@ -12,6 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=1 \
     PYTHONDONTWRITEBYTECODE=1
 
+
 RUN sed -i \
         -e "s|http://deb.debian.org/debian-security|${DEBIAN_SECURITY_MIRROR}|g" \
         -e "s|http://deb.debian.org/debian|${DEBIAN_MIRROR}|g" \
@@ -24,6 +25,9 @@ RUN apt-get -o Acquire::Retries=10 update \
         curl \
         git \
         ripgrep \
+        build-essential \
+        pkg-config \
+        zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN if [ "${INSTALL_FORTRAN}" = "1" ]; then \
@@ -43,7 +47,8 @@ COPY public/ /app/task_068/
 COPY requirements.lock /app/task_068/requirements.lock
 
 RUN python -m pip install --no-cache-dir --upgrade pip \
-    && python -m pip install --no-cache-dir -r requirements.lock
+    && python -m pip install --no-cache-dir  -r requirements.lock
+
 ENV PYTHONPATH=/app/task_068:/app/task_068/source
 
 RUN git init \

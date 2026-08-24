@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/samtools/htslib",
   "source_commit": "a4dde3f93c75dff09e9a1ddaf0db2e54c91ac5e3",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -19,5 +19,5 @@
   "material_licenses": [],
   "materials_provenance": "",
   "restricted_reason": "",
-  "public_payload_sha256": "888a97209250e1a9cd032def6487c0e89dfeb70681e476332331a99536361397"
+  "public_payload_sha256": "fe3f37030e23e9d2c5987d715b1d95adf555abb8e0f04fc5c5b6a4970ad22548"
 }
