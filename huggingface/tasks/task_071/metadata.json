@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/silx-kit/pyFAI",
   "source_commit": "3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
   "source_license": "MIT/X11 (BSD-like; see upstream copyright manifest)",
-  "license_source": "github-api:copyright@3a7adedc45c9a94585ec19bbd4622ac9f483ab9c",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
