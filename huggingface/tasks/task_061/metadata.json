@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/astropy/reproject",
   "source_commit": "62a0d3f037024d4dcf67857fb83d392f2e099ec0",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
