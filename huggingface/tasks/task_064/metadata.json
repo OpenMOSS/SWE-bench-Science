@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/cclib/cclib",
   "source_commit": "593f0d67cf6a76f4a047f9a4856125c05947cff4",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
