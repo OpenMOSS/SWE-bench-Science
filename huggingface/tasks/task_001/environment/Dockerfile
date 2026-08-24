@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.11-slim
+ARG BASE_IMAGE=python:3.12-slim
 FROM ${BASE_IMAGE}
 
 ARG DEBIAN_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/debian
@@ -24,6 +24,8 @@ RUN apt-get -o Acquire::Retries=10 update \
         curl \
         git \
         ripgrep \
+        libxext6 \
+        libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN if [ "${INSTALL_FORTRAN}" = "1" ]; then \

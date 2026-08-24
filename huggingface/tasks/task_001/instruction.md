@@ -1,13 +1,17 @@
-The included repository implements a tuned range-separated DFT workflow. The
-baseline calculation runs, and the
-workflow reports a tuned range-separation parameter. However, the final
-calculation does not show the kind of change one would expect after a successful
-tuning step.
+# Repair an inconsistent transition-state rotor workflow
 
-Inspect the source code and public reproduction workflow, and repair
-the implementation so that the reported tuning step has a real effect on the
-final scientific calculation. Do not hard-code a single molecule, a single
-parameter value, or a fixed expected output.
+A reaction-chemistry workflow is using the supplied historical source to
+prepare transition-state graph data for a high-energy reaction campaign. The
+inputs are valid graph representations and the workflow reaches the graph
+analysis stage, but equivalent presentations of one transition state do not
+give a consistent rotor observation.
 
-The task is about diagnosing why the reproduced tuned workflow still behaves too
-much like its untuned baseline.
+Run the offline reproduction, read the supplied scientific method material, and
+inspect the complete source snapshot. Repair the implementation so that the
+documented transition-state rotor behavior is representation-invariant for all
+supported valid molecular graphs and reaction-edge arrangements. Do not
+hard-code the supplied graph, atom keys, a fixed output, or the public report.
+
+Work only under this task directory.  The evaluation environment is offline;
+all required source files and dependencies are provided.  Do not modify the
+scientific fixtures, the public reproduction, or generated reports.

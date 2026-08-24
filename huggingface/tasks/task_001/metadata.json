@@ -1,13 +1,13 @@
 {
   "task_id": "001",
   "science_knowledge_ablation": false,
-  "title": "Repair omega-dependent range-separated PBE workflow in a real PySCF STRSF repository",
-  "domain": "density-functional-theory",
+  "title": "Repair an inconsistent transition-state rotor workflow",
+  "domain": "computational-reaction-chemistry",
   "language": "python",
-  "source_repository": "https://github.com/aditisingh4812/simplified_tuned_range_separated",
-  "source_commit": "f794ca5265d38906782506f1ac4e197b4e273fc4",
-  "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE",
+  "source_repository": "https://github.com/Auto-Mech/autochem",
+  "source_commit": "cbe1a0c1102b8125608841eb8ac536cfe3b09671",
+  "source_license": "MIT",
+  "license_source": "upstream LICENSE at pinned source commit (author audit verified)",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -19,5 +19,5 @@
   "material_licenses": [],
   "materials_provenance": "",
   "restricted_reason": "",
-  "public_payload_sha256": "9ed895761e11ebcd5d3d383429d1b50b2039969eab6be3369298f32077d581dd"
+  "public_payload_sha256": "624261111bb1223ce6af304c999ee84e484496f1c9b2ac90898d2e387d901fcd"
 }

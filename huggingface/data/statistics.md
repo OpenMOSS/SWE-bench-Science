@@ -42,12 +42,13 @@ Science-knowledge ablation rows: **91**.
 | `computational-mechanics-and-soft-filament-dynamics` | 1 |
 | `computational-oceanography-and-spherical-geometry` | 1 |
 | `computational-oceanography-finite-volume-grids` | 1 |
+| `computational-reaction-chemistry` | 1 |
 | `computational-thermodynamics-calphad` | 1 |
 | `computer-algebra` | 1 |
 | `condensed-matter-magnetism-and-magnetic-symmetry` | 1 |
 | `convex-optimization-parametric-workflows` | 1 |
 | `crystallography-file-format-semantics` | 1 |
-| `density-functional-theory` | 2 |
+| `density-functional-theory` | 1 |
 | `diffusion-mri-denoising` | 1 |
 | `drug-discovery-cheminformatics` | 1 |
 | `earth-science-data-semantics` | 1 |
@@ -141,14 +142,14 @@ Science-knowledge ablation rows: **91**.
 | `Academic-NonCommercial` | 1 |
 | `Apache-2.0` | 13 |
 | `BSD-2-Clause` | 2 |
-| `BSD-3-Clause` | 37 |
+| `BSD-3-Clause` | 36 |
 | `GPL-3.0` | 1 |
 | `GPL-3.0-or-later` | 1 |
 | `LGPL-2.1-family` | 1 |
 | `LGPL-2.1-family and MIT (upstream conflict)` | 1 |
 | `LGPL-3.0-family` | 8 |
 | `LGPL-3.0-or-later` | 4 |
-| `MIT` | 45 |
+| `MIT` | 46 |
 | `MIT AND BSD-3-Clause` | 1 |
 | `MIT AND LGPL-family AND BSD-3-Clause` | 1 |
 | `MIT/X11 (BSD-like; see upstream copyright manifest)` | 1 |

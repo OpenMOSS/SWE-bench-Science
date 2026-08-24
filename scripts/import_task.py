@@ -88,6 +88,14 @@ def normalize_task_id(value: str) -> str:
     return task_id
 
 
+def normalize_source_task_id(value: str) -> str:
+    """Normalize an authoring ID, including legacy IDs not used at release time."""
+    value = value.strip().removeprefix("task_")
+    if not value.isdigit() or not 1 <= int(value) <= 120:
+        raise ValueError(f"source task id must be in 001..120: {value!r}")
+    return f"{int(value):03d}"
+
+
 def copy_tree(source: Path, destination: Path) -> None:
     def ignore(_directory: str, names: list[str]) -> set[str]:
         return {
@@ -159,17 +167,20 @@ def classify_license_text(text: str) -> str | None:
 
 
 def detect_license(source: Path) -> tuple[str, str]:
+    # A nested dependency notice must not be mistaken for the license of the
+    # task's repository. Use root-level notices when present; otherwise leave
+    # the project license unknown rather than attributing a subcomponent's
+    # license to the whole source snapshot.
     candidates = sorted(
         (
             path
-            for path in source.rglob("*")
+            for path in source.iterdir()
             if path.is_file() and path.name.upper().startswith(("LICENSE", "COPYING"))
         ),
-        key=lambda path: (len(path.relative_to(source).parts), path.as_posix()),
+        key=lambda path: path.name,
     )
     if not candidates:
         return "UNKNOWN", "not-detected"
-
     spdx_re = re.compile(
         r"SPDX-License-Identifier:\s*"
         r"(AGPL-(?:2\.0|3\.0)(?:-only|-or-later)?|"
@@ -257,6 +268,35 @@ def detect_license(source: Path) -> tuple[str, str]:
     if "APACHE LICENSE" in normalized and "VERSION 2.0" in normalized:
         return "Apache-2.0", candidates[0].name
     return "UNKNOWN", candidates[0].name
+
+
+def audited_license_from_author_notes(
+    source_root: Path, source_task_id: str
+) -> tuple[str, str]:
+    """Read an explicit source-license statement from the author audit.
+
+    Some source snapshots intentionally omit the upstream repository's root
+    license file.  In that case an author-only snapshot audit is the
+    authoritative provenance record; it must contain an explicit ``License:``
+    line rather than relying on a guessed or nested dependency notice.
+    """
+    audit_path = (
+        source_root
+        / "app"
+        / "author_notes"
+        / f"task_{source_task_id}"
+        / "source_snapshot_audit.md"
+    )
+    if not audit_path.is_file():
+        return "UNKNOWN", "not-detected"
+    pattern = re.compile(r"^\s*-\s*License:\s*([^(`\r\n]+)", re.IGNORECASE | re.MULTILINE)
+    match = pattern.search(audit_path.read_text(encoding="utf-8", errors="replace"))
+    if not match:
+        return "UNKNOWN", "not-detected"
+    license_name = match.group(1).strip()
+    if not license_name or license_name.upper() == "UNKNOWN":
+        return "UNKNOWN", "not-detected"
+    return license_name, "upstream LICENSE at pinned source commit (author audit verified)"
 
 
 def is_gpl_family_license(value: str) -> bool:
@@ -506,8 +546,15 @@ def write_manifest_row(row: dict[str, object]) -> None:
     )
 
 
-def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, object]:
-    source_name = f"task_{task_id}"
+def import_task(
+    source_root: Path,
+    task_id: str,
+    *,
+    force: bool,
+    source_task_id: str | None = None,
+) -> dict[str, object]:
+    release_name = f"task_{task_id}"
+    source_name = f"task_{source_task_id or task_id}"
     public_source = source_root / "app" / "tasks" / source_name
     private_source = source_root / "app" / "private_tests" / source_name
     if not public_source.is_dir():
@@ -530,6 +577,10 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
     language = str(metadata.get("language") or task_data.get("language") or "unknown")
     base_commit = str(metadata.get("source_commit") or "")
     source_license, license_source = detect_license(public_source / "source")
+    if source_license == "UNKNOWN":
+        source_license, license_source = audited_license_from_author_notes(
+            source_root, source_task_id or task_id
+        )
     declared_base_image, declared_dependencies, system_packages = runtime_config(task_data)
     declared_source_license = str(metadata.get("source_license") or "")
     canonical_family_members = {
@@ -542,12 +593,12 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         source_license = declared_source_license
         license_source = str(metadata.get("license_source") or license_source)
 
-    task_dir = TASKS_ROOT / source_name
+    task_dir = TASKS_ROOT / release_name
     environment_dir = task_dir / "environment"
-    verifier_dir = STAGING_ROOT / source_name / "verifier"
+    verifier_dir = STAGING_ROOT / release_name / "verifier"
     if force:
         shutil.rmtree(task_dir, ignore_errors=True)
-        shutil.rmtree(STAGING_ROOT / source_name, ignore_errors=True)
+        shutil.rmtree(STAGING_ROOT / release_name, ignore_errors=True)
     if task_dir.exists() or verifier_dir.exists():
         raise FileExistsError(f"task already imported; use --force: {task_dir}")
 
@@ -564,7 +615,31 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         else:
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
+
+    # Public metadata is part of the runtime context, so its task identity must
+    # follow the release ID when an authoring task is remapped.
+    for filename, value in (("task.json", release_name), ("metadata.json", task_id)):
+        identity_path = environment_dir / "public" / filename
+        if not identity_path.is_file():
+            continue
+        identity = json.loads(identity_path.read_text(encoding="utf-8"))
+        if isinstance(identity, dict) and "task_id" in identity:
+            identity["task_id"] = value
+            identity_path.write_text(
+                json.dumps(identity, indent=2) + "\n", encoding="utf-8"
+            )
     copy_tree(private_source, verifier_dir / "private_tests")
+    if source_name != release_name:
+        legacy_name = source_name
+        for path in (verifier_dir / "private_tests").rglob("*"):
+            if not path.is_file():
+                continue
+            try:
+                text = path.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                continue
+            if legacy_name in text:
+                path.write_text(text.replace(legacy_name, release_name), encoding="utf-8")
 
     render_template(
         TEMPLATES_ROOT / "environment" / "Dockerfile",
@@ -695,7 +770,7 @@ def import_task(source_root: Path, task_id: str, *, force: bool) -> dict[str, ob
         "materials_gate": bool(material_metadata.get("materials_gate")),
         "materials_manifest_sha256": material_metadata.get("materials_manifest_sha256", ""),
         "restricted_reason": material_metadata.get("restricted_reason", ""),
-        "task_path": f"tasks/{source_name}",
+        "task_path": f"tasks/{release_name}",
         "environment_image": "",
         "verifier_image": "",
         "image_platform": "linux/amd64",
@@ -710,12 +785,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-root", type=Path, required=True)
     parser.add_argument("--task-id", required=True)
+    parser.add_argument(
+        "--source-task-id",
+        help="Authoring task ID to import; defaults to --task-id and may be legacy 120",
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     row = import_task(
         args.source_root.resolve(),
         normalize_task_id(args.task_id),
         force=args.force,
+        source_task_id=normalize_source_task_id(args.source_task_id or args.task_id),
     )
     print(json.dumps(row, indent=2, sort_keys=True))
     return 0
