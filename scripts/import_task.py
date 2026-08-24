@@ -558,7 +558,10 @@ def render_system_package_lines(packages: list[str]) -> str:
 
 
 PACKAGE_SOURCE_URLS = {
-    "pytorch-cpu": "https://download.pytorch.org/whl/cpu",
+    # The canonical index intermittently resets TLS connections on the
+    # campus route.  The official R2 mirror serves the same signed wheel
+    # index and is reachable through the configured registry proxy.
+    "pytorch-cpu": "https://download-r2.pytorch.org/whl/cpu",
 }
 
 
