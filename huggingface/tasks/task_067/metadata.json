@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/Ouranosinc/xclim",
   "source_commit": "d1e654cf59a5d5761f5586bca1102a1590ae6e32",
   "source_license": "Apache-2.0",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
