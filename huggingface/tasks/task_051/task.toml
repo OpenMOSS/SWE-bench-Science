@@ -17,7 +17,7 @@ network_mode = "no-network"
 timeout_sec = 5400.0
 
 [environment]
-docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-fortran-task-051:v0.1.0@sha256:8235525555c16d48f6e12019ba6239fc99569358183a444cb0251b72dfd99de4"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-environment-fortran-task-051:v0.1.2@sha256:914f6a785eeb3753ebdf16fc5ed577533a88977cddcfb92d9565d3d8d35541da"
 os = "linux"
 allow_internet = false
 cpus = 2
@@ -31,7 +31,7 @@ environment_mode = "separate"
 timeout_sec = 1800.0
 
 [verifier.environment]
-docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-fortran-task-051:v0.1.0@sha256:cc4ffda89baf3ef1fed6903ff06b194b1ef2f992413574aa6032451e09e653fb"
+docker_image = "docker.io/kevinxulearning/swe-bench-science-verifier-fortran-task-051:v0.1.2@sha256:9c3ffb87798fcce875b2c1583c48823f46063d0ccc18ed062e4caf9e35fa8e3c"
 os = "linux"
 allow_internet = false
 cpus = 2

@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/SHTOOLS/SHTOOLS",
   "source_commit": "7f7d91474509acb597071eb789661b1f0cc304ca",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -19,5 +19,5 @@
   "material_licenses": [],
   "materials_provenance": "",
   "restricted_reason": "",
-  "public_payload_sha256": "e12cdd178e91e4970a775d1426972061c0ab4548b2b3b37c7093671aa51b8362"
+  "public_payload_sha256": "3a52eab743a3c3fad73bcc7d82814ce644db0d2f75e2609aa23b8b14de4000ca"
 }
