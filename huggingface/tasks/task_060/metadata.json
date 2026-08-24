@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/SpikeInterface/spikeinterface",
   "source_commit": "3fd3d97164c6e85c2897ce8b13ba6aace81c2811",
   "source_license": "MIT",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
