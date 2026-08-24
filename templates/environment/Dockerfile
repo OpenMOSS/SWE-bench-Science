@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_INDEX_URL=${PIP_INDEX_URL} \
     PIP_NO_CACHE_DIR=1 \
     PYTHONDONTWRITEBYTECODE=1
+__RUNTIME_ENVIRONMENT_LINES__
 
 RUN sed -i \
         -e "s|http://deb.debian.org/debian-security|${DEBIAN_SECURITY_MIRROR}|g" \
@@ -43,7 +44,8 @@ COPY public/ /app/task___TASK_ID__/
 COPY requirements.lock /app/task___TASK_ID__/requirements.lock
 
 RUN python -m pip install --no-cache-dir --upgrade pip \
-    && python -m pip install --no-cache-dir -r requirements.lock
+    && python -m pip install --no-cache-dir __PIP_EXTRA_INDEX_ARGS__ -r requirements.lock
+__SOURCE_BUILD_LINES__
 ENV PYTHONPATH=/app/task___TASK_ID__:/app/task___TASK_ID__/source
 
 RUN git init \

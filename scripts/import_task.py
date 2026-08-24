@@ -465,13 +465,32 @@ def write_requirements_lock(
 
 
 def runtime_config(task_data: dict[str, object]) -> tuple[str | None, list[str] | None, list[str]]:
-    """Read optional per-task runtime pins with a narrow, auditable allowlist."""
+    """Read the legacy three-field view of a task runtime declaration."""
+    options = runtime_options(task_data)
+    return options["base_image"], options["python_packages"], options["system_packages"]
+
+
+def runtime_options(task_data: dict[str, object]) -> dict[str, object]:
+    """Validate and return every field used to render a task environment.
+
+    ``runtime_config`` predates package indexes, environment variables, and
+    source builds and remains as a compatibility wrapper for callers/tests.
+    The renderer must consume the complete declaration or a regenerated image
+    silently falls back to an incomplete environment.
+    """
     environment = task_data.get("environment", {})
     if not isinstance(environment, dict):
         raise ValueError("task environment must be an object")
     runtime = environment.get("runtime")
     if runtime is None:
-        return None, None, []
+        return {
+            "base_image": None,
+            "python_packages": None,
+            "system_packages": [],
+            "python_package_sources": {},
+            "environment_variables": {},
+            "source_build": None,
+        }
     if not isinstance(runtime, dict):
         raise ValueError("task environment.runtime must be an object")
     base_image_value = runtime.get("base_image")
@@ -489,13 +508,91 @@ def runtime_config(task_data: dict[str, object]) -> tuple[str | None, list[str] 
         for value in system_value
     ):
         raise ValueError("task runtime system_packages contains an invalid package name")
-    return base_image, [str(value).strip() for value in dependencies_value], [str(value) for value in system_value]
+    source_value = runtime.get("python_package_sources", {})
+    if source_value is None:
+        source_value = {}
+    if not isinstance(source_value, dict) or not all(
+        isinstance(key, str)
+        and re.fullmatch(r"[A-Za-z0-9_.-]+", key)
+        and isinstance(value, str)
+        and value.strip()
+        for key, value in source_value.items()
+    ):
+        raise ValueError("task runtime python_package_sources must be a string map")
+    environment_value = runtime.get("environment_variables", {})
+    if environment_value is None:
+        environment_value = {}
+    if not isinstance(environment_value, dict) or not all(
+        isinstance(key, str)
+        and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key)
+        and isinstance(value, (str, int, float, bool))
+        for key, value in environment_value.items()
+    ):
+        raise ValueError("task runtime environment_variables must be a scalar map")
+    source_build = environment.get("source_build")
+    if source_build is not None:
+        if not isinstance(source_build, dict) or source_build.get("kind") not in {
+            "python_setup",
+            "python_setup_clib",
+        }:
+            raise ValueError("unsupported task environment.source_build kind")
+        source_build = {"kind": str(source_build["kind"])}
+    return {
+        "base_image": base_image,
+        "python_packages": [str(value).strip() for value in dependencies_value],
+        "system_packages": [str(value) for value in system_value],
+        "python_package_sources": {
+            str(key): str(value).strip() for key, value in source_value.items()
+        },
+        "environment_variables": {
+            str(key): str(value) for key, value in environment_value.items()
+        },
+        "source_build": source_build,
+    }
 
 
 def render_system_package_lines(packages: list[str]) -> str:
     if not packages:
         return ""
     return " \\\n        " + " \\\n        ".join(packages)
+
+
+PACKAGE_SOURCE_URLS = {
+    "pytorch-cpu": "https://download.pytorch.org/whl/cpu",
+}
+
+
+def render_runtime_environment_lines(environment_variables: dict[str, str]) -> str:
+    if not environment_variables:
+        return ""
+    values = " ".join(
+        f"{key}={json.dumps(value)}"
+        for key, value in sorted(environment_variables.items())
+    )
+    return f"ENV {values}\n"
+
+
+def render_package_source_args(sources: dict[str, str]) -> str:
+    urls: list[str] = []
+    for value in sources.values():
+        url = PACKAGE_SOURCE_URLS.get(value, value)
+        if not re.fullmatch(r"https?://[^\s]+", url):
+            raise ValueError(f"unsupported Python package source: {value!r}")
+        if url not in urls:
+            urls.append(url)
+    return " ".join(f"--extra-index-url {url}" for url in urls)
+
+
+def render_source_build_lines(task_id: str, source_build: dict[str, str] | None) -> str:
+    if not source_build:
+        return ""
+    command = "python setup.py build_ext --inplace"
+    if source_build["kind"] == "python_setup_clib":
+        command = "python setup.py build_clib build_ext --inplace"
+    return (
+        f"RUN cd /app/task_{task_id}/source \\\n"
+        f"    && {command}\n"
+    )
 
 
 def task_toml(*, task_id: str, title: str, language: str, base_commit: str) -> str:
@@ -581,7 +678,10 @@ def import_task(
         source_license, license_source = audited_license_from_author_notes(
             source_root, source_task_id or task_id
         )
-    declared_base_image, declared_dependencies, system_packages = runtime_config(task_data)
+    runtime = runtime_options(task_data)
+    declared_base_image = runtime["base_image"]
+    declared_dependencies = runtime["python_packages"]
+    system_packages = runtime["system_packages"]
     declared_source_license = str(metadata.get("source_license") or "")
     canonical_family_members = {
         "LGPL-3.0-family": {"LGPL-3.0-only", "LGPL-3.0-or-later"},
@@ -652,6 +752,9 @@ def import_task(
             "ARG INSTALL_FORTRAN=0": f"ARG INSTALL_FORTRAN={int(install_fortran_for(language))}",
             "ARG INSTALL_OCTAVE=0": f"ARG INSTALL_OCTAVE={int(install_octave_for(language))}",
             "__SYSTEM_PACKAGE_LINES__": render_system_package_lines(system_packages),
+            "__PIP_EXTRA_INDEX_ARGS__": render_package_source_args(runtime["python_package_sources"]),
+            "__SOURCE_BUILD_LINES__": render_source_build_lines(task_id, runtime["source_build"]),
+            "__RUNTIME_ENVIRONMENT_LINES__": render_runtime_environment_lines(runtime["environment_variables"]),
         },
     )
     write_requirements_lock(
