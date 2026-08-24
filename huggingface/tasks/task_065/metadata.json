@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/yt-project/yt",
   "source_commit": "c86781b8cbdeea8002c7846d37dc1250045146e6",
   "source_license": "BSD-3-Clause",
-  "license_source": "COPYING.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
