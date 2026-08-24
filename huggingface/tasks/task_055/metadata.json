@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/astropy/specutils",
   "source_commit": "0613ba1ba86fd7ae79e9d89c8ffd24004a891aee",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
