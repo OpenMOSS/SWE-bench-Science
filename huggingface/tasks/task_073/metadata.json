@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/biotite-dev/biotite",
   "source_commit": "f8c3b8aa5473e078f91c86dcee7340eb9ed3eb97",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
