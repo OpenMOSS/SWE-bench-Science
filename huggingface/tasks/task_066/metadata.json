@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/SciTools/iris",
   "source_commit": "0b569cdfad5e67f4aec3562bb26460020c7c7354",
   "source_license": "LGPL-3.0-or-later",
-  "license_source": "COPYING",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
