@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 try:
@@ -41,6 +42,40 @@ def load_rows() -> list[dict[str, object]]:
     if not path.is_file():
         raise FileNotFoundError(path)
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def validate_release_provenance(rows: list[dict[str, object]]) -> None:
+    """Keep the published provenance record aligned with both manifests."""
+    manifest_path = ROOT / "manifests" / "tasks.jsonl"
+    provenance_path = ROOT / "manifests" / "release_provenance.json"
+    if not provenance_path.is_file():
+        raise ValueError(f"missing release provenance: {provenance_path}")
+    try:
+        provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"invalid release provenance: {provenance_path}") from exc
+    image_provenance = provenance.get("image_provenance", {})
+    manifest_sha256 = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    if image_provenance.get("manifest_sha256") != manifest_sha256:
+        raise ValueError("release provenance manifest_sha256 is stale")
+    if image_provenance.get("task_count") != len(rows):
+        raise ValueError("release provenance task_count mismatch")
+    if image_provenance.get("environment_digest_count") != sum(
+        bool(row.get("environment_image_digest")) for row in rows
+    ):
+        raise ValueError("release provenance environment digest count mismatch")
+    if image_provenance.get("verifier_digest_count") != sum(
+        bool(row.get("verifier_image_digest")) for row in rows
+    ):
+        raise ValueError("release provenance verifier digest count mismatch")
+    if image_provenance.get("platform") != "linux/amd64":
+        raise ValueError("release provenance platform must be linux/amd64")
+    mirror_path = ROOT / "huggingface" / "manifests" / "tasks.jsonl"
+    if mirror_path.is_file() and mirror_path.read_bytes() != manifest_path.read_bytes():
+        raise ValueError("Hugging Face manifest is not byte-identical to canonical manifest")
+    mirror_provenance = ROOT / "huggingface" / "manifests" / provenance_path.name
+    if mirror_provenance.is_file() and mirror_provenance.read_bytes() != provenance_path.read_bytes():
+        raise ValueError("Hugging Face release provenance is not byte-identical")
 
 
 def scan_files() -> list[str]:
@@ -147,6 +182,7 @@ def expected_license_gate(row: dict[str, object]) -> str:
 
 def validate(*, require_images: bool) -> dict[str, object]:
     rows = load_rows()
+    validate_release_provenance(rows)
     material_policies = load_policies()
     ids = [str(row.get("release_id", "")) for row in rows]
     if len(ids) != len(set(ids)):

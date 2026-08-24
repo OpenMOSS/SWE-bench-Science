@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "release": "SWE-bench Science",
+  "authoritative_configuration": {
+    "repository": "https://github.com/OpenMOSS/SWE-bench-Science",
+    "path": "manifests/tasks.jsonl",
+    "role": "The canonical task metadata and image-reference table.",
+    "huggingface_mirror": "huggingface/manifests/tasks.jsonl",
+    "mirror_invariant": "The Hugging Face copy is generated from the canonical file and is byte-identical for this release."
+  },
+  "image_provenance": {
+    "registry": "docker.io",
+    "platform": "linux/amd64",
+    "task_count": 119,
+    "environment_digest_count": 119,
+    "verifier_digest_count": 119,
+    "pair_definition": "For each release_id, the environment_image and verifier_image fields in manifests/tasks.jsonl form the immutable pair used by the runner.",
+    "verifier_base_rule": "A verifier is built FROM the corresponding environment reference pinned by its digest.",
+    "manifest_sha256": "d078e9b47f112af8c05e36571ff112566ed91dac007a32338e50c16032722554"
+  },
+  "clean_evaluation": {
+    "authoritative_image_source": "The immutable Docker Hub references in manifests/tasks.jsonl; no alternate or historical image set is selected at runtime.",
+    "dependency_setup": "none",
+    "environment_dependencies": "Task dependencies, compilers, and public fixtures are baked into the environment image.",
+    "runner_side_install": "The clean runner does not install or upgrade task dependencies before verification.",
+    "verifier_network": "none",
+    "private_tests": "Private tests are present only in the verifier image and are never copied into the agent environment.",
+    "candidate_boundary": "The verifier applies the candidate patch to a clean baseline before running public and private checks."
+  },
+  "public_boundary": {
+    "answer_artifacts": "excluded",
+    "credentials": "excluded",
+    "agent_trajectories": "excluded",
+    "source_of_truth": "The release manifest and the pinned image digests, not a mutable tag or an unrecorded setup step."
+  }
+}

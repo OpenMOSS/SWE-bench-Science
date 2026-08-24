@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/Stanford-NavLab/gnss_lib_py",
   "source_commit": "9a4e467ba06e636ffa4de6ceee302cefee8b2a34",
   "source_license": "MIT",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",

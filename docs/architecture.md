@@ -16,7 +16,7 @@ SWE-bench Science 的发布需要同时满足：
    Docker Hub 发布 `119 x n` 份题目镜像；
 5. verifier 能在干净源码上应用 agent patch，并重新编译 C/C++ 等任务；
 6. 发布物不包含标准答案 patch；
-7. 97 道默认题和 22 道 restricted-license 题有明确但非强制的下载入口；
+7. 96 道默认题和 23 道 restricted-license 题有明确但非强制的下载入口；
 8. Hugging Face + Docker Hub 可以独立于 GitHub 工作。
 
 ## 2. 官方 benchmark 核对结论
@@ -328,20 +328,20 @@ Pier 当前不直接解析或下载 HF registry dataset，因此需要一个显�
 `restricted_license` 和 `--allow-restricted-licenses` 不是 DeepSWE/Pier 字段，而是
 本项目的分发选择策略：
 
-- 默认下载/构建清单包含 97 道 unrestricted-license 题；
+- 默认下载/构建清单包含 96 道 unrestricted-license 题；
 - `--allow-restricted-licenses` 明确加入 18 道 GPL/LGPL/AGPL-family 题和
-  019、026、101、102 的其他受限材料，共 119 道；
-- 22 道 gated release id 为 `003, 019, 020, 021, 023, 026, 032, 057, 066,
+  019、026、035、101、102 的其他受限材料，共 119 道；
+- 23 道 gated release id 为 `003, 019, 020, 021, 023, 026, 032, 035, 057, 066,
   074, 075, 082, 083, 084, 085, 096, 097, 098, 100, 101, 102, 118`；
 - 其中 `019` 为 academic non-commercial source license，`026` 含 academic
-  non-commercial auxiliary material，`101` 和 `102` 含受限第三方材料，其余
+  non-commercial auxiliary material，`035`、`101` 和 `102` 含受限第三方材料，其余
   18 道为 GPL/LGPL/AGPL-family；
 - Pier 本身只运行已经下载到本地的目录，不负责解释 license gate；
 - 该入口不替代上游 license、notice、source offer 等实际合规义务；
 - 按此前约定，不做 Docker registry hostname 的强制检查。
 
 `--allow-restricted-licenses` 的具体入口属于 HF materializer：默认只
-materialize/pull `default-97.json` 中的任务和镜像；显式传入后可 materialize
+materialize/pull `default-96.json` 中的任务和镜像；显式传入后可 materialize
 `all-119.json` 对应集合。直接对已经 materialize 的目录运行 Pier 不再重复做
 license gate。
 
@@ -386,7 +386,7 @@ replicate id 和结果路径。失败重试只重跑明确 task/trial，不重�
 - Hugging Face：`OpenMOSS-Team/SWE-bench-Science`，display title 为
   `SWE-bench Science`。
 - Docker Hub：`kevinxulearning`；不发布 GHCR 镜像。
-- 默认选择：97 道 unrestricted-license 题；全量 119 题必须显式使用
+- 默认选择：96 道 unrestricted-license 题；全量 119 题必须显式使用
   `--allow-restricted-licenses`。
 - 运行架构：所有已发布 environment/verifier 镜像为 `linux/amd64`。
 - 结果汇总：Pier `result.json` 加 runner 生成的 `summary.json`/`summary.csv`。

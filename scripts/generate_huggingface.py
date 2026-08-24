@@ -289,6 +289,9 @@ def write_snapshot(
     manifest_dir = output_root / "manifests"
     manifest_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy2(ROOT / "manifests" / "tasks.jsonl", manifest_dir / "tasks.jsonl")
+    provenance = ROOT / "manifests" / "release_provenance.json"
+    if provenance.is_file():
+        shutil.copy2(provenance, manifest_dir / provenance.name)
     tools_dir = output_root / "tools"
     tools_dir.mkdir(parents=True, exist_ok=True)
     for script in (

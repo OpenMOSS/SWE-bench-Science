@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/StingraySoftware/stingray",
   "source_commit": "79b8f9bb9d122bd0176bb37f48f0fd4926eb9afb",
   "source_license": "MIT",
-  "license_source": "LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",

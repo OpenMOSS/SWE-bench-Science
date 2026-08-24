@@ -8,8 +8,8 @@ operational verification steps.
 - [x] 119 canonical release ids (`001` through `119`), with the replacement
       payload used for `001` and no legacy id exposed.
 - [x] 18 GPL-family ids, one academic non-commercial source id, one id with
-      academic non-commercial auxiliary material, and two restricted-material
-      ids are separated from the default selection.
+      academic non-commercial auxiliary material, and three other
+      restricted-material ids are separated from the default selection.
 - [x] 119 environment image digests and 119 verifier image digests are recorded.
 - [x] Every published image resolves to `linux/amd64`.
 - [x] Every verifier image is based on the corresponding environment digest.
@@ -20,7 +20,7 @@ operational verification steps.
 ## Dataset Integrity
 
 - [x] Dataset Viewer table is generated from the canonical 119-row manifest.
-- [x] `default-97.json` excludes exactly the 22 restricted-license ids.
+- [x] `default-96.json` excludes exactly the 23 restricted-license ids.
 - [x] `all-119.json` contains exactly 119 unique ids.
 - [x] Task bundles contain no reference-answer patch, credential, trajectory, or
       private verifier test.
@@ -53,3 +53,6 @@ available for diagnosis.
 - [x] Codex Responses/Chat, Claude Code, and mini-swe-agent profile examples are
       included without credentials.
 - [x] Results can be inspected with `pier view` or the generated JSON/CSV summary.
+- [x] [`manifests/release_provenance.json`](../manifests/release_provenance.json)
+      records the authoritative manifest, all image-pair counts, and the clean
+      no-extra-dependency verification boundary.

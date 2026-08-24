@@ -53,6 +53,7 @@ can change a real repository while preserving those contracts.
 | Configure a gateway, model, or harness | [Batch runner reference](docs/run-batch.md) |
 | Understand the release architecture | [Architecture](docs/architecture.md) |
 | Inspect the data contract | [Dataset contract](docs/dataset-contract.md) |
+| Verify image/config provenance | [Release provenance](manifests/release_provenance.json) |
 
 ## Why This Benchmark
 

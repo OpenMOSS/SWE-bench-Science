@@ -106,6 +106,7 @@ The repository also includes:
 | `data/tasks.csv` | Human-readable task table |
 | `data/statistics.md` | Generated release statistics |
 | `manifests/tasks.jsonl` | Canonical machine-readable release manifest |
+| `manifests/release_provenance.json` | Authoritative configuration and clean-verification provenance |
 | `selections/` | Reproducible task selections |
 | `tasks/task_NNN/` | Thin Harbor/Pier task bundles |
 | `tools/` | Materialization, provider, batch, and summary tools |

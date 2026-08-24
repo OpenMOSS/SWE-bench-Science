@@ -14,11 +14,11 @@
 huggingface/data/tasks.csv    119 rows, one row per release task
 ```
 
-`default`（97 题）和 `all`（119 题）是下载 selection，不复制成多份数据表。
+`default`（96 题）和 `all`（119 题）是下载 selection，不复制成多份数据表。
 生成两个固定清单：
 
 ```text
-selections/default-97.json
+selections/default-96.json
 selections/all-119.json
 ```
 
@@ -144,7 +144,7 @@ card 必须由 119 行 canonical data 生成以下表格，不能手填猜测数
 - amd64 覆盖率；
 - verifier canary 通过/基础设施失败数。
 
-当前发布的全局数字为：119 total、97 default、22 restricted-license、18
+当前发布的全局数字为：119 total、96 default、23 restricted-license、18
 GPL-family。其余统计由发布脚本从 canonical rows 自动生成。当前 release 不含
 `UNKNOWN` source license；后续导入若无法确认许可证，必须保留显式缺失值并在
 发布前审阅，不能填零或猜测。
@@ -174,15 +174,18 @@ HF snapshot、release Git 和两类 Docker image 都要扫描：
 
 ## 8. Restricted license selection
 
-22 个 restricted-license release id：
+23 个 restricted-license release id：
 
 ```text
-003 019 020 021 023 026 032 057 066 074 075 082 083 084 085 096 097 098 100 101 102 118
+003 019 020 021 023 026 032 035 057 066 074 075 082 083 084 085 096 097 098 100 101 102 118
 ```
 
 其中 `019` 为 academic non-commercial source license，`026` 含 academic
-non-commercial auxiliary material，`101` 和 `102` 含受限第三方材料；其余 18
-个为 GPL/LGPL/AGPL-family。`default-97.json` 必须排除这些题，`all-119.json`
+non-commercial auxiliary material，`035`、`101` 和 `102` 含受限第三方材料；其余
+18 个为 GPL/LGPL/AGPL-family。`default-96.json` 必须排除这些题，`all-119.json`
 必须恰好包含 119 个唯一 id。
 `--allow-restricted-licenses` 只切换 selection；不修改任务内容，不绕过许可证
 notice/source 义务，也不改变 Pier 行为。
+
+发布配置和运行边界见
+[`manifests/release_provenance.json`](../manifests/release_provenance.json)。

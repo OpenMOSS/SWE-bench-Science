@@ -60,7 +60,7 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertTrue(gpl_gate_ids)
         self.assertEqual(sum(bool(row.get("gpl_family")) for row in rows), len(gpl_ids(rows)))
         self.assertTrue(gpl_ids(rows) <= restricted_ids(rows))
-        self.assertTrue({"019", "026", "101", "102"} <= restricted_ids(rows))
+        self.assertTrue({"019", "026", "035", "101", "102"} <= restricted_ids(rows))
 
     def test_091_105_material_policies_are_complete(self) -> None:
         policies = load_policies()
