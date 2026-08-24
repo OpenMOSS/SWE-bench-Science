@@ -46,10 +46,17 @@ class ReleaseToolTests(unittest.TestCase):
             normalize_task_id("120")
 
     def test_legacy_source_license_comes_from_explicit_author_audit(self) -> None:
-        source_root = Path(
-            "/Users/fnlp/workspace/agent/my_science_bench_platform_amd64"
-        )
-        license_name, evidence = audited_license_from_author_notes(source_root, "120")
+        with tempfile.TemporaryDirectory() as directory:
+            source_root = Path(directory)
+            audit = source_root / "app" / "author_notes" / "task_120"
+            audit.mkdir(parents=True)
+            (audit / "source_snapshot_audit.md").write_text(
+                "- License: MIT (`LICENSE` at the selected commit)\n",
+                encoding="utf-8",
+            )
+            license_name, evidence = audited_license_from_author_notes(
+                source_root, "120"
+            )
         self.assertEqual(license_name, "MIT")
         self.assertEqual(
             evidence,
