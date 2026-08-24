@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/mdtraj/mdtraj",
   "source_commit": "b963d4f01290fef66cca714e4a53f4891096b69a",
   "source_license": "LGPL-2.1-family",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
