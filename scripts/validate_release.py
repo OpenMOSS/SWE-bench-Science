@@ -6,6 +6,10 @@ from __future__ import annotations
 import argparse
 import json
 import re
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10 and earlier.
+    import tomli as tomllib
 from pathlib import Path
 
 try:
@@ -83,6 +87,49 @@ def is_restricted_license(row: dict[str, object]) -> bool:
     )
 
 
+def validate_task_image_references(
+    row: dict[str, object], thin_task_path: Path
+) -> None:
+    """Require task-local image refs to equal the canonical manifest pair."""
+    environment_image = str(row.get("environment_image") or "")
+    verifier_image = str(row.get("verifier_image") or "")
+    if not environment_image and not verifier_image:
+        return
+    task_toml = thin_task_path / "task.toml"
+    if not task_toml.is_file():
+        raise ValueError(f"missing task.toml for {row['release_id']}")
+    try:
+        payload = tomllib.loads(task_toml.read_text(encoding="utf-8"))
+    except tomllib.TOMLDecodeError as exc:
+        raise ValueError(f"invalid task.toml for {row['release_id']}: {exc}") from exc
+    task_environment = str(
+        payload.get("environment", {}).get("docker_image", "")
+    )
+    task_verifier = str(
+        payload.get("verifier", {}).get("environment", {}).get("docker_image", "")
+    )
+    if task_environment != environment_image:
+        raise ValueError(
+            f"environment image mismatch for {row['release_id']}: "
+            f"task.toml={task_environment!r}, manifest={environment_image!r}"
+        )
+    if task_verifier != verifier_image:
+        raise ValueError(
+            f"verifier image mismatch for {row['release_id']}: "
+            f"task.toml={task_verifier!r}, manifest={verifier_image!r}"
+        )
+    dockerfile = thin_task_path / "tests" / "Dockerfile"
+    if dockerfile.is_file():
+        match = re.search(r"^ARG VERIFIER_IMAGE=(\S+)$", dockerfile.read_text(encoding="utf-8"), re.MULTILINE)
+        if not match:
+            raise ValueError(f"missing VERIFIER_IMAGE in {dockerfile}")
+        if match.group(1) != verifier_image:
+            raise ValueError(
+                f"verifier Dockerfile mismatch for {row['release_id']}: "
+                f"Dockerfile={match.group(1)!r}, manifest={verifier_image!r}"
+            )
+
+
 def expected_license_gate(row: dict[str, object]) -> str:
     if is_gpl_family_license(row.get("source_license")):
         return "gpl-family"
@@ -140,8 +187,15 @@ def validate(*, require_images: bool) -> dict[str, object]:
         ):
             if not (thin_task_path / relative).is_file():
                 raise ValueError(f"missing dynamic verifier entrypoint for {task_id}: {relative}")
+        validate_task_image_references(row, thin_task_path)
         if policy:
             task_dir = ROOT / str(row["task_path"])
+            if not task_dir.is_dir():
+                # The public-control repository may carry only the thin HF
+                # snapshot.  Validate its retained public material files in
+                # that layout instead of assuming the private authoring tree
+                # is present locally.
+                task_dir = thin_task_path
             materials_path = task_dir / "environment" / "public" / "MATERIALS.json"
             if not materials_path.is_file():
                 raise ValueError(f"missing material manifest for {task_id}")
@@ -152,7 +206,7 @@ def validate(*, require_images: bool) -> dict[str, object]:
                 if (task_dir / str(relative)).exists():
                     raise ValueError(f"excluded material remains in task {task_id}: {relative}")
             for pattern in policy.get("remove_globs", []):
-                if next(task_dir.glob(str(pattern)), None) is not None:
+                if task_dir.exists() and next(task_dir.glob(str(pattern)), None) is not None:
                     raise ValueError(
                         f"excluded material glob remains in task {task_id}: {pattern}"
                     )
@@ -160,6 +214,8 @@ def validate(*, require_images: bool) -> dict[str, object]:
                 policy.get("retain_subdirectories", {})
             ).items():
                 parent = task_dir / str(relative)
+                if not parent.is_dir():
+                    continue
                 allowed = {str(name) for name in allowed_names}
                 unexpected = sorted(
                     child.name
@@ -173,6 +229,8 @@ def validate(*, require_images: bool) -> dict[str, object]:
                     )
             for relative, allowed_names in dict(policy.get("retain_files", {})).items():
                 parent = task_dir / str(relative)
+                if not parent.is_dir():
+                    continue
                 allowed = {str(name) for name in allowed_names}
                 unexpected = sorted(
                     child.name
@@ -185,7 +243,10 @@ def validate(*, require_images: bool) -> dict[str, object]:
                         f"{relative}: {unexpected}"
                     )
             for relative in policy.get("strip_notebook_outputs", []):
-                notebook = json.loads((task_dir / str(relative)).read_text(encoding="utf-8"))
+                notebook_path = task_dir / str(relative)
+                if not notebook_path.is_file():
+                    continue
+                notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
                 if any(cell.get("outputs") for cell in notebook.get("cells", [])):
                     raise ValueError(f"notebook outputs remain in task {task_id}: {relative}")
         if require_images and (not row.get("environment_image") or not row.get("verifier_image")):

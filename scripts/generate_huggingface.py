@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import shutil
 from collections import Counter
 from pathlib import Path
@@ -164,6 +165,57 @@ def metadata_from_row(row: dict[str, object]) -> dict[str, object]:
     }
 
 
+def rewrite_image_references(task_dir: Path, row: dict[str, object]) -> None:
+    """Make every generated task-local image reference follow the manifest.
+
+    The repository manifest is the release authority.  Imported task bundles
+    can predate a later image republish, so copying their ``task.toml`` as-is
+    would silently leave the Hugging Face snapshot pointing at a different
+    image pair.
+    """
+    environment_image = str(row.get("environment_image") or "")
+    verifier_image = str(row.get("verifier_image") or "")
+    task_toml = task_dir / "task.toml"
+    if not task_toml.is_file() or not environment_image or not verifier_image:
+        return
+    lines: list[str] = []
+    section = ""
+    seen_environment = False
+    seen_verifier = False
+    for line in task_toml.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if stripped.startswith("["):
+            section = stripped
+        if stripped.startswith("docker_image") and section == "[environment]":
+            line = f'docker_image = "{environment_image}"'
+            seen_environment = True
+        elif stripped.startswith("docker_image") and section == "[verifier.environment]":
+            line = f'docker_image = "{verifier_image}"'
+            seen_verifier = True
+        lines.append(line)
+    if not seen_environment or not seen_verifier:
+        raise ValueError(
+            f"task {row['release_id']} task.toml is missing environment/verifier image fields"
+        )
+    task_toml.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    verifier_dockerfile = task_dir / "tests" / "Dockerfile"
+    if verifier_dockerfile.is_file():
+        dockerfile = verifier_dockerfile.read_text(encoding="utf-8")
+        updated, count = re.subn(
+            r"^ARG VERIFIER_IMAGE=.*$",
+            f"ARG VERIFIER_IMAGE={verifier_image}",
+            dockerfile,
+            count=1,
+            flags=re.MULTILINE,
+        )
+        if count != 1:
+            raise ValueError(
+                f"task {row['release_id']} tests/Dockerfile is missing VERIFIER_IMAGE"
+            )
+        verifier_dockerfile.write_text(updated, encoding="utf-8")
+
+
 def write_snapshot(
     rows: list[dict[str, object]],
     output_root: Path,
@@ -221,6 +273,7 @@ def write_snapshot(
                         "RUN chmod 755 /tests/grader.py\n",
                         encoding="utf-8",
                     )
+        rewrite_image_references(destination, row)
         for relative in OPTIONAL_THIN_TASK_FILES:
             source_file = source / relative
             if not source_file.is_file() and relative == "fixtures/PROVENANCE.md":
