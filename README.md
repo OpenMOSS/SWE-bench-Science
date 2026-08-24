@@ -123,15 +123,15 @@ The runtime release is distributed through Hugging Face and Docker Hub. A GitHub
 is useful for documentation and source inspection, but evaluation runs from the
 downloaded dataset bundle.
 
-You need Python 3.11+, Docker Desktop or Docker Engine with `linux/amd64` support,
+You need Python 3.12+, Docker Desktop or Docker Engine with `linux/amd64` support,
 and `uv` (or another Python environment manager). Apple Silicon hosts are supported
 through Docker Desktop's amd64 emulation.
 
 ### 1. Install the runner
 
 ~~~bash
-python3 -m pip install "huggingface_hub[cli]"
-uv tool install "datacurve-pier==0.3.0"
+python3.12 -m pip install "huggingface_hub[cli]"
+uv tool install --python 3.12 "datacurve-pier==0.3.0"
 docker login
 ~~~
 
@@ -194,8 +194,9 @@ python3 tools/run_batch.py \
 
 For Claude Code or mini-swe-agent, change `--agent` and provide the corresponding
 profile and `--model`. For an approximately 120-second agent-stage smoke, add
-`--agent-timeout-multiplier 0.0223`; verifier and native-build timeouts remain
-independent.
+`--agent-timeout-multiplier 0.0223`; for an approximately 30-second smoke, use
+`--agent-timeout-multiplier 0.0055556`. Verifier and native-build timeouts remain
+independent. The pinned `datacurve-pier==0.3.0` release requires Python 3.12+.
 
 ## Provider Profiles
 

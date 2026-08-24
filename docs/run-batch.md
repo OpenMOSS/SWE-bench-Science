@@ -11,12 +11,14 @@ for `linux/amd64`, writes a redacted run record, and invokes Pier with
 From a downloaded release directory:
 
 ~~~bash
-uv tool install "datacurve-pier==0.3.0"
+uv tool install --python 3.12 "datacurve-pier==0.3.0"
 docker login
 python3 tools/materialize.py \
   --task-id 002,005-007 \
   --output tasks-selected-small --force
 ~~~
+
+The pinned `datacurve-pier==0.3.0` release requires Python 3.12 or newer.
 
 The `--path` passed to `run_batch.py` must be a materialized directory containing
 `task_NNN/task.toml` directories. The runner never selects tasks implicitly and
@@ -121,8 +123,9 @@ python3 tools/run_batch.py \
 ~~~
 
 For an approximately 120-second agent-stage smoke, add
-`--agent-timeout-multiplier 0.0223`. This does not shorten the verifier timeout
-or any native build timeout.
+`--agent-timeout-multiplier 0.0223`. For an approximately 30-second agent-stage
+smoke, use `--agent-timeout-multiplier 0.0055556`. These options do not shorten
+the verifier timeout or any native build timeout.
 
 ## Patch and Verifier Boundary
 

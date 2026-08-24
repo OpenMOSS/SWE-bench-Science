@@ -116,14 +116,16 @@ The environment image contains the baseline source, public fixtures, dependencie
 
 ## Quick Start
 
+The pinned `datacurve-pier==0.3.0` release requires Python 3.12 or newer.
+
 ~~~bash
-python3 -m pip install "huggingface_hub[cli]"
+python3.12 -m pip install "huggingface_hub[cli]"
 hf auth login
 hf download OpenMOSS-Team/SWE-bench-Science \
   --repo-type dataset --local-dir swe-bench-science
 cd swe-bench-science
 
-uv tool install "datacurve-pier==0.3.0"
+uv tool install --python 3.12 "datacurve-pier==0.3.0"
 docker login
 ~~~
 
@@ -204,7 +206,11 @@ python3 tools/run_batch.py \
   --jobs-dir jobs --job-name codex-small
 ~~~
 
-For a short agent-stage smoke, add `--agent-timeout-multiplier 0.0223`, approximately 120 seconds for the default task timeout. Verifier and scientific-build timeouts remain independent.
+For an approximately 120-second agent-stage smoke, add
+`--agent-timeout-multiplier 0.0223`; for an approximately 30-second smoke, use
+`--agent-timeout-multiplier 0.0055556`. Verifier and scientific-build timeouts
+remain independent. The pinned `datacurve-pier==0.3.0` release requires Python
+3.12 or newer.
 
 ## Provider Profiles
 
