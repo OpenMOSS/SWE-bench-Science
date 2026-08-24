@@ -18,6 +18,7 @@ from import_task import (
     render_package_source_args,
     render_runtime_environment_lines,
     render_source_build_lines,
+    render_verifier_source_build_lines,
     render_system_package_lines,
     render_template,
     runtime_options,
@@ -132,6 +133,14 @@ def sync(task_id: str, *, add_python: list[str], add_system: list[str]) -> None:
             ROOT / "templates" / "verifier" / name,
             staging / name,
             task_id=task_id,
+            replacements={
+                "__SOURCE_BUILD_CLEAN_FLAGS__": (
+                    "ffd" if runtime.get("source_build") else "ffdqx"
+                ),
+                "__SOURCE_BUILD_RUNTIME_LINES__": render_verifier_source_build_lines(
+                    task_id, runtime.get("source_build")
+                )
+            },
         )
     print(
         json.dumps(

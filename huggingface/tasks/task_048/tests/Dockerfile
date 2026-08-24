@@ -1,4 +1,4 @@
-ARG VERIFIER_IMAGE=docker.io/kevinxulearning/swe-bench-science-verifier-python-task-048:v0.1.1@sha256:670f242d783782ed07312104f888007fdfa136952eb46941c065cfb4b5d9eb14
+ARG VERIFIER_IMAGE=docker.io/kevinxulearning/swe-bench-science-verifier-python-task-048:v0.1.2@sha256:2f9f66bb675f3e67c8ece3caa9a5ddf155534dbf656e0fd1d5f4d2c58c886500
 FROM ${VERIFIER_IMAGE}
 
 COPY grader.py /tests/grader.py

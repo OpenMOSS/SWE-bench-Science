@@ -595,6 +595,28 @@ def render_source_build_lines(task_id: str, source_build: dict[str, str] | None)
     )
 
 
+def render_verifier_source_build_lines(
+    task_id: str, source_build: dict[str, str] | None
+) -> str:
+    """Rebuild ignored native artifacts after a verifier patch is applied.
+
+    Environment images intentionally keep generated extensions out of git, so
+    the verifier's isolation cleanup removes them. Repeating the declared
+    source build after applying the candidate patch restores the same runtime
+    contract and ensures patched native sources are actually compiled.
+    """
+    if not source_build:
+        return ""
+    command = "python setup.py build_ext --inplace"
+    if source_build["kind"] == "python_setup_clib":
+        command = "python setup.py build_clib build_ext --inplace"
+    return (
+        f"\ncd /app/task_{task_id}/source\n"
+        f"{command}\n"
+        f"cd /app/task_{task_id}\n"
+    )
+
+
 def task_toml(*, task_id: str, title: str, language: str, base_commit: str) -> str:
     return (
         'schema_version = "1.3"\n'
@@ -769,6 +791,14 @@ def import_task(
             TEMPLATES_ROOT / "verifier" / name,
             verifier_dir / name,
             task_id=task_id,
+            replacements={
+                "__SOURCE_BUILD_CLEAN_FLAGS__": (
+                    "ffd" if runtime["source_build"] else "ffdqx"
+                ),
+                "__SOURCE_BUILD_RUNTIME_LINES__": render_verifier_source_build_lines(
+                    task_id, runtime["source_build"]
+                )
+            },
         )
     for name in ("Dockerfile", "test.sh"):
         render_template(

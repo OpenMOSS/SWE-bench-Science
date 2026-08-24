@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/scikit-rf/scikit-rf",
   "source_commit": "a6dae181dbcf76fc738fc7fbc03d7de0a6c22634",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
