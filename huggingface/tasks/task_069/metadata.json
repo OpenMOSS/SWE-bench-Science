@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/open2c/cooltools",
   "source_commit": "ba2be42c714fffb6b62ea13e7ecfbecb5f4a4d9a",
   "source_license": "MIT",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
