@@ -15,7 +15,6 @@ from scripts.import_task import (
     classify_license_text,
     dependency_lines,
     detect_license,
-    audited_license_from_author_notes,
     normalize_task_id,
     render_system_package_lines,
     runtime_config,
@@ -44,24 +43,6 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertEqual(normalize_task_id("task_019"), "019")
         with self.assertRaises(ValueError):
             normalize_task_id("120")
-
-    def test_legacy_source_license_comes_from_explicit_author_audit(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            source_root = Path(directory)
-            audit = source_root / "app" / "author_notes" / "task_120"
-            audit.mkdir(parents=True)
-            (audit / "source_snapshot_audit.md").write_text(
-                "- License: MIT (`LICENSE` at the selected commit)\n",
-                encoding="utf-8",
-            )
-            license_name, evidence = audited_license_from_author_notes(
-                source_root, "120"
-            )
-        self.assertEqual(license_name, "MIT")
-        self.assertEqual(
-            evidence,
-            "upstream LICENSE at pinned source commit (author audit verified)",
-        )
 
     def test_manifest_has_119_rows_and_exact_gpl_gate(self) -> None:
         summary = validate(require_images=False)
