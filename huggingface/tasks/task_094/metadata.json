@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/materialsproject/pymatgen",
   "source_commit": "ab97479e8da696b33f02cd140fdd16956600f94a",
   "source_license": "MIT",
-  "license_source": "LICENSE.rst",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
