@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/chemprop/chemprop",
   "source_commit": "1f367d55d1bac14dd6b9e0cd5746574fcfab9a59",
   "source_license": "MIT",
-  "license_source": "LICENSE.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
@@ -19,5 +19,5 @@
   "material_licenses": [],
   "materials_provenance": "",
   "restricted_reason": "",
-  "public_payload_sha256": "c291d415ccd2e70e47144f5f0165dbbf3c715b19888a5cd27277fc3f24f0653b"
+  "public_payload_sha256": "d49ff62be8ea0f353378d3180b6041173b3d63a234eaf9daf06a39b4262c5d86"
 }

@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/materialsproject/pymatgen-core",
   "source_commit": "c8cfee71f3ce5d92c5b5f6ca3d363f8f3a9f4495",
   "source_license": "MIT",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
