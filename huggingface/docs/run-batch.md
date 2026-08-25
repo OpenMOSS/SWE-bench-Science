@@ -1,6 +1,6 @@
 # Batch Evaluation Reference
 
-`tools/run_batch.py` is the convenience wrapper for running a materialized task
+`scripts/run_batch.py` is the convenience wrapper for running a materialized task
 selection with Pier. It does not build task images. It reads the immutable
 environment and verifier references from each `task.toml`, pulls those images
 for `linux/amd64`, writes a redacted run record, and invokes Pier with
@@ -13,7 +13,7 @@ From a downloaded release directory:
 ~~~bash
 uv tool install --python 3.12 "datacurve-pier==0.3.0"
 docker login
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --task-id 002,005-007 \
   --output tasks-selected-small --force
 ~~~
@@ -86,7 +86,7 @@ the selected harness by Pier.
 Run a no-model infrastructure smoke:
 
 ~~~bash
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-selected-small \
   --agent nop \
   --n-concurrent 1 \
@@ -98,7 +98,7 @@ python3 tools/run_batch.py \
 Run Codex through a gateway:
 
 ~~~bash
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-selected-small \
   --agent codex \
   --env-file ~/.config/swe-bench-science/codex.env \
@@ -112,7 +112,7 @@ python3 tools/run_batch.py \
 Run Claude Code or mini-swe-agent:
 
 ~~~bash
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-selected-small \
   --agent claude-code \
   --env-file ~/.config/swe-bench-science/claude.env \
@@ -201,7 +201,7 @@ for trajectories and inspect `result.json`, `reward.json`, and
 Pull nothing and inspect the fully rendered command:
 
 ~~~bash
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-selected-small \
   --agent codex \
   --env-file ~/.config/swe-bench-science/codex.env \
@@ -212,12 +212,12 @@ python3 tools/run_batch.py \
 Run the 91-task science-knowledge ablation selection after materialization:
 
 ~~~bash
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --task-id 002-082,084,086,090,097-101,111,114 \
   --allow-restricted-licenses \
   --output tasks-science-knowledge-ablation --force
 
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-science-knowledge-ablation \
   --agent codex \
   --env-file ~/.config/swe-bench-science/codex.env \

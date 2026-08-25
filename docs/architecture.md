@@ -407,7 +407,7 @@ swe-bench-science-release/
 │   ├── task-tests/               # 预构建 verifier 的薄入口
 │   └── verifier/                 # verifier Dockerfile/entrypoint 模板
 ├── huggingface/                  # HF card、data、selection、薄 task bundle
-│   ├── tools/                    # 随 HF 下载的 materializer/batch runner
+│   ├── scripts/                  # 随 HF 下载的 materializer/batch runner
 │   └── profiles/                 # 不含密钥的 provider 示例
 ├── scripts/                      # 导入、生成、校验、构建和 Pier 批量入口
 └── tests/                        # release tooling tests

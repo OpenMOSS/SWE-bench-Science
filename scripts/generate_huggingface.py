@@ -292,13 +292,13 @@ def write_snapshot(
     provenance = ROOT / "manifests" / "release_provenance.json"
     if provenance.is_file():
         shutil.copy2(provenance, manifest_dir / provenance.name)
-    tools_dir = output_root / "tools"
-    tools_dir.mkdir(parents=True, exist_ok=True)
+    scripts_dir = output_root / "scripts"
+    scripts_dir.mkdir(parents=True, exist_ok=True)
     for script in (
         "materialize.py", "provider_config.py", "pier_adapters.py", "run_batch.py",
         "summarize_results.py",
     ):
-        shutil.copy2(ROOT / "scripts" / script, tools_dir / script)
+        shutil.copy2(ROOT / "scripts" / script, scripts_dir / script)
     docs_dir = output_root / "docs"
     docs_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy2(ROOT / "docs" / "run-batch.md", docs_dir / "run-batch.md")

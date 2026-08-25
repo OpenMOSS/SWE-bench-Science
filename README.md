@@ -151,12 +151,12 @@ hf download OpenMOSS-Team/SWE-bench-Science \
 
 ~~~bash
 # Default selection: 96 unrestricted-license tasks.
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --output tasks-selected \
   --force
 
 # Or select one task, comma-separated IDs, and inclusive ranges.
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --task-id 002,005-007 \
   --output tasks-selected-small \
   --force
@@ -170,7 +170,7 @@ This checks task images, Pier wiring, verifier collection, and result paths with
 model call:
 
 ~~~bash
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-selected-small \
   --agent nop \
   --n-concurrent 1 \
@@ -182,7 +182,7 @@ python3 tools/run_batch.py \
 ### 5. Run an agent
 
 ~~~bash
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-selected-small \
   --agent codex \
   --env-file ~/.config/swe-bench-science/codex.env \
@@ -233,7 +233,7 @@ The default materialization excludes tasks that require an explicit license deci
 To include the 23 restricted rows:
 
 ~~~bash
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --allow-restricted-licenses \
   --output tasks-selected-all \
   --force
@@ -247,7 +247,7 @@ is no `--allow-GPL` compatibility option.
 The 91-task science-knowledge ablation selection is:
 
 ~~~bash
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --task-id 002-082,084,086,090,097-101,111,114 \
   --allow-restricted-licenses \
   --output tasks-science-knowledge-ablation \

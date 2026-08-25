@@ -109,7 +109,7 @@ The repository also includes:
 | `manifests/release_provenance.json` | Authoritative configuration and clean-verification provenance |
 | `selections/` | Reproducible task selections |
 | `tasks/task_NNN/` | Thin Harbor/Pier task bundles |
-| `tools/` | Materialization, provider, batch, and summary tools |
+| `scripts/` | Materialization, provider, batch, and summary tools |
 | `docs/run-batch.md` | Full provider and batch-runner reference |
 
 The environment image contains the baseline source, public fixtures, dependencies, and compilers. The separate verifier image contains held-out tests and the grader. The dataset does not contain reference-answer patches, credentials, agent trajectories, or private verifier tests.
@@ -132,14 +132,14 @@ docker login
 Materialize the default selection:
 
 ~~~bash
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --output tasks-selected --force
 ~~~
 
 Materialize one task, a comma-separated list, or inclusive ranges:
 
 ~~~bash
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --task-id 002,005-007 \
   --output tasks-selected-small --force
 ~~~
@@ -148,7 +148,7 @@ Materialize the complete 91-task science-knowledge ablation split. It contains
 restricted-license tasks, so the explicit license opt-in is required:
 
 ~~~bash
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --task-id 002-082,084,086,090,097-101,111,114 \
   --allow-restricted-licenses \
   --output tasks-science-knowledge-ablation --force
@@ -161,7 +161,7 @@ Every materialization writes `selection.json` with the exact task IDs used for t
 Twenty-three tasks are excluded from the default selection because they contain GPL/LGPL/AGPL-family code, academic non-commercial sources or materials, or restricted third-party data. Include them only after confirming that your use is permitted:
 
 ~~~bash
-python3 tools/materialize.py \
+python3 scripts/materialize.py \
   --allow-restricted-licenses \
   --output tasks-selected-all --force
 ~~~
@@ -198,7 +198,7 @@ pier run -p tasks-selected-small \
 For Codex gateway profiles, use the included wrapper:
 
 ~~~bash
-python3 tools/run_batch.py \
+python3 scripts/run_batch.py \
   --path tasks-selected-small \
   --agent codex \
   --env-file ~/.config/swe-bench-science/codex.env \
@@ -242,7 +242,7 @@ jobs/<job-name>/<task>__<trial>/verifier/test-stdout.txt
 The wrapper additionally writes `jobs/summary.json` and `jobs/summary.csv`. For a direct Pier run, generate the same summaries with:
 
 ~~~bash
-python3 tools/summarize_results.py --jobs-dir jobs
+python3 scripts/summarize_results.py --jobs-dir jobs
 ~~~
 
 Use `pier view jobs` to inspect trajectories.
