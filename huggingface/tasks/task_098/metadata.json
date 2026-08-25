@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/pytroll/satpy",
   "source_commit": "0ef189634030bda38bd069de30b60f8769995050",
   "source_license": "GPL-3.0-or-later",
-  "license_source": "source/satpy/utils.py",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
