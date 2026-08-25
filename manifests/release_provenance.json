@@ -16,7 +16,7 @@
     "verifier_digest_count": 119,
     "pair_definition": "For each release_id, the environment_image and verifier_image fields in manifests/tasks.jsonl form the immutable pair used by the runner.",
     "verifier_base_rule": "A verifier is built FROM the corresponding environment reference pinned by its digest.",
-    "manifest_sha256": "81fd29bf315fd9f6a22a664366f1146f4116d73f6d46c7e3276cb03517d35bd8"
+    "manifest_sha256": "e3f9e51546a7820d1d0719c1e35a5cfe07ae3f33a0aeee32e5fe05fb1e74eee0"
   },
   "clean_evaluation": {
     "authoritative_image_source": "The immutable Docker Hub references in manifests/tasks.jsonl; no alternate or historical image set is selected at runtime.",
