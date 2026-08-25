@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/SteveDoyle2/pyNastran",
   "source_commit": "bdff2bb616847a058960c56328b68e36ab3764e3",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.md",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",

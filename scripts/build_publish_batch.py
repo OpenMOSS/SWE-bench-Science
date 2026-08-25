@@ -359,6 +359,10 @@ def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int =
         )
         return f"{output}\ndigest: {match.group(1)}"
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired, RuntimeError) as exc:
+        if isinstance(exc, subprocess.CalledProcessError):
+            serialized_output = (exc.stdout or "").strip()
+            if serialized_output:
+                print(f"! serialized upload output for {reference}: {serialized_output[-2000:]}", flush=True)
         if last_error is not None:
             raise last_error from exc
         raise
@@ -560,6 +564,9 @@ def update_task_bundle(task_id: str, env_image: str, verifier_image: str) -> Non
 
 
 def cleanup_batch(builder: str, references: list[str]) -> None:
+    if os.environ.get("SWE_BENCH_SKIP_CLEANUP") == "1":
+        print("+ keeping local images/build cache (SWE_BENCH_SKIP_CLEANUP=1)", flush=True)
+        return
     for reference in references:
         subprocess.run(["docker", "image", "rm", "-f", reference], cwd=ROOT, check=False)
     subprocess.run(["docker", "image", "prune", "--force"], cwd=ROOT, check=False)
