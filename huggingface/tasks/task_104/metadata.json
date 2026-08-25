@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/pybamm-team/PyBaMM",
   "source_commit": "4cf09f36bb4afb42c661e8765e14b4527581eff7",
   "source_license": "BSD-3-Clause",
-  "license_source": "LICENSE.txt",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",

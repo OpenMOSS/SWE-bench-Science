@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.11-slim
+ARG BASE_IMAGE=python:3.12-slim
 FROM ${BASE_IMAGE}
 
 ARG DEBIAN_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/debian
@@ -11,6 +11,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_INDEX_URL=${PIP_INDEX_URL} \
     PIP_NO_CACHE_DIR=1 \
     PYTHONDONTWRITEBYTECODE=1
+ENV PYBAMM_DISABLE_TELEMETRY="1"
+
 
 RUN sed -i \
         -e "s|http://deb.debian.org/debian-security|${DEBIAN_SECURITY_MIRROR}|g" \
@@ -43,7 +45,8 @@ COPY public/ /app/task_104/
 COPY requirements.lock /app/task_104/requirements.lock
 
 RUN python -m pip install --no-cache-dir --upgrade pip \
-    && python -m pip install --no-cache-dir -r requirements.lock
+    && python -m pip install --no-cache-dir  -r requirements.lock
+
 ENV PYTHONPATH=/app/task_104:/app/task_104/source
 
 RUN git init \
