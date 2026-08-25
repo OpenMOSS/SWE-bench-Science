@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/deepmodeling/deepmd-kit",
   "source_commit": "6c3b985cbc6e2dec51976a20ae51214186c693b5",
   "source_license": "LGPL-3.0-or-later",
-  "license_source": "source/deepmd/utils/spin.py",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
