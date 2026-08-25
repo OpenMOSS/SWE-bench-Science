@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/CLIMADA-project/climada_python",
   "source_commit": "104dfdb64ed00fce6c49a5d67be371f4fca016dd",
   "source_license": "GPL-3.0",
-  "license_source": "github-api:LICENSE@104dfdb64ed00fce6c49a5d67be371f4fca016dd",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
