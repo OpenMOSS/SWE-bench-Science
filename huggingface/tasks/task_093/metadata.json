@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/Project-MONAI/MONAI",
   "source_commit": "5a644e4edcc37e5c963e52fda6fab4c85b3ff02e",
   "source_license": "Apache-2.0",
-  "license_source": "github-api:LICENSE@5a644e4edcc37e5c963e52fda6fab4c85b3ff02e",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": false,
   "license_gate": "none",
