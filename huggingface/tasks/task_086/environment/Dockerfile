@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.11-slim
+ARG BASE_IMAGE=python:3.12-slim
 FROM ${BASE_IMAGE}
 
 ARG DEBIAN_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/debian
@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_INDEX_URL=${PIP_INDEX_URL} \
     PIP_NO_CACHE_DIR=1 \
     PYTHONDONTWRITEBYTECODE=1
+
 
 RUN sed -i \
         -e "s|http://deb.debian.org/debian-security|${DEBIAN_SECURITY_MIRROR}|g" \
@@ -41,12 +42,10 @@ WORKDIR /app/task_086
 COPY repo/ /app/task_086/source/
 COPY public/ /app/task_086/
 COPY requirements.lock /app/task_086/requirements.lock
-COPY wheels/torch-2.6.0+cpu-cp311-cp311-linux_x86_64.whl /app/task_086/torch-2.6.0+cpu-cp311-cp311-linux_x86_64.whl
 
 RUN python -m pip install --no-cache-dir --upgrade pip \
-    && python -m pip install --no-cache-dir /app/task_086/torch-2.6.0+cpu-cp311-cp311-linux_x86_64.whl \
-    && rm -f /app/task_086/torch-2.6.0+cpu-cp311-cp311-linux_x86_64.whl \
-    && python -m pip install --no-cache-dir -r requirements.lock
+    && python -m pip install --no-cache-dir --extra-index-url https://download-r2.pytorch.org/whl/cpu -r requirements.lock
+
 ENV PYTHONPATH=/app/task_086:/app/task_086/source
 
 RUN git init \
