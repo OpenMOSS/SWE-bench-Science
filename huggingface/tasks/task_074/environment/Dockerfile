@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.11-slim
+ARG BASE_IMAGE=python:3.12-slim
 FROM ${BASE_IMAGE}
 
 ARG DEBIAN_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/debian
@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_INDEX_URL=${PIP_INDEX_URL} \
     PIP_NO_CACHE_DIR=1 \
     PYTHONDONTWRITEBYTECODE=1
+
 
 RUN sed -i \
         -e "s|http://deb.debian.org/debian-security|${DEBIAN_SECURITY_MIRROR}|g" \
@@ -43,17 +44,8 @@ COPY public/ /app/task_074/
 COPY requirements.lock /app/task_074/requirements.lock
 
 RUN python -m pip install --no-cache-dir --upgrade pip \
-    && env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY \
-       -u http_proxy -u https_proxy -u all_proxy \
-       python -m pip install --no-cache-dir \
-        --index-url https://download.pytorch.org/whl/cpu \
-        torch==2.5.1+cpu \
-    && python -m pip install --no-cache-dir -r requirements.lock \
-    && env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY \
-       -u http_proxy -u https_proxy -u all_proxy \
-       python -m pip install --no-cache-dir \
-        --find-links https://data.pyg.org/whl/torch-2.5.0+cpu.html \
-        torch-scatter==2.1.2
+    && python -m pip install --no-cache-dir --extra-index-url https://download-r2.pytorch.org/whl/cpu -r requirements.lock
+
 ENV PYTHONPATH=/app/task_074:/app/task_074/source
 
 RUN git init \

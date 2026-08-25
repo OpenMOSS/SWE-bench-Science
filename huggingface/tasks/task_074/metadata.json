@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/deepmodeling/DeePTB",
   "source_commit": "e365079ea71190aaa0dc96d22253d3888c47abf9",
   "source_license": "LGPL-3.0-family",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": true,
   "restricted_license": true,
   "license_gate": "gpl-family",
