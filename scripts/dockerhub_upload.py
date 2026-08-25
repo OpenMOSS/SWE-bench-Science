@@ -7,6 +7,8 @@ import argparse
 import base64
 import hashlib
 import json
+import os
+import socket
 import subprocess
 import tarfile
 import tempfile
@@ -17,6 +19,23 @@ import urllib.request
 from pathlib import Path
 
 REGISTRY = "https://registry-1.docker.io"
+
+
+def configure_socks_proxy() -> None:
+    """Route urllib's Registry API sockets through an optional SOCKS5 proxy."""
+    value = os.environ.get("SWE_BENCH_REGISTRY_SOCKS5", "")
+    if not value:
+        return
+    import socks  # PySocks is installed on the publishing workstation.
+
+    host, separator, port = value.rpartition(":")
+    if not separator or not host or not port.isdigit():
+        raise ValueError(f"invalid SWE_BENCH_REGISTRY_SOCKS5 value: {value!r}")
+    socks.set_default_proxy(socks.SOCKS5, host, int(port))
+    socket.socket = socks.socksocket
+
+
+configure_socks_proxy()
 
 
 def http(url: str, *, method: str = "GET", headers: dict[str, str] | None = None,

@@ -119,6 +119,23 @@ def registry_network_env() -> dict[str, str]:
     return env
 
 
+def registry_upload_proxy_env() -> dict[str, str]:
+    """Return the registry environment with an optional upload-only proxy."""
+    env = registry_network_env()
+    proxy = os.environ.get("SWE_BENCH_REGISTRY_PROXY_URL")
+    if proxy:
+        if proxy.startswith("socks5://"):
+            # The Registry API uploader uses PySocks; leave urllib's normal
+            # proxy variables unset so the SOCKS socket is used directly.
+            env["SWE_BENCH_REGISTRY_SOCKS5"] = proxy.removeprefix("socks5://")
+            for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
+                env.pop(name, None)
+        else:
+            for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
+                env[name] = proxy
+    return env
+
+
 def ensure_builder(name: str) -> None:
     probe = subprocess.run(
         ["docker", "buildx", "inspect", name],
@@ -320,7 +337,7 @@ def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int =
                 tag,
             ],
             cwd=ROOT,
-            env=registry_network_env(),
+            env=registry_upload_proxy_env(),
             check=True,
             text=True,
             stdout=subprocess.PIPE,
@@ -336,7 +353,7 @@ def push_with_retry(reference: str, *, attempts: int = 3, timeout_seconds: int =
         subprocess.run(
             ["docker", "pull", "--platform", "linux/amd64", reference],
             cwd=ROOT,
-            env=registry_network_env(),
+            env=registry_upload_proxy_env(),
             check=True,
             text=True,
         )

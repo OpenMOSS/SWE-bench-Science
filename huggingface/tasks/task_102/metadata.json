@@ -7,7 +7,7 @@
   "source_repository": "https://github.com/marrink-lab/polyply_1.0",
   "source_commit": "160e9707d844ad1b108e1d8184152050d16088a0",
   "source_license": "Apache-2.0",
-  "license_source": "LICENSE",
+  "license_source": "manifests/materials.jsonl and retained upstream notices",
   "gpl_family": false,
   "restricted_license": true,
   "license_gate": "restricted-materials",
