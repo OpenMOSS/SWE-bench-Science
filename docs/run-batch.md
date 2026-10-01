@@ -19,6 +19,7 @@ python3 scripts/materialize.py \
 ~~~
 
 The pinned `datacurve-pier==0.3.0` release requires Python 3.12 or newer.
+Docker Engine 28 or newer is required for isolated bridge gateway mode.
 
 The `--path` passed to `run_batch.py` must be a materialized directory containing
 `task_NNN/task.toml` directories. The runner never selects tasks implicitly and
@@ -59,6 +60,65 @@ CODEX_REASONING_EFFORT=high
 proxy. A network proxy is configured with standard `HTTP_PROXY`, `HTTPS_PROXY`,
 and `NO_PROXY` variables. For Docker Desktop, a proxy running on the host is
 usually reached from a container as `host.docker.internal`, not `127.0.0.1`.
+Responses gateways use HTTP/SSE (`supports_websockets=false`). Include the API
+path in `CODEX_BASE_URL`, for example `http://gateway.example:4000/v1`.
+Nonstandard gateway ports are allowed only for their configured gateway host.
+The benchmark's generated Codex configuration disables hosted web search.
+
+### Chat-only gateways through LiteLLM
+
+Use an independent LiteLLM proxy when the upstream deployment exposes only
+Chat Completions. Codex continues to use its native Responses interface; the
+benchmark does not rewrite model requests or add model-specific adapters.
+LiteLLM provides the
+[Responses-to-Chat bridge](https://docs.litellm.ai/docs/response_api#opt-in-bridge-for-openai-models-with-custom-api_base).
+
+Install a separate gateway environment:
+
+~~~bash
+uv venv --python 3.12 .venv-gateway
+uv pip install --python .venv-gateway/bin/python 'litellm[proxy]==1.103.2'
+~~~
+
+Create `litellm.yaml`, replacing the deployment name and upstream URL:
+
+~~~yaml
+model_list:
+  - model_name: my-deployment
+    litellm_params:
+      model: openai/my-deployment
+      api_base: https://upstream.example/v1
+      api_key: os.environ/UPSTREAM_API_KEY
+      use_chat_completions_api: true
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+litellm_settings:
+  turn_off_message_logging: true
+~~~
+
+Set `UPSTREAM_API_KEY` and a separate `LITELLM_MASTER_KEY` in the gateway
+process's environment, then start it:
+
+~~~bash
+.venv-gateway/bin/litellm --config litellm.yaml --host 127.0.0.1 --port 4001
+~~~
+
+For Docker Desktop, configure the evaluation profile as follows:
+
+~~~dotenv
+MODEL=my-deployment
+OPENAI_API_KEY=replace-with-your-litellm-master-key
+CODEX_BASE_URL=http://host.docker.internal:4001/v1
+CODEX_WIRE_API=responses
+CODEX_VERSION=latest
+~~~
+
+Only the LiteLLM proxy key enters the Agent container. The upstream key stays
+in the gateway process. The configured host and port are added to the inference
+allowlist; direct Agent internet access remains blocked. On Linux, use a gateway
+address reachable from the proxy's egress network rather than enabling host
+networking for the Agent. The gateway is a separate local service, not part of
+the task images or verifier.
 
 ### Claude Code and mini-swe-agent
 
@@ -127,6 +187,45 @@ For an approximately 120-second agent-stage smoke, add
 smoke, use `--agent-timeout-multiplier 0.0055556`. These options do not shorten
 the verifier timeout or any native build timeout.
 
+## Offline Network Isolation
+
+The batch runner selects the shared `ScienceBenchDocker` environment for every
+harness, including Codex, Claude Code, and mini-swe-agent. Agent containers join
+only an internal bridge with `gateway_mode_ipv4=isolated` and IPv6 disabled.
+The inference proxy also joins a separate egress network, enforces the harness's
+provider allowlist, and has IPv4/IPv6 forwarding disabled. Both containers drop
+`NET_ADMIN` and `NET_RAW`. Verifiers and agents without inference egress use
+`network_mode=none`.
+
+Before the agent starts, the runner inspects the actual container and network
+configuration. Unsupported engines, a host gateway, additional Agent networks,
+or elevated network capabilities fail the trial. Clearing proxy variables,
+`NO_PROXY='*'`, `curl --noproxy '*'`, and Git proxy overrides cannot create a
+direct route to external source repositories.
+
+Each trial records `network-policy-<session>.json`; `batch-run.json` records
+the network policy and configured gateway authorities without credentials.
+Task image digests are unchanged by this runtime policy. Pier installs the
+selected harness during a separate image-build stage before the isolated agent
+stage starts.
+
+Run the opt-in Docker regression with an already pulled environment image:
+
+~~~bash
+SCI_BENCH_NETWORK_TEST_IMAGE='<environment image from task.toml>' \
+  python3.12 -m unittest tests.test_network_policy_e2e -v
+~~~
+
+This regression lives in the GitHub checkout. It uses a reachable local HTTP
+fixture to test permitted gateway traffic, denied source hosts, and direct
+proxy bypass attempts without a paid model call.
+
+Use `scripts/run_batch.py` for this policy. A direct `pier run` command must
+also supply `--environment-import-path scripts.pier_network:ScienceBenchDocker`
+and any nonstandard gateway URLs through
+`--environment-kwarg 'inference_urls=["http://gateway.example:4000"]'`.
+The validated release backend is Docker.
+
 ## Patch and Verifier Boundary
 
 Each materialized task contains a Pier `pre_artifacts.sh` hook. Pier runs this
@@ -154,7 +253,7 @@ test discovery does not require rebuilding the image.
 | --- | --- | --- |
 | `--path` | required | Materialized task directory |
 | `--agent` | `nop` | Pier harness, such as `codex`, `claude-code`, `mini-swe-agent`, or `nop` |
-| `--env` | `docker` | Pier environment backend |
+| `--env` | `docker` | Docker backend with the Science benchmark offline policy |
 | `--env-file` | unset | Provider/harness env file |
 | `--model` | unset | Model route; repeat for multiple Pier model arguments |
 | `--agent-env KEY=VALUE` | repeatable | Extra environment value passed to the harness |

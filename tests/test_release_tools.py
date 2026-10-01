@@ -519,6 +519,8 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertEqual(profile.wire_api, "chat")
         self.assertEqual(profile.safe_base_url, "https://gateway.example/v1")
         self.assertIn('env_key = "OPENAI_API_KEY"', config)
+        self.assertIn('web_search = "disabled"', config)
+        self.assertIn('supports_websockets = false', config)
         self.assertNotIn("secret-value", config)
 
 

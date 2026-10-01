@@ -295,7 +295,7 @@ def write_snapshot(
     scripts_dir = output_root / "scripts"
     scripts_dir.mkdir(parents=True, exist_ok=True)
     for script in (
-        "materialize.py", "provider_config.py", "pier_adapters.py", "run_batch.py",
+        "materialize.py", "provider_config.py", "pier_adapters.py", "pier_network.py", "run_batch.py",
         "summarize_results.py",
     ):
         shutil.copy2(ROOT / "scripts" / script, scripts_dir / script)

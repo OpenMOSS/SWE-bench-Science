@@ -11,6 +11,7 @@ import shlex
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 
 try:
     from .provider_config import parse_dotenv, render_codex_config, resolve_codex_profile
@@ -136,6 +137,46 @@ def pier_version(pier_bin: str) -> str | None:
     return value or None
 
 
+def inference_urls(agent: str, environ: dict[str, str], agent_kwargs: list[str]) -> list[str]:
+    """Extract gateway authorities, including their ports, without credentials."""
+    values: list[str] = []
+    keys = {
+        "codex": ("CODEX_BASE_URL", "OPENAI_BASE_URL", "OPENAI_API_BASE"),
+        "claude-code": ("ANTHROPIC_BASE_URL",),
+        "mini-swe-agent": ("OPENAI_BASE_URL", "OPENAI_API_BASE", "ANTHROPIC_BASE_URL"),
+    }.get(agent, ())
+    values.extend(environ[key] for key in keys if environ.get(key))
+    if agent == "codex":
+        for value in agent_kwargs:
+            if value.startswith("config_toml="):
+                config = tomllib.loads(value.split("=", 1)[1])
+            elif value.startswith("config_toml_file="):
+                config = tomllib.loads(Path(value.split("=", 1)[1]).read_text())
+            else:
+                continue
+            for provider in config.get("model_providers", {}).values():
+                if isinstance(provider, dict) and provider.get("base_url"):
+                    values.append(provider["base_url"])
+    urls = set()
+    for value in values:
+        parsed = urlsplit(value)
+        if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+            raise ValueError("Model gateway must be an absolute HTTP or HTTPS URL")
+        host = parsed.hostname
+        if ":" in host:
+            host = f"[{host}]"
+        if parsed.port:
+            host += f":{parsed.port}"
+        urls.add(urlunsplit((parsed.scheme, host, "", "", "")))
+    return sorted(urls)
+
+
+def job_error_count(path: Path) -> int:
+    """Pier can exit zero even when every trial failed to start."""
+    result = json.loads(path.read_text(encoding="utf-8"))
+    return int(result.get("stats", {}).get("n_errored_trials", 0))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=__doc__,
@@ -172,6 +213,9 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="Validate, pull, and record metadata without invoking Pier")
     args = parser.parse_args()
 
+    if args.env != "docker":
+        raise ValueError("The Science benchmark offline network policy requires --env docker")
+
     root = args.path.resolve()
     dirs = task_dirs(root)
     if not dirs:
@@ -190,11 +234,15 @@ def main() -> int:
     if args.agent == "codex" and not args.no_auto_agent_adapter and not agent_import_path:
         package = Path(__file__).resolve().parent.name
         agent_import_path = f"{package}.pier_adapters:ScienceBenchCodex"
+    profile_env = dict(os.environ)
+    if args.env_file:
+        profile_env.update(parse_dotenv(args.env_file))
+    for value in args.agent_env:
+        if "=" in value:
+            key, item = value.split("=", 1)
+            profile_env[key] = item
     provider_metadata: dict[str, object] | None = None
     if args.agent == "codex" and not args.no_auto_provider:
-        profile_env = dict(os.environ)
-        if args.env_file:
-            profile_env.update(parse_dotenv(args.env_file))
         profile = resolve_codex_profile(profile_env)
         if not models:
             models.append(profile.model)
@@ -217,11 +265,20 @@ def main() -> int:
             "credential_env": "OPENAI_API_KEY",
         }
 
+    package = Path(__file__).resolve().parent.name
+    environment_import_path = f"{package}.pier_network:ScienceBenchDocker"
+    gateway_urls = inference_urls(args.agent, profile_env, agent_kwargs)
     command = [
-        args.pier_bin, "run", "--path", str(root), "--agent", args.agent, "--env", args.env,
+        args.pier_bin, "run", "--path", str(root), "--env", args.env,
+        "--environment-import-path", environment_import_path,
+        "--environment-kwarg", "inference_urls=" + json.dumps(gateway_urls),
         "--n-concurrent", str(args.n_concurrent), "--n-attempts", str(args.n_attempts),
         "--max-retries", str(args.max_retries), "--no-force-build", "--no-delete", "--yes",
     ]
+    # Pier 0.3.0 gives a built-in agent name precedence over import_path.
+    # Omit the name when selecting an adapter so the adapter actually runs.
+    if not agent_import_path:
+        command.extend(["--agent", args.agent])
     if args.agent_timeout_multiplier is not None:
         command.extend(["--agent-timeout-multiplier", str(args.agent_timeout_multiplier)])
     if args.verifier_timeout_multiplier is not None:
@@ -255,11 +312,14 @@ def main() -> int:
         "pier_version": pier_version(args.pier_bin),
         "pier_command": redacted_command(command),
         "agent_import_path": agent_import_path,
+        "environment_import_path": environment_import_path,
+        "network_policy": "internal-isolated-squid-v1",
+        "inference_urls": gateway_urls,
         "provider": provider_metadata,
     }
     metadata_path = root / "batch-run.json"
     metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(metadata, indent=2, sort_keys=True))
+    print(json.dumps(metadata, indent=2, sort_keys=True), flush=True)
     if args.dry_run:
         return 0
     pier_environment = os.environ.copy()
@@ -277,6 +337,11 @@ def main() -> int:
         print(json.dumps({"summary_json": str(summary_json), "summary_csv": str(summary_csv)}, indent=2))
     except (OSError, ValueError) as exc:
         print(f"warning: unable to write result summary: {exc}", file=sys.stderr)
+    if returncode == 0 and args.job_name:
+        result_path = args.jobs_dir / args.job_name / "result.json"
+        if result_path.is_file() and (count := job_error_count(result_path)):
+            print(f"error: {count} trial(s) reported execution errors; inspect {result_path}", file=sys.stderr)
+            returncode = 1
     return returncode
 
 

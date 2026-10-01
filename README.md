@@ -127,6 +127,11 @@ You need Python 3.12+, Docker Desktop or Docker Engine with `linux/amd64` suppor
 and `uv` (or another Python environment manager). Apple Silicon hosts are supported
 through Docker Desktop's amd64 emulation.
 
+Use Docker Engine 28+ for the benchmark's enforced offline network policy. The
+batch runner connects agents only to an isolated internal network and permits
+inference through an allowlisted proxy; verifiers run without network access.
+See [offline network isolation](docs/run-batch.md#offline-network-isolation).
+
 ### 1. Install the runner
 
 ~~~bash

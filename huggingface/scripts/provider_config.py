@@ -90,12 +90,14 @@ def render_codex_config(profile: CodexProfile) -> str:
     return "\n".join(
         [
             'model_provider = "science_bench_gateway"',
+            'web_search = "disabled"',
             "",
             "[model_providers.science_bench_gateway]",
             'name = "SWE-bench Science Gateway"',
             f"base_url = {json.dumps(profile.base_url)}",
             f"wire_api = {json.dumps(profile.wire_api)}",
             'env_key = "OPENAI_API_KEY"',
+            'supports_websockets = false',
             "",
         ]
     )

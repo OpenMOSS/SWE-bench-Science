@@ -170,6 +170,12 @@ The GPL/LGPL/AGPL-family task IDs are `003, 020, 021, 023, 032, 057, 066, 074, 0
 
 ## Run An Evaluation
 
+Docker Engine 28+ is required. `scripts/run_batch.py` applies a shared isolated
+network policy to all harnesses: the agent can reach its model provider through
+an allowlisted proxy, and the verifier has no network access. Clearing proxy
+variables does not create direct internet access. See
+[offline network isolation](docs/run-batch.md#offline-network-isolation).
+
 Run an infrastructure smoke with no model:
 
 ~~~bash
